@@ -7,6 +7,7 @@ public class Jogador {
     private int pontos;
     private int JogadaMaisRapidaEmUnidadedeTempo;
     private int TempoTotalJogado;
+    private int sequenciaMaisLongadeAcertos;
 
     public Jogador(String nome, String apelido) {
         this.nome = nome;
@@ -14,6 +15,7 @@ public class Jogador {
         this.pontos = 0;
         JogadaMaisRapidaEmUnidadedeTempo = 0;
         TempoTotalJogado = 0;
+        sequenciaMaisLongadeAcertos = 0;
     }
 
     public String getNome() {
