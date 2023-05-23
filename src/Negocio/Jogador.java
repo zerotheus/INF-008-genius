@@ -38,4 +38,8 @@ public class Jogador {
         return TempoTotalJogado;
     }
 
+    public int getsequenciaMaisLongadeAcertos() {
+        return this.sequenciaMaisLongadeAcertos;
+    }
+
 }
