@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import Enums.Cor;
+
 public class Genius {
     private Data data;// mudar para tipo para Date;
     private String titulodoCampeonato;
@@ -27,11 +29,11 @@ public class Genius {
         return;
     }
 
-    public boolean analisaJogada(Long instantedaReacao, int numerodaJogada, int codigodaCor) {
+    public boolean analisaJogada(Long instantedaReacao, int numerodaJogada, Cor cor) {
         if (!reagiuemTempo(instantedaReacao)) {
             return false;
         }
-        acertouaSequencia(numerodaJogada, codigodaCor);
+        acertouaSequencia(numerodaJogada, cor);
         return true;
     }
 
@@ -61,9 +63,9 @@ public class Genius {
         sequenciaInicialdeCores.add(numeroAleotoriRandom.nextInt(4));
     }
 
-    public boolean acertouaSequencia(int numerodaJogada, int codigodaCor) {
+    public boolean acertouaSequencia(int numerodaJogada, Cor cor) {
 
-        if (codigodaCor != sequenciadeCores.get(numerodaJogada)) {
+        if (cor.ordinal() != sequenciadeCores.get(numerodaJogada)) {
             return false;
         }
 
