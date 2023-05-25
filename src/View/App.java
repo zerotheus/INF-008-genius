@@ -18,7 +18,7 @@ public class App {
         long x = clock.millis() % 10000 + 1000;
         Clock relogio = clock.systemDefaultZone();
         System.out.println(LocalDateTime.now().getYear()/* relogio.millis() % 10000 + ">?" + x */);
-        System.out.println(Cor.getCor(0));
+        System.out.println();
         // System.out.println(Cor.valueOf(Integer.toString(2)));
         /*
          * while (clock.millis() <= x) {
