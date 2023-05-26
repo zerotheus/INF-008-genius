@@ -81,6 +81,10 @@ public class Genius {
         return;
     }
 
+    private void pontua(int numeroDaJogada) {
+        this.jogadores.get(this.indexJogadorAtual).pontua(numeroDaJogada);
+    }
+
     public boolean analisaJogada(Long instantedaExibicao, Long instantedaReacao, int numeroDaJogada, Cor jogada) {
         if (!reagiuEmTempo(instantedaExibicao, instantedaReacao)) {
             this.alteraJogadorAtual();
@@ -104,6 +108,7 @@ public class Genius {
             return false;
         }
         if (numerodaJogada == this.sequenciaDeCores.size()) {
+            pontua(numerodaJogada);
             adicionanaSequencia();
         }
 
