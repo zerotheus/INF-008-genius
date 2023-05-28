@@ -37,7 +37,7 @@ public class GeniusView {
 	 * Create the application.
 	 */
 	public GeniusView() {
-		basePath = new File("").getAbsolutePath() + "/";
+		basePath = new File("").getAbsolutePath() + "\\";
 		initialize();
 	}
 
@@ -49,6 +49,7 @@ public class GeniusView {
 		frame.setBounds(0, 0, 1440, 900);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		frame.getContentPane().setVisible(true);
 
 		JLabel lbl8jogadores = new JLabel("");
 		lbl8jogadores.setEnabled(false);
@@ -138,9 +139,11 @@ public class GeniusView {
 		frame.getContentPane().add(lbl2jogadores);
 		frame.getContentPane().add(lbl8jogadores);
 
+		final String botaoIniciarPath = this.basePath + new File("src\\imagens\\botão iniciar.png").getPath();
+
 		JLabel lblbutao = new JLabel("");
 		lblbutao.setIcon(
-				new ImageIcon("C:\\Users\\Alana\\Desktop\\GENIUS\\INF-008-genius\\src\\imagens\\botão iniciar.png"));
+				new ImageIcon(botaoIniciarPath));
 		lblbutao.setBounds(587, 573, 276, 117);
 		frame.getContentPane().add(lblbutao);
 
@@ -160,9 +163,10 @@ public class GeniusView {
 		lblindividual.setVisible(false);
 		frame.getContentPane().add(lblindividual);
 
+		final String teladeFundoPath = this.basePath + new File("src/imagens/tela.png").getPath();
 		JLabel lbltelaFundo = new JLabel("");
 		lbltelaFundo
-				.setIcon(new ImageIcon("C:\\Users\\Alana\\Desktop\\GENIUS\\INF-008-genius\\src\\imagens\\tela.png"));
+				.setIcon(new ImageIcon(teladeFundoPath));
 		lbltelaFundo.setBounds(0, 0, 1451, 884);
 		frame.getContentPane().add(lbltelaFundo);
 
