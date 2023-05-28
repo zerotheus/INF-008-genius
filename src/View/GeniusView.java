@@ -45,7 +45,7 @@ public class GeniusView {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
+		frame = new TelaInicialFrame();
 		frame.setBounds(0, 0, 1440, 900);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -139,11 +139,20 @@ public class GeniusView {
 		frame.getContentPane().add(lbl2jogadores);
 		frame.getContentPane().add(lbl8jogadores);
 
+		final String teladeFundoPath = this.basePath + new File("src/imagens/tela.png").getPath();
+		JLabel lbltelaFundo = new JLabel("");
+		lbltelaFundo
+				.setIcon(new ImageIcon(teladeFundoPath));
+		lbltelaFundo.setBounds(0, 0, 1451, 884);
+		frame.getContentPane().add(lbltelaFundo);
+
 		final String botaoIniciarPath = this.basePath + new File("src\\imagens\\botão iniciar.png").getPath();
 
 		JLabel lblbutao = new JLabel("");
+		System.out.println(botaoIniciarPath
+				.compareTo("C:\\Users\\Mathe\\Desktop\\Vsprojects\\GeniusPOO\\src\\imagens\\botão iniciar.png"));
 		lblbutao.setIcon(
-				new ImageIcon(botaoIniciarPath));
+				new ImageIcon("C:\\Users\\Mathe\\Desktop\\Vsprojects\\GeniusPOO\\src\\imagens\\botão iniciar.png"));
 		lblbutao.setBounds(587, 573, 276, 117);
 		frame.getContentPane().add(lblbutao);
 
@@ -162,13 +171,6 @@ public class GeniusView {
 		lblindividual.setBounds(406, 573, 264, 95);
 		lblindividual.setVisible(false);
 		frame.getContentPane().add(lblindividual);
-
-		final String teladeFundoPath = this.basePath + new File("src/imagens/tela.png").getPath();
-		JLabel lbltelaFundo = new JLabel("");
-		lbltelaFundo
-				.setIcon(new ImageIcon(teladeFundoPath));
-		lbltelaFundo.setBounds(0, 0, 1451, 884);
-		frame.getContentPane().add(lbltelaFundo);
 
 		lblbutao.addMouseListener(new MouseAdapter() { // colocar som ao clicar o botão
 			@Override
@@ -215,8 +217,11 @@ public class GeniusView {
 				lblCampeonato.setVisible(false);
 				lblindividual.setEnabled(false);
 				lblindividual.setVisible(false);
-				lbltelaFundo.setIcon(new ImageIcon(
-						"C:\\Users\\Alana\\Desktop\\GENIUS\\INF-008-genius\\src\\imagens\\fundo sem logo.png"));
+				/*
+				 * lbltelaFundo.setIcon(new ImageIcon(
+				 * "C:\\Users\\Alana\\Desktop\\GENIUS\\INF-008-genius\\src\\imagens\\fundo sem logo.png"
+				 * ));
+				 */
 				lblLogo.setVisible(true);
 				lblCadastro.setVisible(true);
 				lblJogador.setVisible(true);
