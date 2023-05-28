@@ -1,5 +1,6 @@
 package View;
 
+import java.io.File;
 import java.time.Clock;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -18,7 +19,8 @@ public class App {
         long x = clock.millis() % 10000 + 1000;
         Clock relogio = clock.systemDefaultZone();
         System.out.println(LocalDateTime.now().getYear()/* relogio.millis() % 10000 + ">?" + x */);
-        System.out.println();
+        final String path = new File("").getAbsolutePath();// forma de pegar o caminho relativo para o diretorio;
+        System.out.println(path);
         // System.out.println(Cor.valueOf(Integer.toString(2)));
         /*
          * while (clock.millis() <= x) {
