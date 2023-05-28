@@ -19,8 +19,9 @@ public class App {
         long x = clock.millis() % 10000 + 1000;
         Clock relogio = clock.systemDefaultZone();
         System.out.println(LocalDateTime.now().getYear()/* relogio.millis() % 10000 + ">?" + x */);
-        final String path = new File("").getAbsolutePath();// forma de pegar o caminho relativo para o diretorio;
-        System.out.println(path);
+        final String path = new File("").getAbsolutePath() + "/";// forma de pegar o caminho relativo para o diretorio;
+        final String teladeFundoPath = new File("src/images/tela.png").getPath();
+        System.out.println(path + teladeFundoPath);
         // System.out.println(Cor.valueOf(Integer.toString(2)));
         /*
          * while (clock.millis() <= x) {
