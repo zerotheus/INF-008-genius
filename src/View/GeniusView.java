@@ -1,14 +1,18 @@
 package View;
 
+import java.awt.CardLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.ImageIcon;
+
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-//import com.jgoodies.forms.factories.DefaultComponentFactory;
 import java.awt.Font;
 import java.awt.TextField;
 
@@ -45,11 +49,14 @@ public class GeniusView {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new TelaInicialFrame();
+		frame = new JFrame();
+		frame.setLayout(new CardLayout());
+		frame.update(null);
 		frame.setBounds(0, 0, 1440, 900);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.getContentPane().setVisible(true);
+		// frame.setContentPane();
 
 		JLabel lbl8jogadores = new JLabel("");
 		lbl8jogadores.setEnabled(false);
@@ -139,22 +146,22 @@ public class GeniusView {
 		frame.getContentPane().add(lbl2jogadores);
 		frame.getContentPane().add(lbl8jogadores);
 
+		final String botaoIniciarPath = this.basePath + new File("src/imagens/botão iniciar.png").getPath();
+
+		JLabel lblbutao = new JLabel();
+		System.out.println(botaoIniciarPath
+				.compareTo("C:\\Users\\Mathe\\Desktop\\Vsprojects\\GeniusPOO\\src\\imagens\\botão iniciar.png"));
+		lblbutao.setIcon(
+				new ImageIcon(botaoIniciarPath));
+		lblbutao.setBounds(587, 573, 276, 117);
+		frame.getContentPane().add(lblbutao);
+
 		final String teladeFundoPath = this.basePath + new File("src/imagens/tela.png").getPath();
 		JLabel lbltelaFundo = new JLabel("");
 		lbltelaFundo
 				.setIcon(new ImageIcon(teladeFundoPath));
 		lbltelaFundo.setBounds(0, 0, 1451, 884);
 		frame.getContentPane().add(lbltelaFundo);
-
-		final String botaoIniciarPath = this.basePath + new File("src\\imagens\\botão iniciar.png").getPath();
-
-		JLabel lblbutao = new JLabel("");
-		System.out.println(botaoIniciarPath
-				.compareTo("C:\\Users\\Mathe\\Desktop\\Vsprojects\\GeniusPOO\\src\\imagens\\botão iniciar.png"));
-		lblbutao.setIcon(
-				new ImageIcon("C:\\Users\\Mathe\\Desktop\\Vsprojects\\GeniusPOO\\src\\imagens\\botão iniciar.png"));
-		lblbutao.setBounds(587, 573, 276, 117);
-		frame.getContentPane().add(lblbutao);
 
 		JLabel lblCampeonato = new JLabel("");
 		lblCampeonato.setEnabled(false);
@@ -172,12 +179,15 @@ public class GeniusView {
 		lblindividual.setVisible(false);
 		frame.getContentPane().add(lblindividual);
 
-		lblbutao.addMouseListener(new MouseAdapter() { // colocar som ao clicar o botão
+		lblbutao.addMouseListener(new MouseAdapter() { // colocar som ao clicar o
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getSource() != lblbutao) {
 					return;
 				}
+
+				System.out.println("click");
 				lblbutao.setEnabled(false);
 				lblbutao.setVisible(false);
 				lblCampeonato.setEnabled(true);
