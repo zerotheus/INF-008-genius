@@ -15,6 +15,7 @@ public class GeniusView {
 
 	private JFrame frame;
 	private final String basePath;
+	private final String imagesBasePath;
 
 	/**
 	 * Launch the application.
@@ -37,6 +38,8 @@ public class GeniusView {
 	 */
 	public GeniusView() {
 		basePath = new File("").getAbsolutePath() + "\\";
+		imagesBasePath = basePath + new File("src\\imagens").getPath() + "\\";
+		System.out.println(imagesBasePath);
 		initialize();
 	}
 
@@ -53,26 +56,26 @@ public class GeniusView {
 		JLabel lbl8jogadores = new JLabel("");
 		lbl8jogadores.setEnabled(false);
 		lbl8jogadores.setIcon(
-				new ImageIcon("C:\\Users\\Alana\\Desktop\\GENIUS\\INF-008-genius\\src\\imagens\\8 jogadores.png"));
+				new ImageIcon(this.imagesBasePath + "8 jogadores.png"));
 		lbl8jogadores.setBounds(935, 573, 321, 108);
 		lbl8jogadores.setVisible(false);
 
 		JLabel lbl4jogadores = new JLabel("");
 		lbl4jogadores.setEnabled(false);
 		lbl4jogadores.setIcon(
-				new ImageIcon("C:\\Users\\Alana\\Desktop\\GENIUS\\INF-008-genius\\src\\imagens\\4 jogadores.png"));
+				new ImageIcon(this.imagesBasePath + "4 jogadores.png"));
 		lbl4jogadores.setBounds(581, 573, 321, 108);
 		lbl4jogadores.setVisible(false);
 
 		JLabel lblCadastro = new JLabel("");
 		lblCadastro.setIcon(
-				new ImageIcon("C:\\Users\\Alana\\Desktop\\GENIUS\\INF-008-genius\\src\\imagens\\cadastro.png"));
+				new ImageIcon(this.imagesBasePath + "cadastro.png"));
 		lblCadastro.setBounds(406, 330, 662, 531);
 		lblCadastro.setVisible(false);
 
 		JLabel lblLogo = new JLabel("");
 		lblLogo.setIcon(
-				new ImageIcon("C:\\Users\\Alana\\Desktop\\GENIUS\\INF-008-genius\\src\\imagens\\geniuslogo.png"));
+				new ImageIcon(this.imagesBasePath + "geniuslogo.png"));
 		lblLogo.setBounds(395, 164, 734, 247);
 		lblLogo.setVisible(false);
 		// CAMPO DE CADASTRO
@@ -88,7 +91,7 @@ public class GeniusView {
 
 		JLabel lblProximo = new JLabel("");
 		lblProximo
-				.setIcon(new ImageIcon("C:\\Users\\Alana\\Desktop\\GENIUS\\INF-008-genius\\src\\imagens\\Salvar.png"));
+				.setIcon(new ImageIcon(this.imagesBasePath + "Salvar.png"));
 		lblProximo.setBounds(680, 771, 133, 68);
 		lblProximo.setVisible(false);
 
@@ -131,25 +134,23 @@ public class GeniusView {
 
 		JLabel lbl2jogadores = new JLabel("");
 		lbl2jogadores.setIcon(
-				new ImageIcon("C:\\Users\\Alana\\Desktop\\GENIUS\\INF-008-genius\\src\\imagens\\2 jogadores.png"));
+				new ImageIcon(this.imagesBasePath + "2 jogadores.png"));
 		lbl2jogadores.setEnabled(false);
 		lbl2jogadores.setBounds(238, 573, 321, 108);
 		lbl2jogadores.setVisible(false);
 		frame.getContentPane().add(lbl2jogadores);
 		frame.getContentPane().add(lbl8jogadores);
 
-		final String botaoIniciarPath = this.basePath + new File("src\\imagens\\botão iniciar.png").getPath();
-
 		JLabel lblbutao = new JLabel("");
 		lblbutao.setIcon(
-				new ImageIcon(botaoIniciarPath));
+				new ImageIcon(this.imagesBasePath + "botão iniciar.png"));
 		lblbutao.setBounds(587, 573, 276, 117);
 		frame.getContentPane().add(lblbutao);
 
 		JLabel lblCampeonato = new JLabel("");
 		lblCampeonato.setEnabled(false);
 		lblCampeonato.setIcon(
-				new ImageIcon("C:\\Users\\Alana\\Desktop\\GENIUS\\INF-008-genius\\src\\imagens\\VARIOS JOGADORES.png"));
+				new ImageIcon(this.imagesBasePath + "VARIOS JOGADORES.png"));
 		lblCampeonato.setBounds(759, 573, 264, 95);
 		lblCampeonato.setVisible(false);
 		frame.getContentPane().add(lblCampeonato);
@@ -157,15 +158,14 @@ public class GeniusView {
 		JLabel lblindividual = new JLabel("");
 		lblindividual.setEnabled(false);
 		lblindividual.setIcon(
-				new ImageIcon("C:\\Users\\Alana\\Desktop\\GENIUS\\INF-008-genius\\src\\imagens\\SOLO BOTAO.png"));
+				new ImageIcon(this.imagesBasePath + "SOLO BOTAO.png"));
 		lblindividual.setBounds(406, 573, 264, 95);
 		lblindividual.setVisible(false);
 		frame.getContentPane().add(lblindividual);
 
-		final String teladeFundoPath = this.basePath + new File("src/imagens/tela.png").getPath();
-		JLabel lbltelaFundo = new JLabel("");
+		JLabel lbltelaFundo = new JLabel();
 		lbltelaFundo
-				.setIcon(new ImageIcon(teladeFundoPath));
+				.setIcon(new ImageIcon(this.imagesBasePath + "tela.png"));
 		lbltelaFundo.setBounds(0, 0, 1451, 884);
 		frame.getContentPane().add(lbltelaFundo);
 
@@ -215,7 +215,7 @@ public class GeniusView {
 				lblindividual.setEnabled(false);
 				lblindividual.setVisible(false);
 				lbltelaFundo.setIcon(new ImageIcon(
-						"C:\\Users\\Alana\\Desktop\\GENIUS\\INF-008-genius\\src\\imagens\\fundo sem logo.png"));
+						imagesBasePath + "fundo sem logo.png"));
 				lblLogo.setVisible(true);
 				lblCadastro.setVisible(true);
 				lblJogador.setVisible(true);
