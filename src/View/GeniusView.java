@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.ImageIcon;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.awt.Font;
 import java.awt.TextField;
@@ -230,6 +231,125 @@ public class GeniusView {
 
 			}
 		});
+
+		lbl2jogadores.addMouseListener(new MouseAdapter() { // colocar som ao clicar o botão
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getSource() != lbl2jogadores) {
+					return;
+				}
+
+				lblCampeonato.setEnabled(false);
+				lblCampeonato.setVisible(false);
+				lbl2jogadores.setEnabled(false);
+				lbl8jogadores.setEnabled(false);
+				lbl4jogadores.setEnabled(false);
+				lbl2jogadores.setVisible(false);
+				lbl8jogadores.setVisible(false);
+				lbl4jogadores.setVisible(false);
+				lbltelaFundo.setIcon(new ImageIcon(
+						imagesBasePath + "fundo sem logo.png"));
+				lblLogo.setVisible(true);
+				lblCadastro.setVisible(true);
+				lblJogador.setVisible(true);
+				lblNome.setVisible(true);
+				lblApelido.setVisible(true);
+				lblCampeonatoNome.setVisible(true);
+				textCampeonato.setVisible(true);
+				textNome.setVisible(true);
+				textApelido.setVisible(true);
+				lblProximo.setVisible(true);
+
+			}
+		});
+
+		lbl4jogadores.addMouseListener(new MouseAdapter() { // colocar som ao clicar o botão
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getSource() != lbl4jogadores) {
+					return;
+				}
+
+				lblCampeonato.setEnabled(false);
+				lblCampeonato.setVisible(false);
+				lbl2jogadores.setEnabled(false);
+				lbl8jogadores.setEnabled(false);
+				lbl4jogadores.setEnabled(false);
+				lbl2jogadores.setVisible(false);
+				lbl8jogadores.setVisible(false);
+				lbl4jogadores.setVisible(false);
+				lbltelaFundo.setIcon(new ImageIcon(
+						imagesBasePath + "fundo sem logo.png"));
+				lblLogo.setVisible(true);
+				lblCadastro.setVisible(true);
+				lblJogador.setVisible(true);
+				lblNome.setVisible(true);
+				lblApelido.setVisible(true);
+				lblCampeonatoNome.setVisible(true);
+				textCampeonato.setVisible(true);
+				textNome.setVisible(true);
+				textApelido.setVisible(true);
+				lblProximo.setVisible(true);
+
+			}
+		});
+
+
+		lbl8jogadores.addMouseListener(new MouseAdapter() { // colocar som ao clicar o botão
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getSource() != lbl8jogadores) {
+					return;
+				}
+
+				lblCampeonato.setEnabled(false);
+				lblCampeonato.setVisible(false);
+				lbl2jogadores.setEnabled(false);
+				lbl8jogadores.setEnabled(false);
+				lbl4jogadores.setEnabled(false);
+				lbl2jogadores.setVisible(false);
+				lbl8jogadores.setVisible(false);
+				lbl4jogadores.setVisible(false);
+				lbltelaFundo.setIcon(new ImageIcon(
+						imagesBasePath + "fundo sem logo.png"));
+				lblLogo.setVisible(true);
+				lblCadastro.setVisible(true);
+				lblJogador.setVisible(true);
+				lblNome.setVisible(true);
+				lblApelido.setVisible(true);
+				lblCampeonatoNome.setVisible(true);
+				textCampeonato.setVisible(true);
+				textNome.setVisible(true);
+				textApelido.setVisible(true);
+				lblProximo.setVisible(true);
+
+			}
+		});
+
+		lblProximo.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e){
+				if(e.getSource() != lblProximo){
+					return;
+				}
+				lblLogo.setVisible(false);
+				lblCadastro.setVisible(false);
+				lblJogador.setVisible(false);
+				lblNome.setVisible(false);
+				lblApelido.setVisible(false);
+				lblCampeonatoNome.setVisible(false);
+				textCampeonato.setVisible(false);
+				textNome.setVisible(false);
+				textApelido.setVisible(false);
+				lblProximo.setVisible(false);
+
+			}
+		});
+		
+
+
+
+
 
 	}
 }
