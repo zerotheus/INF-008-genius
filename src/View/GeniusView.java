@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.ImageIcon;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -50,6 +51,9 @@ public class GeniusView {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		JTabbedPane tabbedPane = new JTabbedPane();
+		JPanel telaincialPanel = new JPanel(null);
+
 		frame.setBounds(0, 0, 1440, 900);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -170,6 +174,19 @@ public class GeniusView {
 				.setIcon(new ImageIcon(this.imagesBasePath + "tela.png"));
 		lbltelaFundo.setBounds(0, 0, 1451, 884);
 		frame.getContentPane().add(lbltelaFundo);
+
+		telaincialPanel.add(lblbutao);
+		telaincialPanel.add(lbltelaFundo);
+
+		JPanel copia = new JPanel();
+
+		tabbedPane.setVisible(true);
+		// tabbedPane.addTab("ABA INICIAL", telaincialPanel);
+		tabbedPane.addTab("ABA 2", copia);
+		tabbedPane.setEnabled(false);
+		tabbedPane.insertTab("string", null, telaincialPanel, "no tip", 0);
+		tabbedPane.remove(copia);
+		frame.setContentPane(tabbedPane);
 
 		lblbutao.addMouseListener(new MouseAdapter() { // colocar som ao clicar o botão
 			@Override
@@ -294,7 +311,6 @@ public class GeniusView {
 			}
 		});
 
-
 		lbl8jogadores.addMouseListener(new MouseAdapter() { // colocar som ao clicar o botão
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -328,8 +344,8 @@ public class GeniusView {
 
 		lblProximo.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e){
-				if(e.getSource() != lblProximo){
+			public void mouseClicked(MouseEvent e) {
+				if (e.getSource() != lblProximo) {
 					return;
 				}
 				lblLogo.setVisible(false);
@@ -345,11 +361,6 @@ public class GeniusView {
 
 			}
 		});
-		
-
-
-
-
 
 	}
 }
