@@ -1,5 +1,6 @@
 package View;
 
+import java.awt.CardLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -13,7 +14,7 @@ import java.io.File;
 import java.awt.Font;
 import java.awt.TextField;
 
-public class GeniusView {
+public class GeniusView extends JFrame implements MouseListener {
 
 	private JFrame frame;
 	private final String basePath;
@@ -49,10 +50,12 @@ public class GeniusView {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
+
+		frame = new TelaInicialFrame();
+
 		frame.setBounds(0, 0, 1440, 900);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		// System.out.println(frame.getContentPane().getLayout());
 		frame.getContentPane().setVisible(true);
 
 		JLabel lbl8jogadores = new JLabel("");
@@ -143,11 +146,13 @@ public class GeniusView {
 		frame.getContentPane().add(lbl2jogadores);
 		frame.getContentPane().add(lbl8jogadores);
 
-		JLabel lblbutao = new JLabel("");
-		lblbutao.setIcon(
-				new ImageIcon(this.imagesBasePath + "botão iniciar.png"));
-		lblbutao.setBounds(587, 573, 276, 117);
-		frame.getContentPane().add(lblbutao);
+		/*
+		 * JLabel lblbutao = new JLabel("");
+		 * lblbutao.setIcon(
+		 * new ImageIcon(this.imagesBasePath + "botão iniciar.png"));
+		 * lblbutao.setBounds(587, 573, 276, 117);
+		 * frame.getContentPane().add(lblbutao);
+		 */
 
 		JLabel lblCampeonato = new JLabel("");
 		lblCampeonato.setEnabled(false);
@@ -164,27 +169,30 @@ public class GeniusView {
 		lblindividual.setBounds(406, 573, 264, 95);
 		lblindividual.setVisible(false);
 		frame.getContentPane().add(lblindividual);
-
-		JLabel lbltelaFundo = new JLabel();
-		lbltelaFundo
-				.setIcon(new ImageIcon(this.imagesBasePath + "tela.png"));
-		lbltelaFundo.setBounds(0, 0, 1451, 884);
-		frame.getContentPane().add(lbltelaFundo);
-
-		lblbutao.addMouseListener(new MouseAdapter() { // colocar som ao clicar o botão
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (e.getSource() != lblbutao) {
-					return;
-				}
-				lblbutao.setEnabled(false);
-				lblbutao.setVisible(false);
-				lblCampeonato.setEnabled(true);
-				lblCampeonato.setVisible(true);
-				lblindividual.setEnabled(true);
-				lblindividual.setVisible(true);
-			}
-		});
+		/*
+		 * JLabel lbltelaFundo = new JLabel();
+		 * lbltelaFundo
+		 * .setIcon(new ImageIcon(this.imagesBasePath + "tela.png"));
+		 * lbltelaFundo.setBounds(0, 0, 1451, 884);
+		 * frame.getContentPane().add(lbltelaFundo);
+		 * 
+		 * lblbutao.addMouseListener(new MouseAdapter() { // colocar som ao clicar o
+		 * botão
+		 * 
+		 * @Override
+		 * public void mouseClicked(MouseEvent e) {
+		 * if (e.getSource() != lblbutao) {
+		 * return;
+		 * }
+		 * lblbutao.setEnabled(false);
+		 * lblbutao.setVisible(false);
+		 * lblCampeonato.setEnabled(true);
+		 * lblCampeonato.setVisible(true);
+		 * lblindividual.setEnabled(true);
+		 * lblindividual.setVisible(true);
+		 * }
+		 * });
+		 */
 
 		lblCampeonato.addMouseListener(new MouseAdapter() { // colocar som ao clicar o botão
 			@Override
@@ -216,8 +224,10 @@ public class GeniusView {
 				lblCampeonato.setVisible(false);
 				lblindividual.setEnabled(false);
 				lblindividual.setVisible(false);
-				lbltelaFundo.setIcon(new ImageIcon(
-						imagesBasePath + "fundo sem logo.png"));
+				/*
+				 * lbltelaFundo.setIcon(new ImageIcon(
+				 * imagesBasePath + "fundo sem logo.png"));
+				 */
 				lblLogo.setVisible(true);
 				lblCadastro.setVisible(true);
 				lblJogador.setVisible(true);
@@ -247,8 +257,10 @@ public class GeniusView {
 				lbl2jogadores.setVisible(false);
 				lbl8jogadores.setVisible(false);
 				lbl4jogadores.setVisible(false);
-				lbltelaFundo.setIcon(new ImageIcon(
-						imagesBasePath + "fundo sem logo.png"));
+				/*
+				 * lbltelaFundo.setIcon(new ImageIcon(
+				 * imagesBasePath + "fundo sem logo.png"));
+				 */
 				lblLogo.setVisible(true);
 				lblCadastro.setVisible(true);
 				lblJogador.setVisible(true);
@@ -278,8 +290,10 @@ public class GeniusView {
 				lbl2jogadores.setVisible(false);
 				lbl8jogadores.setVisible(false);
 				lbl4jogadores.setVisible(false);
-				lbltelaFundo.setIcon(new ImageIcon(
-						imagesBasePath + "fundo sem logo.png"));
+				/*
+				 * lbltelaFundo.setIcon(new ImageIcon(
+				 * imagesBasePath + "fundo sem logo.png"));
+				 */
 				lblLogo.setVisible(true);
 				lblCadastro.setVisible(true);
 				lblJogador.setVisible(true);
@@ -293,7 +307,6 @@ public class GeniusView {
 
 			}
 		});
-
 
 		lbl8jogadores.addMouseListener(new MouseAdapter() { // colocar som ao clicar o botão
 			@Override
@@ -310,8 +323,10 @@ public class GeniusView {
 				lbl2jogadores.setVisible(false);
 				lbl8jogadores.setVisible(false);
 				lbl4jogadores.setVisible(false);
-				lbltelaFundo.setIcon(new ImageIcon(
-						imagesBasePath + "fundo sem logo.png"));
+				/*
+				 * lbltelaFundo.setIcon(new ImageIcon(
+				 * imagesBasePath + "fundo sem logo.png"));
+				 */
 				lblLogo.setVisible(true);
 				lblCadastro.setVisible(true);
 				lblJogador.setVisible(true);
@@ -328,8 +343,8 @@ public class GeniusView {
 
 		lblProximo.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e){
-				if(e.getSource() != lblProximo){
+			public void mouseClicked(MouseEvent e) {
+				if (e.getSource() != lblProximo) {
 					return;
 				}
 				lblLogo.setVisible(false);
@@ -345,11 +360,31 @@ public class GeniusView {
 
 			}
 		});
-		
 
+	}
 
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		System.out.println("foi");
 
+		System.out.println(e.getSource());
+	}
 
+	@Override
+	public void mousePressed(MouseEvent e) {
+
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
 
 	}
 }
