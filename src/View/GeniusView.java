@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.ImageIcon;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -14,9 +15,9 @@ import java.io.File;
 import java.awt.Font;
 import java.awt.TextField;
 
-public class GeniusView extends JFrame implements MouseListener {
+public class GeniusView {
 
-	private TelaInicialFrame frame;
+	private JFrame frame;
 	private final String basePath;
 	private final String imagesBasePath;
 
@@ -50,9 +51,9 @@ public class GeniusView extends JFrame implements MouseListener {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-
-		frame = TelaInicialFrame.getTelaIncial(this);
-		frame.addMouseListener(this);
+		frame = new JFrame();
+		JTabbedPane tabbedPane = new JTabbedPane();
+		JPanel telaincialPanel = new JPanel(null);
 
 		frame.setBounds(0, 0, 1440, 900);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -147,13 +148,11 @@ public class GeniusView extends JFrame implements MouseListener {
 		frame.getContentPane().add(lbl2jogadores);
 		frame.getContentPane().add(lbl8jogadores);
 
-		/*
-		 * JLabel lblbutao = new JLabel("");
-		 * lblbutao.setIcon(
-		 * new ImageIcon(this.imagesBasePath + "botão iniciar.png"));
-		 * lblbutao.setBounds(587, 573, 276, 117);
-		 * frame.getContentPane().add(lblbutao);
-		 */
+		JLabel lblbutao = new JLabel("");
+		lblbutao.setIcon(
+				new ImageIcon(this.imagesBasePath + "botão iniciar.png"));
+		lblbutao.setBounds(587, 573, 276, 117);
+		frame.getContentPane().add(lblbutao);
 
 		JLabel lblCampeonato = new JLabel("");
 		lblCampeonato.setEnabled(false);
@@ -170,30 +169,40 @@ public class GeniusView extends JFrame implements MouseListener {
 		lblindividual.setBounds(406, 573, 264, 95);
 		lblindividual.setVisible(false);
 		frame.getContentPane().add(lblindividual);
-		/*
-		 * JLabel lbltelaFundo = new JLabel();
-		 * lbltelaFundo
-		 * .setIcon(new ImageIcon(this.imagesBasePath + "tela.png"));
-		 * lbltelaFundo.setBounds(0, 0, 1451, 884);
-		 * frame.getContentPane().add(lbltelaFundo);
-		 * 
-		 * lblbutao.addMouseListener(new MouseAdapter() { // colocar som ao clicar o
-		 * botão
-		 * 
-		 * @Override
-		 * public void mouseClicked(MouseEvent e) {
-		 * if (e.getSource() != lblbutao) {
-		 * return;
-		 * }
-		 * lblbutao.setEnabled(false);
-		 * lblbutao.setVisible(false);
-		 * lblCampeonato.setEnabled(true);
-		 * lblCampeonato.setVisible(true);
-		 * lblindividual.setEnabled(true);
-		 * lblindividual.setVisible(true);
-		 * }
-		 * });
-		 */
+
+		JLabel lbltelaFundo = new JLabel();
+		lbltelaFundo
+				.setIcon(new ImageIcon(this.imagesBasePath + "tela.png"));
+		lbltelaFundo.setBounds(0, 0, 1451, 884);
+		frame.getContentPane().add(lbltelaFundo);
+
+		telaincialPanel.add(lblbutao);
+		telaincialPanel.add(lbltelaFundo);
+
+		JPanel copia = new JPanel();
+
+		tabbedPane.setVisible(true);
+		// tabbedPane.addTab("ABA INICIAL", telaincialPanel);
+		tabbedPane.addTab("ABA 2", copia);
+		tabbedPane.setEnabled(false);
+		tabbedPane.insertTab("string", null, telaincialPanel, "no tip", 0);
+		tabbedPane.remove(copia);
+		frame.setContentPane(tabbedPane);
+
+		lblbutao.addMouseListener(new MouseAdapter() { // colocar som ao clicar o botão
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getSource() != lblbutao) {
+					return;
+				}
+				lblbutao.setEnabled(false);
+				lblbutao.setVisible(false);
+				lblCampeonato.setEnabled(true);
+				lblCampeonato.setVisible(true);
+				lblindividual.setEnabled(true);
+				lblindividual.setVisible(true);
+			}
+		});
 
 		lblCampeonato.addMouseListener(new MouseAdapter() { // colocar som ao clicar o botão
 			@Override
@@ -361,32 +370,6 @@ public class GeniusView extends JFrame implements MouseListener {
 
 			}
 		});
-
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		System.out.println("foi");
-		FrameFuncional funcao = this.frame.atualizaFrame(frame);
-		funcao.iniciaFrameFuncional();
-
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
 
 	}
 }
