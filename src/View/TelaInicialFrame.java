@@ -10,39 +10,54 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-public class TelaInicialFrame extends JFrame implements MouseListener {
+public class TelaInicialFrame extends JFrame implements MouseListener, FrameFuncional {
 
     private static String basePath;
     private static String imagesBasePath;
+    private static TelaInicialFrame frame;
 
     public TelaInicialFrame() {
         basePath = new File("").getAbsolutePath() + "\\";
-        imagesBasePath = basePath + new File("src\\imagens").getPath() + "\\";
-        JLabel lblbutao = new JLabel("butao");
-        lblbutao.setIcon(
-                new ImageIcon(TelaInicialFrame.imagesBasePath + "botão iniciar.png"));
-        lblbutao.setBounds(587, 573, 276, 117);
-        this.getContentPane().add(lblbutao);
-
-        JLabel lbltelaFundo = new JLabel();
-        System.out.println(TelaInicialFrame.imagesBasePath + "tela.png");
-        lbltelaFundo.setIcon(new ImageIcon(TelaInicialFrame.imagesBasePath + "tela.png"));
-        lbltelaFundo.setBounds(0, 0, 1451, 884);
-        this.getContentPane().add(lbltelaFundo);
-
-        this.add(lblbutao);
-        this.add(lbltelaFundo);
-        FrontEndManager frontEnd = new FrontEndManager();
-        frontEnd.setFrontEnd(this);
-        lblbutao.addMouseListener(frontEnd);
-
+        imagesBasePath = basePath + new File("imagens").getPath() + "\\";
+        System.out.println("tela nova");
     }
 
-    public static JFrame getTelaIncial(JFrame frame) {
+    public static TelaInicialFrame getTelaIncial(MouseListener mouse) {
+        TelaInicialFrame novoFrame = new TelaInicialFrame();
 
-        frame = new TelaInicialFrame();
+        JLabel lblbutao = new JLabel("");
+        lblbutao.setIcon(
+                new ImageIcon(imagesBasePath + "botão iniciar.png"));
+        lblbutao.setBounds(587, 573, 276, 117);
+        novoFrame.getContentPane().add(lblbutao);
+
+        JLabel lbltelaFundo = new JLabel();
+        System.out.println(imagesBasePath + "tela.png");
+        lbltelaFundo.setIcon(new ImageIcon(imagesBasePath + "tela.png"));
+        lbltelaFundo.setBounds(0, 0, 1451, 884);
+        novoFrame.getContentPane().add(lbltelaFundo);
+
+        novoFrame.add(lblbutao);
+        novoFrame.add(lbltelaFundo);
+
+        FrontEndManager frontEnd = new FrontEndManager();
+        frontEnd.setFrontEnd(novoFrame);
+        lbltelaFundo.addMouseListener(frontEnd);
+
+        lblbutao.addMouseListener(mouse
+
+        );
+        frame = novoFrame;
 
         return frame;
+    }
+
+    public FrameFuncional atualizaFrame(JFrame frame) {
+        FrameFuncional atualizaFrame = () -> {
+            this.frame = new TelaInicialFrame();
+            return this.frame;
+        };
+        return atualizaFrame;
     }
 
     @Override
@@ -73,6 +88,12 @@ public class TelaInicialFrame extends JFrame implements MouseListener {
     public void mouseExited(MouseEvent e) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'mouseExited'");
+    }
+
+    @Override
+    public TelaInicialFrame iniciaFrameFuncional() {
+        System.out.println("n entendi nada");
+        return new CrianovaTela();
     }
 
 }

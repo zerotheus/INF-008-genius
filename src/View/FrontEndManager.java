@@ -23,6 +23,10 @@ public class FrontEndManager extends MouseInputAdapter {
         System.out.println(e.getID());
         System.out.println("coisas estranhas");
         System.out.println(e.getButton());
+        System.out.println(e.getSource());
+        System.out.println(e.getClass());
+        System.out.println(e.getComponent());
+
     }
 
 }

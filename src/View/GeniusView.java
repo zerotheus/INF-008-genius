@@ -16,7 +16,7 @@ import java.awt.TextField;
 
 public class GeniusView extends JFrame implements MouseListener {
 
-	private JFrame frame;
+	private TelaInicialFrame frame;
 	private final String basePath;
 	private final String imagesBasePath;
 
@@ -51,7 +51,8 @@ public class GeniusView extends JFrame implements MouseListener {
 	 */
 	private void initialize() {
 
-		frame = new TelaInicialFrame();
+		frame = TelaInicialFrame.getTelaIncial(this);
+		frame.addMouseListener(this);
 
 		frame.setBounds(0, 0, 1440, 900);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -366,8 +367,9 @@ public class GeniusView extends JFrame implements MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		System.out.println("foi");
+		FrameFuncional funcao = this.frame.atualizaFrame(frame);
+		funcao.iniciaFrameFuncional();
 
-		System.out.println(e.getSource());
 	}
 
 	@Override
