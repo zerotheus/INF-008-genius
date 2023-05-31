@@ -10,7 +10,6 @@ public class JLabeldateladeFundo extends JLabel {
     private final String imagesBasePath;
 
     JLabeldateladeFundo() {
-
         basePath = new File("").getAbsolutePath() + "\\";
         imagesBasePath = basePath + new File("src\\imagens").getPath() + "\\";
         this.setIcon(new ImageIcon(this.imagesBasePath + "tela.png"));
