@@ -4,56 +4,54 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import Enums.Dificuldade;
 import Enums.Cor;
 
 public class Genius {
     private Data data;// mudar para tipo para Date;
     private String titulodoCampeonato;
-    private int dificuldade;
+    private Dificuldade dificuldade;
     private List<Jogador> jogadores; // para facilitar a alteracao na quantidade de jogadores
     private List<Integer> sequenciaDeCores;
     private int indexJogadorAtual;
     private int tempoParaReagir; // A definir oq poderia ser considerado facil ou dificil
 
-    public Genius(Data data, String titulodoCampeonato, int dificuldade, List<Jogador> jogadores,
+    public Genius(Data data, String titulodoCampeonato, Dificuldade dificuldade, List<Jogador> jogadores,
             List<Integer> sequenciaDeCores, int indexJogadorAtual, int tempoParaReagir) {
         this.data = data;
         this.titulodoCampeonato = titulodoCampeonato;
-        this.dificuldade = dificuldade = 0; // 1 easy // 2 medio // 3 dificil
+        this.dificuldade = dificuldade;
         this.jogadores = jogadores;
         this.sequenciaDeCores = sequenciaDeCores;
         this.indexJogadorAtual = indexJogadorAtual;
         this.tempoParaReagir = tempoParaReagir;
     }
 
-    public Genius(String titulodoCampeonato, int dificuldade) {
+    public Genius(String titulodoCampeonato, Dificuldade dificuldade) {
         data = new Data(LocalDateTime.now().getDayOfMonth(), LocalDateTime.now().getMonthValue(),
                 LocalDateTime.now().getYear());
         this.titulodoCampeonato = titulodoCampeonato;
-        setDificuldade(1);
+        setDificuldade(dificuldade);
         this.jogadores = new ArrayList<Jogador>();
         this.indexJogadorAtual = 0;
         geraSequencia();
     }
 
-    public void setDificuldade(int mudanca) {
-        if (mudanca + this.dificuldade < 1 || mudanca + this.dificuldade > 3) {
-            return;
-        }
-        this.dificuldade += mudanca;
+    private void setDificuldade(Dificuldade dificuldade) {
+        this.dificuldade = dificuldade;
         setTempodeReacao(this.dificuldade);
     }
 
-    private void setTempodeReacao(int dificuldade) {
-        if (dificuldade == 1) {
+    private void setTempodeReacao(Dificuldade dificuldade) {
+        if (dificuldade == Dificuldade.facil) {
             tempoParaReagir = 180000;
             return;
         }
-        if (dificuldade == 2) {
+        if (dificuldade == Dificuldade.medio) {
             tempoParaReagir = 3000;
             return;
         }
-        if (dificuldade == 3) {
+        if (dificuldade == Dificuldade.dificil) {
             tempoParaReagir = 1000;
             return;
         }
