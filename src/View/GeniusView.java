@@ -53,7 +53,7 @@ public class GeniusView {
 	private void initialize() {
 		frame = new JFrame();
 		JTabbedPane tabbedPane = new JTabbedPane();
-		JPanel telaincialPanel = new JPanel(null);
+		// JPanel telaincialPanel = new JPanel(null);
 
 		frame.setBounds(0, 0, 1440, 900);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -148,109 +148,64 @@ public class GeniusView {
 		frame.getContentPane().add(lbl2jogadores);
 		frame.getContentPane().add(lbl8jogadores);
 
-		JLabel lblbutao = new JLabel("");
-		lblbutao.setIcon(
-				new ImageIcon(this.imagesBasePath + "botão iniciar.png"));
-		lblbutao.setBounds(587, 573, 276, 117);
-		frame.getContentPane().add(lblbutao);
+		// telaincialPanel.add(lblbutao);
+		// telaincialPanel.add(lbltelaFundo);
 
-		JLabel lblCampeonato = new JLabel("");
-		lblCampeonato.setEnabled(false);
-		lblCampeonato.setIcon(
-				new ImageIcon(this.imagesBasePath + "VARIOS JOGADORES.png"));
-		lblCampeonato.setBounds(759, 573, 264, 95);
-		lblCampeonato.setVisible(false);
-		frame.getContentPane().add(lblCampeonato);
-
-		JLabel lblindividual = new JLabel("");
-		lblindividual.setEnabled(false);
-		lblindividual.setIcon(
-				new ImageIcon(this.imagesBasePath + "SOLO BOTAO.png"));
-		lblindividual.setBounds(406, 573, 264, 95);
-		lblindividual.setVisible(false);
-		frame.getContentPane().add(lblindividual);
-
-		JLabel lbltelaFundo = new JLabel();
-		lbltelaFundo
-				.setIcon(new ImageIcon(this.imagesBasePath + "tela.png"));
-		lbltelaFundo.setBounds(0, 0, 1451, 884);
-		frame.getContentPane().add(lbltelaFundo);
-
-		telaincialPanel.add(lblbutao);
-		telaincialPanel.add(lbltelaFundo);
-
-		JPanel copia = new JPanel();
-
-		tabbedPane.setVisible(true);
+		// tabbedPane.setVisible(true);
 		// tabbedPane.addTab("ABA INICIAL", telaincialPanel);
-		tabbedPane.addTab("ABA 2", copia);
+		tabbedPane.addTab("Tela Inicial", new TelaInicial(tabbedPane));
 		tabbedPane.setEnabled(false);
-		tabbedPane.insertTab("string", null, telaincialPanel, "no tip", 0);
-		tabbedPane.remove(copia);
 		frame.setContentPane(tabbedPane);
 
-		lblbutao.addMouseListener(new MouseAdapter() { // colocar som ao clicar o botão
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (e.getSource() != lblbutao) {
-					return;
-				}
-				lblbutao.setEnabled(false);
-				lblbutao.setVisible(false);
-				lblCampeonato.setEnabled(true);
-				lblCampeonato.setVisible(true);
-				lblindividual.setEnabled(true);
-				lblindividual.setVisible(true);
-			}
-		});
+		// lblCampeonato.addMouseListener(new MouseAdapter() { // colocar som ao clicar
+		// o botão
+		// @Override
+		// public void mouseClicked(MouseEvent e) {
+		// if (e.getSource() != lblCampeonato) {
+		// return;
+		// }
+		// lblCampeonato.setEnabled(false);
+		// lblCampeonato.setVisible(false);
+		// lblindividual.setEnabled(false);
+		// lblindividual.setVisible(false);
+		// lbl2jogadores.setEnabled(true);
+		// lbl2jogadores.setVisible(true);
+		// lbl4jogadores.setEnabled(true);
+		// lbl4jogadores.setVisible(true);
+		// lbl8jogadores.setEnabled(true);
+		// lbl8jogadores.setVisible(true);
 
-		lblCampeonato.addMouseListener(new MouseAdapter() { // colocar som ao clicar o botão
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (e.getSource() != lblCampeonato) {
-					return;
-				}
-				lblCampeonato.setEnabled(false);
-				lblCampeonato.setVisible(false);
-				lblindividual.setEnabled(false);
-				lblindividual.setVisible(false);
-				lbl2jogadores.setEnabled(true);
-				lbl2jogadores.setVisible(true);
-				lbl4jogadores.setEnabled(true);
-				lbl4jogadores.setVisible(true);
-				lbl8jogadores.setEnabled(true);
-				lbl8jogadores.setVisible(true);
+		// }
+		// });
 
-			}
-		});
+		// lblindividual.addMouseListener(new MouseAdapter() { // colocar som ao clicar
+		// o botão
+		// @Override
+		// public void mouseClicked(MouseEvent e) {
+		// if (e.getSource() != lblindividual) {
+		// return;
+		// }
+		// lblCampeonato.setEnabled(false);
+		// lblCampeonato.setVisible(false);
+		// lblindividual.setEnabled(false);
+		// lblindividual.setVisible(false);
+		/*
+		 * lbltelaFundo.setIcon(new ImageIcon(
+		 * imagesBasePath + "fundo sem logo.png"));
+		 */
+		// lblLogo.setVisible(true);
+		// lblCadastro.setVisible(true);
+		// lblJogador.setVisible(true);
+		// lblNome.setVisible(true);
+		// lblApelido.setVisible(true);
+		// lblCampeonatoNome.setVisible(true);
+		// textCampeonato.setVisible(true);
+		// textNome.setVisible(true);
+		// textApelido.setVisible(true);
+		// lblProximo.setVisible(true);
 
-		lblindividual.addMouseListener(new MouseAdapter() { // colocar som ao clicar o botão
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (e.getSource() != lblindividual) {
-					return;
-				}
-				lblCampeonato.setEnabled(false);
-				lblCampeonato.setVisible(false);
-				lblindividual.setEnabled(false);
-				lblindividual.setVisible(false);
-				/*
-				 * lbltelaFundo.setIcon(new ImageIcon(
-				 * imagesBasePath + "fundo sem logo.png"));
-				 */
-				lblLogo.setVisible(true);
-				lblCadastro.setVisible(true);
-				lblJogador.setVisible(true);
-				lblNome.setVisible(true);
-				lblApelido.setVisible(true);
-				lblCampeonatoNome.setVisible(true);
-				textCampeonato.setVisible(true);
-				textNome.setVisible(true);
-				textApelido.setVisible(true);
-				lblProximo.setVisible(true);
-
-			}
-		});
+		// }
+		// });
 
 		lbl2jogadores.addMouseListener(new MouseAdapter() { // colocar som ao clicar o botão
 			@Override
@@ -259,8 +214,8 @@ public class GeniusView {
 					return;
 				}
 
-				lblCampeonato.setEnabled(false);
-				lblCampeonato.setVisible(false);
+				// lblCampeonato.setEnabled(false);
+				// lblCampeonato.setVisible(false);
 				lbl2jogadores.setEnabled(false);
 				lbl8jogadores.setEnabled(false);
 				lbl4jogadores.setEnabled(false);
@@ -292,8 +247,8 @@ public class GeniusView {
 					return;
 				}
 
-				lblCampeonato.setEnabled(false);
-				lblCampeonato.setVisible(false);
+				// lblCampeonato.setEnabled(false);
+				// lblCampeonato.setVisible(false);
 				lbl2jogadores.setEnabled(false);
 				lbl8jogadores.setEnabled(false);
 				lbl4jogadores.setEnabled(false);
@@ -325,8 +280,8 @@ public class GeniusView {
 					return;
 				}
 
-				lblCampeonato.setEnabled(false);
-				lblCampeonato.setVisible(false);
+				// lblCampeonato.setEnabled(false);
+				// lblCampeonato.setVisible(false);
 				lbl2jogadores.setEnabled(false);
 				lbl8jogadores.setEnabled(false);
 				lbl4jogadores.setEnabled(false);
