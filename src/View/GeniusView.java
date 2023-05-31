@@ -142,8 +142,7 @@ public class GeniusView {
 		panelSelecaoModo.add(lblTelaFundo2);
 		
 		
-		
-		//PANEL CADASTRO JOGADOR
+		//PAINEL CADASTRO JOGADOR
 		
 		JPanel panelCadastro = new JPanel();
 		frame.getContentPane().add(panelCadastro, "name_170928722915200");
@@ -176,63 +175,25 @@ public class GeniusView {
 		panelCadastro.add(textApelido);
 		
 		
-		JLabel lblSalvar = new JLabel("");
-		lblSalvar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent click) {
-					if(textNome.getText().isEmpty()|| textApelido.getText().isEmpty())
-						JOptionPane.showMessageDialog(lblLogoGenius, "Todos os campos devem ser preenchidos!");
-					else if(jogadores.size() >= qtdJogadores)
-						lblSalvar.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/botao_salvar_maior_desabilitado.png")));
-					else {
-						jogadores.add(new Jogador(""+textNome.getText(), ""+textApelido.getText()));	
-						JOptionPane.showMessageDialog(lblLogoGenius, "Cadastrado com Sucesso!");
-						textNome.setText(null);
-						textApelido.setText(null);
-						numeroJogador = jogadores.size()+1;
-						textJogador.setText(""+numeroJogador);
-					}
-			}
-			public void mouseEntered(MouseEvent e) {
-				if(jogadores.size() >= qtdJogadores)
-					lblSalvar.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/botao_salvar_maior_desabilitado.png")));
-				else
-					lblSalvar.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/botao_salvar_maior_selecionado.png")));
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				if(jogadores.size() >= qtdJogadores)
-					lblSalvar.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/botao_salvar_maior_desabilitado.png")));
-				else
-					lblSalvar.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/botao_salvar_maior.png")));
-			}
-		});
-		lblSalvar.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/botao_salvar_maior.png")));
-		lblSalvar.setBounds(478, 678, 192, 71);
-		panelCadastro.add(lblSalvar);
+		JLabel lblSalvarCadastro = new JLabel("");
+		lblSalvarCadastro.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/botao_salvar_maior.png")));
+		lblSalvarCadastro.setBounds(610, 596, 192, 71);
+		panelCadastro.add(lblSalvarCadastro);
 		
-		JLabel lbCarregar = new JLabel("");
-		lbCarregar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-			
-			public void mouseEntered(MouseEvent e) {
-				lbCarregar.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/botao carregar_selecionado.png")));
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				lbCarregar.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/botao carregar.png")));
-			}
-		});
-		lbCarregar.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/botao carregar.png")));
-		lbCarregar.setBounds(715, 678, 192, 71);
-		panelCadastro.add(lbCarregar);
+		JLabel lbCarregarCadastro = new JLabel("");
+		lbCarregarCadastro.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/botao carregar.png")));
+		lbCarregarCadastro.setBounds(610, 678, 192, 71);
+		panelCadastro.add(lbCarregarCadastro);
 		
 		JLabel lblJogadorTxt = new JLabel("Jogador");
 		lblJogadorTxt.setFont(new Font("Candara", Font.BOLD, 37));
 		lblJogadorTxt.setBounds(602, 379, 136, 46);
 		panelCadastro.add(lblJogadorTxt);
+		
+		JLabel lblAvancarCadastro = new JLabel("");
+		lblAvancarCadastro.setBounds(579, 760, 256, 95);
+		lblAvancarCadastro.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/Avançar_desabilitado.png")));
+		panelCadastro.add(lblAvancarCadastro);
 		
 		textJogador = new JTextField();
 		textJogador.setBackground(new Color(253, 232, 108));
@@ -249,7 +210,7 @@ public class GeniusView {
 		JLabel lblVoltarCadastro = new JLabel("VOLTAR");
 		lblVoltarCadastro.setForeground(Color.RED);
 		lblVoltarCadastro.setFont(new Font("Candara", Font.BOLD, 37));
-		lblVoltarCadastro.setBounds(628, 771, 136, 52);
+		lblVoltarCadastro.setBounds(392, 819, 136, 52);
 		panelCadastro.add(lblVoltarCadastro);
 		
 		JLabel lblCadastro = new JLabel("");
@@ -264,20 +225,14 @@ public class GeniusView {
 		panelCadastro.add(lblTelaFundoSemLogo);
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		//PANEL MULTIPLAYER 
+		//PAINEL MULTIPLAYER 
 		
 		JPanel panelCampeonato = new JPanel();
 		frame.getContentPane().add(panelCampeonato, "name_189379883300700");
 		panelCampeonato.setLayout(null);
 		
 		JLabel lbl2Jogadores = new JLabel("");
+		
 		lbl2Jogadores.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/2 jogadores.png")));
 		lbl2Jogadores.setBounds(298, 651, 264, 95);
 		panelCampeonato.add(lbl2Jogadores);
@@ -304,10 +259,128 @@ public class GeniusView {
 		lblTelaFundo2_1.setBounds(0, 0, 1429, 882);
 		panelCampeonato.add(lblTelaFundo2_1);
 		
+		//PAINEL JOGO
+		
+		JPanel panelJogo = new JPanel();
+		frame.getContentPane().add(panelJogo, "name_254001722167300");
+		panelJogo.setLayout(null);
+		
+		JLabel lblSalvarJogo = new JLabel("");
+		lblSalvarJogo.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/botao_salvar_maior.png")));
+		lblSalvarJogo.setBounds(0, 753, 192, 71);
+		panelJogo.add(lblSalvarJogo);
+		
+		JLabel lblCarregarJogo = new JLabel("");
+		lblCarregarJogo.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/botao carregar.png")));
+		lblCarregarJogo.setBounds(1227, 753, 192, 71);
+		panelJogo.add(lblCarregarJogo);
+		
+		JLabel lblIniciarJogo = new JLabel("");
+		lblIniciarJogo.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/botao inicar.png")));
+		lblIniciarJogo.setBounds(1227, 72, 192, 71);
+		panelJogo.add(lblIniciarJogo);
+		
+		JLabel lblBtnVerde = new JLabel("");
+		lblBtnVerde.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/verde.png")));
+		lblBtnVerde.setBounds(716, 458, 308, 341);
+		panelJogo.add(lblBtnVerde);
+		
+		JLabel lblBtnVermelho = new JLabel("");
+		lblBtnVermelho.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/vermelho.png")));
+		lblBtnVermelho.setBounds(366, 458, 308, 341);
+		panelJogo.add(lblBtnVermelho);
+		
+		JLabel lblBtnAmarelo = new JLabel("");
+		lblBtnAmarelo.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/amarelo.png")));
+		lblBtnAmarelo.setBounds(716, 91, 308, 341);
+		panelJogo.add(lblBtnAmarelo);
+		
+		JLabel lblBtnAzul = new JLabel("");
+		lblBtnAzul.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/azul.png")));
+		lblBtnAzul.setBounds(364, 91, 321, 341);
+		panelJogo.add(lblBtnAzul);
+		
+		JLabel lblBtnCentral_1 = new JLabel("");
+		lblBtnCentral_1.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/icons8-esfera-96 1.png")));
+		lblBtnCentral_1.setBounds(623, 419, 51, 50);
+		panelJogo.add(lblBtnCentral_1);
+		
+		JLabel lblBtnCentral_2 = new JLabel("");
+		lblBtnCentral_2.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/icons8-esfera-96 2.png")));
+		lblBtnCentral_2.setBounds(706, 419, 51, 50);
+		panelJogo.add(lblBtnCentral_2);
+		
+		JLabel lblBtnCentral = new JLabel("");
+		lblBtnCentral.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/Iniciar.png")));
+		lblBtnCentral.setBounds(577, 334, 233, 236);
+		panelJogo.add(lblBtnCentral);
+		
+		JLabel lblFundoGenius = new JLabel("");
+		lblFundoGenius.setHorizontalAlignment(SwingConstants.CENTER);
+		lblFundoGenius.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/genius.png")));
+		lblFundoGenius.setBounds(341, 72, 715, 761);
+		panelJogo.add(lblFundoGenius);
+		
+		JLabel lblTelaFundoJogo = new JLabel("");
+		lblTelaFundoJogo.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/Tela_Fundo_Jogo.png")));
+		lblTelaFundoJogo.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblTelaFundoJogo.setBounds(0, 0, 1429, 893);
+		panelJogo.add(lblTelaFundoJogo);
 		
 		
 		
-		//BOTÕES DE NAVEGAÇÃO
+		//AÇÕES BOTÕES DE OBJETO
+		
+		lblSalvarCadastro.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent click) {
+					if(textNome.getText().isEmpty()|| textApelido.getText().isEmpty())
+						JOptionPane.showMessageDialog(lblLogoGenius, "Todos os campos devem ser preenchidos!");
+					else if(jogadores.size() >= qtdJogadores)
+						lblSalvarCadastro.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/botao_salvar_maior_desabilitado.png")));
+					else {
+						jogadores.add(new Jogador(""+textNome.getText(), ""+textApelido.getText()));	
+						JOptionPane.showMessageDialog(lblLogoGenius, "Cadastrado com Sucesso!");
+						textNome.setText(null);
+						textApelido.setText(null);
+						if(jogadores.size() < qtdJogadores) {
+							numeroJogador = jogadores.size()+1;
+							textJogador.setText(""+numeroJogador);
+						}else {
+							lblAvancarCadastro.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/Avançar.png")));
+							lbCarregarCadastro.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/botao carregar_desabilitado.png")));
+							lblSalvarCadastro.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/botao_salvar_maior_desabilitado.png")));
+						}
+							
+					}
+			}
+			public void mouseEntered(MouseEvent e) {
+				if(jogadores.size() < qtdJogadores)
+					lblSalvarCadastro.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/botao_salvar_maior_selecionado.png")));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				if(jogadores.size() < qtdJogadores)
+					lblSalvarCadastro.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/botao_salvar_maior.png")));
+			}
+		});
+		lbCarregarCadastro.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			}
+			public void mouseEntered(MouseEvent e) {
+				if(jogadores.size() < qtdJogadores)
+					lbCarregarCadastro.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/botao carregar_selecionado.png")));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				if(jogadores.size() < qtdJogadores)
+					lbCarregarCadastro.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/botao carregar.png")));
+			}
+		});
+		
+		
+		//AÇÕES BOTÕES DE NAVEGAÇÃO
 		
 		lblJogar.addMouseListener(new MouseAdapter() {
 			@Override
@@ -325,7 +398,6 @@ public class GeniusView {
 				lblJogar.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/botão iniciar.png")));
 			}
 		});
-		
 		lblVoltarInicio.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -343,7 +415,10 @@ public class GeniusView {
 		lblIndividual.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				jogadores.clear();
 				qtdJogadores = 1;
+				numeroJogador = 1;
+				textJogador.setText(""+numeroJogador);
 				panelSelecaoModo.setVisible(false);
 				panelCadastro.setVisible(true);
 			}
@@ -355,11 +430,115 @@ public class GeniusView {
 				lblIndividual.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/SOLO BOTAO.png")));
 			}
 		});
+		lbl2Jogadores.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				qtdJogadores = 2;
+				if(jogadores.size()<qtdJogadores) {
+					lblAvancarCadastro.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/Avançar_desabilitado.png")));
+					lblSalvarCadastro.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/botao_salvar_maior.png")));
+					lbCarregarCadastro.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/botao carregar.png")));
+				}else {
+					lblAvancarCadastro.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/Avançar.png")));
+					lbCarregarCadastro.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/botao carregar_desabilitado.png")));
+					lblSalvarCadastro.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/botao_salvar_maior_desabilitado.png")));
+				}
+				panelCampeonato.setVisible(false);
+				panelCadastro.setVisible(true);
+			}
+			public void mouseEntered(MouseEvent e) {
+				lbl2Jogadores.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/2 jogadores_selecionado.png")));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				lbl2Jogadores.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/2 jogadores.png")));
+			}
+		});
+		lbl4Jogadores.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				qtdJogadores = 4;
+				if(jogadores.size()<qtdJogadores) {
+					lblAvancarCadastro.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/Avançar_desabilitado.png")));
+					lblSalvarCadastro.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/botao_salvar_maior.png")));
+					lbCarregarCadastro.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/botao carregar.png")));
+				}else {
+					lblAvancarCadastro.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/Avançar.png")));
+					lbCarregarCadastro.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/botao carregar_desabilitado.png")));
+					lblSalvarCadastro.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/botao_salvar_maior_desabilitado.png")));
+				}
+				panelCampeonato.setVisible(false);
+				panelCadastro.setVisible(true);
+			}
+			public void mouseEntered(MouseEvent e) {
+				lbl4Jogadores.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/4 jogadores_selecionado.png")));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				lbl4Jogadores.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/4 jogadores.png")));
+			}
+		});
+		lbl8Jogadores.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				qtdJogadores = 8;
+				if(jogadores.size()<qtdJogadores) {
+					lblAvancarCadastro.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/Avançar_desabilitado.png")));
+					lblSalvarCadastro.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/botao_salvar_maior.png")));
+					lbCarregarCadastro.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/botao carregar.png")));
+				}else {
+					lblAvancarCadastro.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/Avançar.png")));
+					lbCarregarCadastro.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/botao carregar_desabilitado.png")));
+					lblSalvarCadastro.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/botao_salvar_maior_desabilitado.png")));
+				}
+				panelCampeonato.setVisible(false);
+				panelCadastro.setVisible(true);
+			}
+			public void mouseEntered(MouseEvent e) {
+				lbl8Jogadores.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/8 jogadores_selecionado.png")));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				lbl8Jogadores.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/8 jogadores.png")));
+			}
+		});
+		lblAvancarCadastro.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(jogadores.size() == qtdJogadores) {
+					clip.start();
+					panelCadastro.setVisible(false);
+					panelJogo.setVisible(true);
+				}
+			}
+			public void mouseEntered(MouseEvent e) {
+				if(jogadores.size() == qtdJogadores)
+					lblAvancarCadastro.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/Avançar_selecionado.png")));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				if(jogadores.size() == qtdJogadores)
+					lblAvancarCadastro.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/Avançar.png")));
+
+			}
+		});
 		lblVoltarCadastro.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				panelCadastro.setVisible(false);
-				panelSelecaoModo.setVisible(true);
+				int opcao = JOptionPane.showConfirmDialog(lblLogoGenius, "Deseja descartar o(s) jogador(es) cadastrado(s)?");
+				if(opcao== 0) {
+					jogadores.clear();
+					numeroJogador = 1;
+					textJogador.setText(""+numeroJogador);
+					lbCarregarCadastro.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/botao carregar.png")));
+					lblSalvarCadastro.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/botao_salvar_maior.png")));
+					lblAvancarCadastro.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/Avançar_desabilitado.png")));
+					panelCadastro.setVisible(false);
+					panelSelecaoModo.setVisible(true);
+				}else if(opcao == 1) {
+					panelCadastro.setVisible(false);
+					panelSelecaoModo.setVisible(true);
+				}
 			}
 			/*public void mouseEntered(MouseEvent e) {
 			lblVoltarMultiplayer.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/VARIOS JOGADORES_selecionado.png")));
@@ -369,7 +548,6 @@ public class GeniusView {
 				lblVoltarMultiplayer.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/VARIOS JOGADORES.png")));
 			}*/
 		});
-		
 		lblCampeonato.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -384,20 +562,8 @@ public class GeniusView {
 				lblCampeonato.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/VARIOS JOGADORES.png")));
 			}
 		});
-		lblVoltarMultiplayer.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				panelCampeonato.setVisible(false);
-				panelSelecaoModo.setVisible(true);
-			}
-			/*public void mouseEntered(MouseEvent e) {
-				lblVoltarMultiplayer.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/VARIOS JOGADORES_selecionado.png")));
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				lblVoltarMultiplayer.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/VARIOS JOGADORES.png")));
-			}*/
-		});
+		
+		//AÇÕES BOTÕES DE JOGO
 		
 	}
 }
