@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
+import java.util.ArrayList;
 import javax.sound.sampled.*;
 import java.awt.Font;
 import javax.swing.JTextField;
@@ -35,14 +36,16 @@ public class GeniusView {
 	private JFrame frame;
 	private JTextField textNome;
 	private JTextField textApelido;
-	private JTextField textFCampeonato;
 	private Genius jogo;
-	private List<Jogador> jogadores;
+	private List<Jogador> jogadores = new ArrayList<Jogador>();
 	private Data dataAtual;
 	private Calendar calendario;
 	private String soundName = "C:\\Users\\caian\\git\\INF-008-genius\\src\\sfx\\MenuBotão.wav";    
 	private AudioInputStream audioInputStream;
 	private Clip clip;
+	private JTextField textJogador;
+	private Integer numeroJogador;
+	private int qtdJogadores;
 	
 	/**
 	 * Launch the application.
@@ -142,90 +145,129 @@ public class GeniusView {
 		
 		//PANEL CADASTRO JOGADOR
 		
-		JPanel panelIndividualCadastro = new JPanel();
-		frame.getContentPane().add(panelIndividualCadastro, "name_170928722915200");
-		panelIndividualCadastro.setLayout(null);
+		JPanel panelCadastro = new JPanel();
+		frame.getContentPane().add(panelCadastro, "name_170928722915200");
+		panelCadastro.setLayout(null);
 		
 		JLabel lblLogoGenius = new JLabel("");
 		lblLogoGenius.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/geniuslogo.png")));
-		lblLogoGenius.setBounds(346, 173, 723, 268);
-		panelIndividualCadastro.add(lblLogoGenius);
+		lblLogoGenius.setBounds(332, 173, 723, 268);
+		panelCadastro.add(lblLogoGenius);
 		
 		JLabel lblNomeTxt = new JLabel("Nome: ");
 		lblNomeTxt.setFont(new Font("Candara", Font.BOLD, 37));
 		lblNomeTxt.setBounds(403, 452, 113, 46);
-		panelIndividualCadastro.add(lblNomeTxt);
+		panelCadastro.add(lblNomeTxt);
 		
 		textNome = new JTextField();
 		textNome.setFont(new Font("Candara", Font.BOLD, 37));
 		textNome.setBounds(526, 452, 441, 33);
-		panelIndividualCadastro.add(textNome);
-		textNome.setColumns(10);
+		panelCadastro.add(textNome);
 		
 		JLabel lblApelidoTxt = new JLabel("Apelido:");
 		lblApelidoTxt.setFont(new Font("Candara", Font.BOLD, 37));
 		lblApelidoTxt.setBounds(403, 541, 142, 46);
-		panelIndividualCadastro.add(lblApelidoTxt);
+		panelCadastro.add(lblApelidoTxt);
 		
 		textApelido = new JTextField();
 		textApelido.setFont(new Font("Candara", Font.BOLD, 37));
 		textApelido.setColumns(10);
 		textApelido.setBounds(555, 541, 412, 33);
-		panelIndividualCadastro.add(textApelido);
-		
-		JLabel lblCampeonatoTXT = new JLabel("Campeonato:");
-		lblCampeonatoTXT.setFont(new Font("Candara", Font.BOLD, 37));
-		lblCampeonatoTXT.setBounds(403, 620, 218, 46);
-		panelIndividualCadastro.add(lblCampeonatoTXT);
-		
-		textFCampeonato = new JTextField();
-		textFCampeonato.setFont(new Font("Candara", Font.BOLD, 37));
-		textFCampeonato.setColumns(10);
-		textFCampeonato.setBounds(622, 620, 345, 33);
-		panelIndividualCadastro.add(textFCampeonato);
+		panelCadastro.add(textApelido);
 		
 		
 		JLabel lblSalvar = new JLabel("");
 		lblSalvar.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
-				clip.start();
-				try {
-					if(lblNomeTxt == null || lblApelidoTxt == null || lblCampeonatoTXT == null)
-						throw new Exception();
-					jogadores.add(new Jogador(""+lblNomeTxt, ""+lblApelidoTxt));	
-				}catch(Exception ex) {
-					JOptionPane.showMessageDialog(lblLogoGenius, "Todos os campos devem ser preenchidos!");
-				}
+			public void mouseClicked(MouseEvent click) {
+					if(textNome.getText().isEmpty()|| textApelido.getText().isEmpty())
+						JOptionPane.showMessageDialog(lblLogoGenius, "Todos os campos devem ser preenchidos!");
+					else if(jogadores.size() >= qtdJogadores)
+						lblSalvar.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/botao_salvar_maior_desabilitado.png")));
+					else {
+						jogadores.add(new Jogador(""+textNome.getText(), ""+textApelido.getText()));	
+						JOptionPane.showMessageDialog(lblLogoGenius, "Cadastrado com Sucesso!");
+						textNome.setText(null);
+						textApelido.setText(null);
+						numeroJogador = jogadores.size()+1;
+						textJogador.setText(""+numeroJogador);
+					}
 			}
 			public void mouseEntered(MouseEvent e) {
-				lblSalvar.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/Salvar_selecionado.png")));
+				if(jogadores.size() >= qtdJogadores)
+					lblSalvar.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/botao_salvar_maior_desabilitado.png")));
+				else
+					lblSalvar.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/botao_salvar_maior_selecionado.png")));
 			}
 			@Override
 			public void mouseExited(MouseEvent e) {
-				lblSalvar.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/Salvar.png")));
+				if(jogadores.size() >= qtdJogadores)
+					lblSalvar.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/botao_salvar_maior_desabilitado.png")));
+				else
+					lblSalvar.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/botao_salvar_maior.png")));
 			}
 		});
-		lblSalvar.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/Salvar.png")));
-		lblSalvar.setBounds(627, 651, 120, 71);
-		panelIndividualCadastro.add(lblSalvar);
+		lblSalvar.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/botao_salvar_maior.png")));
+		lblSalvar.setBounds(478, 678, 192, 71);
+		panelCadastro.add(lblSalvar);
+		
+		JLabel lbCarregar = new JLabel("");
+		lbCarregar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			}
+			
+			public void mouseEntered(MouseEvent e) {
+				lbCarregar.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/botao carregar_selecionado.png")));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				lbCarregar.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/botao carregar.png")));
+			}
+		});
+		lbCarregar.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/botao carregar.png")));
+		lbCarregar.setBounds(715, 678, 192, 71);
+		panelCadastro.add(lbCarregar);
+		
+		JLabel lblJogadorTxt = new JLabel("Jogador");
+		lblJogadorTxt.setFont(new Font("Candara", Font.BOLD, 37));
+		lblJogadorTxt.setBounds(602, 379, 136, 46);
+		panelCadastro.add(lblJogadorTxt);
+		
+		textJogador = new JTextField();
+		textJogador.setBackground(new Color(253, 232, 108));
+		textJogador.setFont(new Font("Candara", Font.BOLD, 37));
+		textJogador.setEditable(false);
+		textJogador.setBounds(736, 385, 32, 33);
+		textJogador.setBorder(null);
+		panelCadastro.add(textJogador);
+		textJogador.setColumns(10); 
+		if(jogadores.isEmpty() == true)
+			numeroJogador = 1;
+		textJogador.setText(""+numeroJogador);
 		
 		JLabel lblVoltarCadastro = new JLabel("VOLTAR");
 		lblVoltarCadastro.setForeground(Color.RED);
 		lblVoltarCadastro.setFont(new Font("Candara", Font.BOLD, 37));
 		lblVoltarCadastro.setBounds(628, 771, 136, 52);
-		panelIndividualCadastro.add(lblVoltarCadastro);
+		panelCadastro.add(lblVoltarCadastro);
 		
 		JLabel lblCadastro = new JLabel("");
 		lblCadastro.setBounds(369, 357, 660, 525);
 		lblCadastro.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/cadastro.png")));
-		panelIndividualCadastro.add(lblCadastro);
+		panelCadastro.add(lblCadastro);
 		
 		JLabel lblTelaFundoSemLogo = new JLabel("");
 		lblTelaFundoSemLogo.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblTelaFundoSemLogo.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/fundo sem logo.png")));
 		lblTelaFundoSemLogo.setBounds(0, 0, 1429, 893);
-		panelIndividualCadastro.add(lblTelaFundoSemLogo);
+		panelCadastro.add(lblTelaFundoSemLogo);
+		
+		
+		
+		
+		
+		
 		
 		
 		
@@ -287,7 +329,6 @@ public class GeniusView {
 		lblVoltarInicio.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				clip.start();
 				panelSelecaoModo.setVisible(false);
 				panelInicial.setVisible(true);
 			}
@@ -302,9 +343,9 @@ public class GeniusView {
 		lblIndividual.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				clip.start();
+				qtdJogadores = 1;
 				panelSelecaoModo.setVisible(false);
-				panelIndividualCadastro.setVisible(true);
+				panelCadastro.setVisible(true);
 			}
 			public void mouseEntered(MouseEvent e) {
 				lblIndividual.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/SOLO BOTAO_selecionado.png")));
@@ -317,8 +358,7 @@ public class GeniusView {
 		lblVoltarCadastro.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				clip.start();
-				panelIndividualCadastro.setVisible(false);
+				panelCadastro.setVisible(false);
 				panelSelecaoModo.setVisible(true);
 			}
 			/*public void mouseEntered(MouseEvent e) {
@@ -333,7 +373,6 @@ public class GeniusView {
 		lblCampeonato.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				clip.start();
 				panelSelecaoModo.setVisible(false);
 				panelCampeonato.setVisible(true);
 			}
@@ -348,7 +387,6 @@ public class GeniusView {
 		lblVoltarMultiplayer.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				clip.start();
 				panelCampeonato.setVisible(false);
 				panelSelecaoModo.setVisible(true);
 			}
