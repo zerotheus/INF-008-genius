@@ -10,9 +10,7 @@ import java.awt.BorderLayout;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 
-import Negocio.Data;
-import Negocio.Genius;
-import Negocio.Jogador;
+import Negocio.*;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -22,13 +20,15 @@ import javax.swing.JPanel;
 import java.awt.CardLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.Date;
-import java.sql.Time;
+import java.io.File;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
+import javax.sound.sampled.*;
 import java.awt.Font;
 import javax.swing.JTextField;
 import java.awt.Color;
+
 
 public class GeniusView {
 
@@ -40,7 +40,10 @@ public class GeniusView {
 	private List<Jogador> jogadores;
 	private Data dataAtual;
 	private Calendar calendario;
-
+	private String soundName = "C:\\Users\\caian\\git\\INF-008-genius\\src\\sfx\\MenuBotão.wav";    
+	private AudioInputStream audioInputStream;
+	private Clip clip;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -59,8 +62,9 @@ public class GeniusView {
 
 	/**
 	 * Create the application.
+	 * @throws LineUnavailableException 
 	 */
-	public GeniusView() {
+	public GeniusView() throws LineUnavailableException {
 		initialize();
 	}
 
@@ -68,13 +72,26 @@ public class GeniusView {
 	 * Initialize the contents of the frame.
 	 */
 	@SuppressWarnings({ "static-access" })
-	private void initialize() {
+	private void initialize() throws LineUnavailableException {
 		
 		dataAtual = new Data(calendario.DAY_OF_MONTH, calendario.MONTH, calendario.YEAR);
 		frame = new JFrame();
 		frame.setBounds(100, 100, 1445, 921);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new CardLayout(0, 0));
+		try {
+			audioInputStream = AudioSystem.getAudioInputStream(new File((soundName)));//"/sfx/MenuBotão.wav"
+		} catch (UnsupportedAudioFileException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		clip = AudioSystem.getClip();
+		try {
+			clip.open(audioInputStream);
+		} catch (LineUnavailableException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		//PANEL INICIAL
 		
@@ -172,13 +189,14 @@ public class GeniusView {
 		lblSalvar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				clip.start();
 				try {
 					if(lblNomeTxt == null || lblApelidoTxt == null || lblCampeonatoTXT == null)
 						throw new Exception();
 					jogadores.add(new Jogador(""+lblNomeTxt, ""+lblApelidoTxt));	
 				}catch(Exception ex) {
 					JOptionPane.showMessageDialog(lblLogoGenius, "Todos os campos devem ser preenchidos!");
-				}	
+				}
 			}
 			public void mouseEntered(MouseEvent e) {
 				lblSalvar.setIcon(new ImageIcon(GeniusView.class.getResource("/imagens/Salvar_selecionado.png")));
@@ -252,6 +270,7 @@ public class GeniusView {
 		lblJogar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				clip.start();
 				panelInicial.setVisible(false);
 				panelSelecaoModo.setVisible(true);
 			}
@@ -268,6 +287,7 @@ public class GeniusView {
 		lblVoltarInicio.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				clip.start();
 				panelSelecaoModo.setVisible(false);
 				panelInicial.setVisible(true);
 			}
@@ -282,6 +302,7 @@ public class GeniusView {
 		lblIndividual.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				clip.start();
 				panelSelecaoModo.setVisible(false);
 				panelIndividualCadastro.setVisible(true);
 			}
@@ -296,6 +317,7 @@ public class GeniusView {
 		lblVoltarCadastro.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				clip.start();
 				panelIndividualCadastro.setVisible(false);
 				panelSelecaoModo.setVisible(true);
 			}
@@ -311,6 +333,7 @@ public class GeniusView {
 		lblCampeonato.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				clip.start();
 				panelSelecaoModo.setVisible(false);
 				panelCampeonato.setVisible(true);
 			}
@@ -325,6 +348,7 @@ public class GeniusView {
 		lblVoltarMultiplayer.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				clip.start();
 				panelCampeonato.setVisible(false);
 				panelSelecaoModo.setVisible(true);
 			}
