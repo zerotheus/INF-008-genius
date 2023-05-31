@@ -19,7 +19,7 @@ public class TelaInicial extends JPanel {
         basePath = new File("").getAbsolutePath() + "\\";
         imagesBasePath = basePath + new File("src\\imagens").getPath() + "\\";
 
-        JLabel lblbutao = new JLabel("");
+        JLabel lblbutao = new JLabel();
         lblbutao.setIcon(
                 new ImageIcon(this.imagesBasePath + "botão iniciar.png"));
         lblbutao.setBounds(587, 573, 276, 117);
