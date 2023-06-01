@@ -42,10 +42,22 @@ public class TeladeSelecaoModo extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
 
-                JPanel novoJPanel = new JPanel();
+                JPanel novoJPanel = new TelaIndividual(tabbedPane);
                 tabbedPane.insertTab("Individual", null, novoJPanel, TOOL_TIP_TEXT_KEY, 1);
                 tabbedPane.removeTabAt(0);
+
             }
+        });
+
+        lblCampeonato.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+                JPanel novoJPanel = new TelaCampeonato(tabbedPane);
+                tabbedPane.insertTab("Campeonato", null, novoJPanel, TOOL_TIP_TEXT_KEY, 1);
+                tabbedPane.removeTabAt(0);
+            }
+
         });
 
     }
