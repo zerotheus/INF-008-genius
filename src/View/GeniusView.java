@@ -1,8 +1,6 @@
 package View;
 
-import java.awt.CardLayout;
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -147,65 +145,9 @@ public class GeniusView {
 		lbl2jogadores.setVisible(false);
 		frame.getContentPane().add(lbl2jogadores);
 		frame.getContentPane().add(lbl8jogadores);
-
-		// telaincialPanel.add(lblbutao);
-		// telaincialPanel.add(lbltelaFundo);
-
-		// tabbedPane.setVisible(true);
-		// tabbedPane.addTab("ABA INICIAL", telaincialPanel);
 		tabbedPane.addTab("Tela Inicial", new TelaInicial(tabbedPane));
 		tabbedPane.setEnabled(false);
 		frame.setContentPane(tabbedPane);
-
-		// lblCampeonato.addMouseListener(new MouseAdapter() { // colocar som ao clicar
-		// o botão
-		// @Override
-		// public void mouseClicked(MouseEvent e) {
-		// if (e.getSource() != lblCampeonato) {
-		// return;
-		// }
-		// lblCampeonato.setEnabled(false);
-		// lblCampeonato.setVisible(false);
-		// lblindividual.setEnabled(false);
-		// lblindividual.setVisible(false);
-		// lbl2jogadores.setEnabled(true);
-		// lbl2jogadores.setVisible(true);
-		// lbl4jogadores.setEnabled(true);
-		// lbl4jogadores.setVisible(true);
-		// lbl8jogadores.setEnabled(true);
-		// lbl8jogadores.setVisible(true);
-
-		// }
-		// });
-
-		// lblindividual.addMouseListener(new MouseAdapter() { // colocar som ao clicar
-		// o botão
-		// @Override
-		// public void mouseClicked(MouseEvent e) {
-		// if (e.getSource() != lblindividual) {
-		// return;
-		// }
-		// lblCampeonato.setEnabled(false);
-		// lblCampeonato.setVisible(false);
-		// lblindividual.setEnabled(false);
-		// lblindividual.setVisible(false);
-		/*
-		 * lbltelaFundo.setIcon(new ImageIcon(
-		 * imagesBasePath + "fundo sem logo.png"));
-		 */
-		// lblLogo.setVisible(true);
-		// lblCadastro.setVisible(true);
-		// lblJogador.setVisible(true);
-		// lblNome.setVisible(true);
-		// lblApelido.setVisible(true);
-		// lblCampeonatoNome.setVisible(true);
-		// textCampeonato.setVisible(true);
-		// textNome.setVisible(true);
-		// textApelido.setVisible(true);
-		// lblProximo.setVisible(true);
-
-		// }
-		// });
 
 		lbl2jogadores.addMouseListener(new MouseAdapter() { // colocar som ao clicar o botão
 			@Override
@@ -214,18 +156,12 @@ public class GeniusView {
 					return;
 				}
 
-				// lblCampeonato.setEnabled(false);
-				// lblCampeonato.setVisible(false);
 				lbl2jogadores.setEnabled(false);
 				lbl8jogadores.setEnabled(false);
 				lbl4jogadores.setEnabled(false);
 				lbl2jogadores.setVisible(false);
 				lbl8jogadores.setVisible(false);
 				lbl4jogadores.setVisible(false);
-				/*
-				 * lbltelaFundo.setIcon(new ImageIcon(
-				 * imagesBasePath + "fundo sem logo.png"));
-				 */
 				lblLogo.setVisible(true);
 				lblCadastro.setVisible(true);
 				lblJogador.setVisible(true);
@@ -247,18 +183,12 @@ public class GeniusView {
 					return;
 				}
 
-				// lblCampeonato.setEnabled(false);
-				// lblCampeonato.setVisible(false);
 				lbl2jogadores.setEnabled(false);
 				lbl8jogadores.setEnabled(false);
 				lbl4jogadores.setEnabled(false);
 				lbl2jogadores.setVisible(false);
 				lbl8jogadores.setVisible(false);
 				lbl4jogadores.setVisible(false);
-				/*
-				 * lbltelaFundo.setIcon(new ImageIcon(
-				 * imagesBasePath + "fundo sem logo.png"));
-				 */
 				lblLogo.setVisible(true);
 				lblCadastro.setVisible(true);
 				lblJogador.setVisible(true);
@@ -280,18 +210,12 @@ public class GeniusView {
 					return;
 				}
 
-				// lblCampeonato.setEnabled(false);
-				// lblCampeonato.setVisible(false);
 				lbl2jogadores.setEnabled(false);
 				lbl8jogadores.setEnabled(false);
 				lbl4jogadores.setEnabled(false);
 				lbl2jogadores.setVisible(false);
 				lbl8jogadores.setVisible(false);
 				lbl4jogadores.setVisible(false);
-				/*
-				 * lbltelaFundo.setIcon(new ImageIcon(
-				 * imagesBasePath + "fundo sem logo.png"));
-				 */
 				lblLogo.setVisible(true);
 				lblCadastro.setVisible(true);
 				lblJogador.setVisible(true);
