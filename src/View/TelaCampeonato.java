@@ -69,8 +69,8 @@ public class TelaCampeonato extends JPanel {
 
                 JLabel lblCadastro = new JLabel("");
                 lblCadastro.setIcon(
-                                new ImageIcon(this.imagesBasePath + "cadastro.png"));
-                lblCadastro.setBounds(406, 330, 662, 531);
+                        new ImageIcon(this.imagesBasePath + "cadastro.png"));
+                lblCadastro.setBounds(430, 339, 662, 531);
                 lblCadastro.setVisible(true);
 
                 JLabel lblLogo = new JLabel("");

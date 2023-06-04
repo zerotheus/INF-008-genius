@@ -67,11 +67,14 @@ public class TelaIndividual extends JPanel {
                 lblCampeonatoNome.setBounds(482, 436, 211, 46);
                 lblCampeonatoNome.setVisible(true);
 
+
                 JLabel lblCadastro = new JLabel("");
                 lblCadastro.setIcon(
-                                new ImageIcon(this.imagesBasePath + "cadastro.png"));
-                lblCadastro.setBounds(406, 330, 662, 531);
+                        new ImageIcon(this.imagesBasePath + "cadastro.png"));
+                lblCadastro.setBounds(430, 339, 662, 531);
                 lblCadastro.setVisible(true);
+
+
 
                 JLabel lblLogo = new JLabel("");
                 lblLogo.setIcon(
