@@ -50,8 +50,8 @@ public class TeladeSelecaoModo extends MyJPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
 
-                JPanel novoJPanel = new TelaCampeonato(tabbedPane);
-                tabbedPane.insertTab("Campeonato", null, novoJPanel, TOOL_TIP_TEXT_KEY, 1);
+                JPanel novoJPanel = new TelaCampeonatoSelecao(tabbedPane);
+                tabbedPane.insertTab("CampeonatoSelecao", null, novoJPanel, TOOL_TIP_TEXT_KEY, 1);
                 tabbedPane.removeTabAt(0);
             }
 
