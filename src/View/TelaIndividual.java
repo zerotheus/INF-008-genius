@@ -11,6 +11,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import Negocio.Genius;
+import Negocio.Jogador;
+
 public class TelaIndividual extends MyJPanel {
 
 	TelaIndividual(JTabbedPane tabbedPane) {
@@ -86,8 +89,11 @@ public class TelaIndividual extends MyJPanel {
 		lblProximo.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-
-				JPanel teladeJogo = new TelaJogo();
+				// TODO validar campos
+				Genius jogo = new Genius("Teste");
+				Jogador jogador = new Jogador("Irineu", "Sla");
+				jogo.adicionaJogador(jogador);
+				JPanel teladeJogo = new TelaJogo(tabbedPane, jogo);
 				tabbedPane.insertTab("Genius", null, teladeJogo, TOOL_TIP_TEXT_KEY, 1);
 				tabbedPane.removeTabAt(0);
 			}

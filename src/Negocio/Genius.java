@@ -26,7 +26,7 @@ public class Genius {
         this.tempoParaReagir = tempoParaReagir;
     }
 
-    public Genius(String titulodoCampeonato, int dificuldade) {
+    public Genius(String titulodoCampeonato) {
         data = new Data(LocalDateTime.now().getDayOfMonth(), LocalDateTime.now().getMonthValue(),
                 LocalDateTime.now().getYear());
         this.titulodoCampeonato = titulodoCampeonato;

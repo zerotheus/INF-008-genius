@@ -4,6 +4,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+
+import Negocio.Genius;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -15,8 +18,9 @@ public class TelaJogo extends MyJPanel {
 
 	private final String imagensPath;
 	private Clock clock = Clock.systemDefaultZone();
+	private Genius jogo;
 
-	public TelaJogo() {
+	public TelaJogo(JTabbedPane tabbedPane, Genius jogo) {
 		super();
 		imagensPath = this.getImagesPath();
 		this.setLayout(null);
@@ -25,15 +29,14 @@ public class TelaJogo extends MyJPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				lblAzul.setIcon(new ImageIcon(imagensPath + "azul branco.png"));
-				final long mudancadecor = clock.millis() + 250;
-				while (mudancadecor > clock.millis()) {
-					System.out.println("Millis " + mudancadecor);
-					System.out.println("clock millis" + clock.millis());
-				}
-				if (mudancadecor < clock.millis()) {
-					lblAzul.setIcon(new ImageIcon(imagensPath + "azul.png"));
-
-				}
+				new java.util.Timer().schedule(
+						new java.util.TimerTask() {
+							@Override
+							public void run() {
+								lblAzul.setIcon(new ImageIcon(imagensPath + "azul.png"));
+							}
+						},
+						250);
 			}
 		});
 
@@ -46,6 +49,14 @@ public class TelaJogo extends MyJPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				lblVermelho.setIcon(new ImageIcon(imagensPath + "vermelho branco.png"));
+				new java.util.Timer().schedule(
+						new java.util.TimerTask() {
+							@Override
+							public void run() {
+								lblVermelho.setIcon(new ImageIcon(imagensPath + "vermelho 1.png"));
+							}
+						},
+						250);
 			}
 		});
 		lblVermelho.setIcon(new ImageIcon(this.getImagesPath() + "vermelho 1.png"));
@@ -57,6 +68,14 @@ public class TelaJogo extends MyJPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				lblAmarelo.setIcon(new ImageIcon(imagensPath + "amarelo branco.png"));
+				new java.util.Timer().schedule(
+						new java.util.TimerTask() {
+							@Override
+							public void run() {
+								lblAmarelo.setIcon(new ImageIcon(imagensPath + "amarelo 1.png"));
+							}
+						},
+						250);
 			}
 		});
 		lblAmarelo.setIcon(new ImageIcon(this.getImagesPath() + "amarelo 1.png"));
@@ -68,6 +87,14 @@ public class TelaJogo extends MyJPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				lblVerde.setIcon(new ImageIcon(imagensPath + "verde branco.png"));
+				new java.util.Timer().schedule(
+						new java.util.TimerTask() {
+							@Override
+							public void run() {
+								lblVerde.setIcon(new ImageIcon(imagensPath + "verde 1.png"));
+							}
+						},
+						250);
 			}
 		});
 		lblVerde.setIcon(new ImageIcon(this.getImagesPath() + "verde 1.png"));
@@ -89,18 +116,13 @@ public class TelaJogo extends MyJPanel {
 		this.add(btnSalvar);
 		btnSalvar.setVisible(false);
 
-		JButton btnIniciar = new JButton("");
-		btnIniciar.setBounds(1223, 89, 173, 57);
-		this.add(btnIniciar);
-		btnIniciar.setVisible(false);
-
 		JLabel lblPontos = new JLabel("");
 		lblPontos.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 34));
 		lblPontos.setForeground(new Color(255, 255, 255));
 		lblPontos.setBounds(175, 589, 67, 57);
 		this.add(lblPontos);
 
-		JLabel lblNomeJogador = new JLabel("");
+		JLabel lblNomeJogador = new JLabel(jogo.getJogadorAtual().getApelido());
 		lblNomeJogador.setForeground(new Color(255, 255, 255));
 		lblNomeJogador.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 22));
 		lblNomeJogador.setBounds(95, 221, 241, 39);
@@ -110,6 +132,22 @@ public class TelaJogo extends MyJPanel {
 		lblFundoJogo.setIcon(new ImageIcon(this.getImagesPath() + "fundojOGO.png"));
 		lblFundoJogo.setBounds(0, 0, 1444, 881);
 		this.add(lblFundoJogo);
+
+		JLabel btnIniciar = new JLabel("");
+		btnIniciar.setBounds(1223, 89, 173, 55);
+		this.add(btnIniciar);
+		btnIniciar.setEnabled(true);
+		btnIniciar.setVisible(true);
+
+		btnIniciar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				System.out.println("lcick");
+				JPanel telaPlacar = new TelaPlacar(tabbedPane, jogo);
+				tabbedPane.insertTab("Genius", null, telaPlacar, TOOL_TIP_TEXT_KEY, 1);
+				tabbedPane.removeTabAt(0);
+			}
+		});
 
 	}
 
