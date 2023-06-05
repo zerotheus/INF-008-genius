@@ -9,22 +9,19 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-public class TeladeSelecaoModo extends JPanel {
+public class TeladeSelecaoModo extends MyJPanel {
 
-    private final String basePath;
-    private final String imagesBasePath;
     private JLabel lblTeladeFundo;
 
     public TeladeSelecaoModo(JTabbedPane tabbedPane) {
+        super();
         this.setLayout(null);
-        basePath = new File("").getAbsolutePath() + "\\";
-        imagesBasePath = basePath + new File("src\\imagens").getPath() + "\\";
         lblTeladeFundo = new JLabeldateladeFundo();
 
         JLabel lblCampeonato = new JLabel();
         lblCampeonato.setEnabled(true);
         lblCampeonato.setIcon(
-                new ImageIcon(this.imagesBasePath + "VARIOS JOGADORES.png"));
+                new ImageIcon(this.getImagesPath() + "VARIOS JOGADORES.png"));
         lblCampeonato.setBounds(759, 573, 264, 95);
         lblCampeonato.setVisible(true);
         this.add(lblCampeonato);
@@ -32,7 +29,7 @@ public class TeladeSelecaoModo extends JPanel {
         JLabel lblindividual = new JLabel();
         lblindividual.setEnabled(true);
         lblindividual.setIcon(
-                new ImageIcon(this.imagesBasePath + "SOLO BOTAO.png"));
+                new ImageIcon(this.getImagesPath() + "SOLO BOTAO.png"));
         lblindividual.setBounds(406, 573, 264, 95);
         lblindividual.setVisible(true);
         this.add(lblindividual);

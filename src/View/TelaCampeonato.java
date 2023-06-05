@@ -9,14 +9,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-public class TelaCampeonato extends JPanel {
-        private final String basePath;
-        private final String imagesBasePath;
+public class TelaCampeonato extends MyJPanel {
 
         TelaCampeonato(JTabbedPane tabbedPane) {
+                super();
                 this.setLayout(null);
-                basePath = new File("").getAbsolutePath() + "\\";
-                imagesBasePath = basePath + new File("src\\imagens").getPath() + "\\";
 
                 // CAMPO DE CADASTRO
                 JLabel lblJogador = new JLabel("Jogador");
@@ -31,7 +28,7 @@ public class TelaCampeonato extends JPanel {
 
                 JLabel lblProximo = new JLabel("");
                 lblProximo
-                                .setIcon(new ImageIcon(this.imagesBasePath + "Salvar.png"));
+                                .setIcon(new ImageIcon(this.getImagesPath() + "Salvar.png"));
                 lblProximo.setBounds(680, 771, 133, 68);
                 lblProximo.setVisible(true);
 
@@ -69,13 +66,13 @@ public class TelaCampeonato extends JPanel {
 
                 JLabel lblCadastro = new JLabel("");
                 lblCadastro.setIcon(
-                        new ImageIcon(this.imagesBasePath + "cadastro.png"));
+                                new ImageIcon(this.getImagesPath() + "cadastro.png"));
                 lblCadastro.setBounds(430, 339, 662, 531);
                 lblCadastro.setVisible(true);
 
                 JLabel lblLogo = new JLabel("");
                 lblLogo.setIcon(
-                                new ImageIcon(this.imagesBasePath + "geniuslogo.png"));
+                                new ImageIcon(this.getImagesPath() + "geniuslogo.png"));
                 lblLogo.setBounds(395, 164, 734, 247);
                 lblLogo.setVisible(true);
 

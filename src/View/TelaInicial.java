@@ -8,20 +8,16 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-public class TelaInicial extends JPanel {
-    private final String basePath;
-    private final String imagesBasePath;
+public class TelaInicial extends MyJPanel {
     private JLabel lbltelaFundo;
 
     public TelaInicial(JTabbedPane tabbedPane) {
 
         this.setLayout(null);
-        basePath = new File("").getAbsolutePath() + "\\";
-        imagesBasePath = basePath + new File("src\\imagens").getPath() + "\\";
 
         JLabel lblbutao = new JLabel("");
         lblbutao.setIcon(
-                new ImageIcon(this.imagesBasePath + "botão iniciar.png"));
+                new ImageIcon(this.getImagesPath() + "botão iniciar.png"));
         lblbutao.setBounds(587, 573, 276, 117);
         this.add(lblbutao);
         lbltelaFundo = new JLabeldateladeFundo();
