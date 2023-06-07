@@ -9,9 +9,9 @@ public class Jogador {
     private int TempoTotalJogado;
     private int recordPessoal;
 
-    public Jogador(String nome, String apelido) {
-        this.nome = nome;
-        this.apelido = apelido;
+    public Jogador(String nome, String apelido) throws Exception {
+        this.setNome(nome);
+        this.setApelido(apelido);
         this.pontos = 0;
         JogadaMaisRapidaEmUnidadedeTempo = 0;
         TempoTotalJogado = 0;
@@ -26,6 +26,20 @@ public class Jogador {
         JogadaMaisRapidaEmUnidadedeTempo = jogadaMaisRapidaEmUnidadedeTempo;
         TempoTotalJogado = tempoTotalJogado;
         this.recordPessoal = recordPessoal;
+    }
+
+    public void setNome(String nome) throws Exception {
+        if (apelido.length() < 3) {
+            throw new Exception("Nome tem de ter pelo menos 3 caracteres");
+        }
+        this.nome = nome;
+    }
+
+    public void setApelido(String apelido) throws Exception {
+        if (apelido.length() < 3) {
+            throw new Exception("Apelido tem de ter pelo menos 3 caracteres");
+        }
+        this.apelido = apelido;
     }
 
     public String getNome() {
