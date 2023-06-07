@@ -14,10 +14,11 @@ public class Genius {
     private List<Jogador> jogadores; // para facilitar a alteracao na quantidade de jogadores
     private List<Integer> sequenciaDeCores;
     private int indexJogadorAtual;
+    private int indexdaJogadaAtual;
     private int tempoParaReagir; // A definir oq poderia ser considerado facil ou dificil
 
     public Genius(Data data, String titulodoCampeonato, int ritmo, List<Jogador> jogadores,
-            List<Integer> sequenciaDeCores, int indexJogadorAtual, int tempoParaReagir) {
+            List<Integer> sequenciaDeCores, int indexJogadorAtual, int tempoParaReagir, int indexdaJogadaAtual) {
         this.data = data;
         this.titulodoCampeonato = titulodoCampeonato;
         this.setRitmo(ritmo); // 1 lento // 2 cadenciado // 3 rapido
@@ -73,8 +74,9 @@ public class Genius {
     }
 
     private void alteraJogadorAtual() {
-        if (this.indexJogadorAtual < this.jogadores.size()) {
+        if (this.indexJogadorAtual + 1 < this.jogadores.size()) {
             geraSequencia();
+            this.indexdaJogadaAtual = 0;
             this.indexJogadorAtual++;
         }
     }
@@ -84,17 +86,17 @@ public class Genius {
         return;
     }
 
-    private void pontua(int numeroDaJogada) {
-        this.jogadores.get(this.indexJogadorAtual).pontua(numeroDaJogada);
+    private void pontua() {
+        this.jogadores.get(this.indexJogadorAtual).pontua(this.indexdaJogadaAtual);
     }
 
-    public boolean analisaJogada(Long instantedaExibicao, Long instantedaReacao, int numeroDaJogada, Cor jogada) {
+    public boolean analisaJogada(Long instantedaExibicao, Long instantedaReacao, Cor jogada) {
         if (!reagiuEmTempo(instantedaExibicao, instantedaReacao)) {
             this.alteraJogadorAtual();
             return false;
         }
 
-        return acertouaSequencia(numeroDaJogada, jogada);
+        return acertouaSequencia(jogada);
     }
 
     private boolean reagiuEmTempo(Long instantedaExibicao, Long instantedaReacao) {
@@ -104,17 +106,20 @@ public class Genius {
         return false;
     }
 
-    private boolean acertouaSequencia(int numerodaJogada, Cor cor) {
+    private boolean acertouaSequencia(Cor cor) {
 
-        if (cor.ordinal() != this.sequenciaDeCores.get(numerodaJogada)) {
+        if (cor.ordinal() != this.sequenciaDeCores.get(this.indexdaJogadaAtual)) {
             this.alteraJogadorAtual();
+            this.indexdaJogadaAtual = 0;
             return false;
         }
-        if (numerodaJogada == this.sequenciaDeCores.size()) {
-            pontua(numerodaJogada);
+        if (this.indexdaJogadaAtual + 1 == this.sequenciaDeCores.size()) {
+            pontua();
+            this.indexdaJogadaAtual = 0;
             adicionanaSequencia();
+            return true;
         }
-
+        this.indexdaJogadaAtual++;
         return true;
     }
 
@@ -123,6 +128,7 @@ public class Genius {
         List<Integer> novaSequencia = new ArrayList<Integer>();
         for (int i = 0; i < 3; i++) {
             novaSequencia.add(geraNumeroAleatorio.nextInt(4));
+            System.out.println(novaSequencia.get(i));
         }
         this.sequenciaDeCores = novaSequencia;
         return;
@@ -131,6 +137,7 @@ public class Genius {
     private void adicionanaSequencia() {
         Random geraNumeroAleatorio = new Random();
         this.sequenciaDeCores.add(geraNumeroAleatorio.nextInt(4));
+        System.out.println(this.sequenciaDeCores.get(this.sequenciaDeCores.size() - 1));
     }
 
 }
