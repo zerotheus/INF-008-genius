@@ -10,6 +10,7 @@ public class Genius {
     private Data data;// mudar para tipo para Date;
     private String titulodoCampeonato;
     private int ritmo;
+    private int dificuldade;
     private List<Jogador> jogadores; // para facilitar a alteracao na quantidade de jogadores
     private List<Integer> sequenciaDeCores;
     private int indexJogadorAtual;
@@ -19,7 +20,7 @@ public class Genius {
             List<Integer> sequenciaDeCores, int indexJogadorAtual, int tempoParaReagir) {
         this.data = data;
         this.titulodoCampeonato = titulodoCampeonato;
-        this.ritmo = ritmo = 0; // 1 lento // 2 cadenciado // 3 rapido
+        this.setRitmo(ritmo); // 1 lento // 2 cadenciado // 3 rapido
         this.jogadores = jogadores;
         this.sequenciaDeCores = sequenciaDeCores;
         this.indexJogadorAtual = indexJogadorAtual;
