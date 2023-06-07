@@ -29,7 +29,7 @@ public class Jogador {
     }
 
     public void setNome(String nome) throws Exception {
-        if (apelido.length() < 3) {
+        if (nome.length() < 2) {
             throw new Exception("Nome tem de ter pelo menos 3 caracteres");
         }
         this.nome = nome;
