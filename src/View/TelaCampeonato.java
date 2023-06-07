@@ -11,7 +11,7 @@ import javax.swing.JTabbedPane;
 
 public class TelaCampeonato extends MyJPanel {
 
-        TelaCampeonato(JTabbedPane tabbedPane) {
+        TelaCampeonato(JTabbedPane tabbedPane, int quantidadedeJogadoresdoCampeonato) {
                 super();
                 this.setLayout(null);
 
@@ -26,9 +26,8 @@ public class TelaCampeonato extends MyJPanel {
                 textNome.setBounds(482, 645, 515, 39);
                 textNome.setVisible(true);
 
-                JLabel lblProximo = new JLabel("");
-                lblProximo
-                                .setIcon(new ImageIcon(this.getImagesPath() + "Salvar.png"));
+                JLabel lblProximo = new JLabel();
+                lblProximo.setIcon(new ImageIcon(this.getImagesPath() + "Salvar.png"));
                 lblProximo.setBounds(680, 771, 133, 68);
                 lblProximo.setVisible(true);
 
@@ -64,13 +63,13 @@ public class TelaCampeonato extends MyJPanel {
                 lblCampeonatoNome.setBounds(482, 436, 211, 46);
                 lblCampeonatoNome.setVisible(true);
 
-                JLabel lblCadastro = new JLabel("");
+                JLabel lblCadastro = new JLabel();
                 lblCadastro.setIcon(
                                 new ImageIcon(this.getImagesPath() + "cadastro.png"));
                 lblCadastro.setBounds(430, 339, 662, 531);
                 lblCadastro.setVisible(true);
 
-                JLabel lblLogo = new JLabel("");
+                JLabel lblLogo = new JLabel();
                 lblLogo.setIcon(
                                 new ImageIcon(this.getImagesPath() + "geniuslogo.png"));
                 lblLogo.setBounds(395, 164, 734, 247);
