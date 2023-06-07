@@ -11,7 +11,7 @@ import javax.swing.JTabbedPane;
 
 public class TelaCampeonato extends MyJPanel {
 
-        TelaCampeonato(JTabbedPane tabbedPane, int quantidadedeJogadoresdoCampeonato) {
+        public TelaCampeonato(JTabbedPane tabbedPane, int quantidadedeJogadoresdoCampeonato) {
                 super();
                 this.setLayout(null);
 
