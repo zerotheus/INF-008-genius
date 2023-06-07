@@ -16,7 +16,7 @@ import Negocio.Jogador;
 
 public class TelaIndividual extends MyJPanel {
 
-	TelaIndividual(JTabbedPane tabbedPane) {
+	public TelaIndividual(JTabbedPane tabbedPane) {
 		super();
 		this.setLayout(null);
 
@@ -91,7 +91,13 @@ public class TelaIndividual extends MyJPanel {
 			public void mouseClicked(MouseEvent e) {
 				// TODO validar campos
 				Genius jogo = new Genius("Teste");
-				Jogador jogador = new Jogador("Irineu", "Sla");
+				Jogador jogador;
+				try {
+					jogador = new Jogador("Irineu", "Sla");
+				} catch (Exception e1) {
+					e1.printStackTrace();
+					return;
+				}
 				jogo.adicionaJogador(jogador);
 				JPanel teladeJogo = new TelaJogo(tabbedPane, jogo);
 				tabbedPane.insertTab("Genius", null, teladeJogo, TOOL_TIP_TEXT_KEY, 1);
