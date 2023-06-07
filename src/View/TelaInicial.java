@@ -15,7 +15,7 @@ public class TelaInicial extends MyJPanel {
 
         this.setLayout(null);
 
-        JLabel lblbutao = new JLabel("");
+        MyJLabelwithSound lblbutao = new MyJLabelwithSound();
         lblbutao.setIcon(
                 new ImageIcon(this.getImagesPath() + "botão iniciar.png"));
         lblbutao.setBounds(587, 573, 276, 117);
@@ -28,6 +28,11 @@ public class TelaInicial extends MyJPanel {
             public void mouseClicked(MouseEvent e) {
                 if (e.getSource() != lblbutao) {
                     return;
+                }
+                try {
+                    lblbutao.startSound();
+                } catch (Exception e1) {
+                    System.out.println(e.toString());
                 }
                 lblbutao.setEnabled(false);
                 lblbutao.setVisible(false);
