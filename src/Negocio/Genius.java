@@ -9,17 +9,17 @@ import Enums.Cor;
 public class Genius {
     private Data data;// mudar para tipo para Date;
     private String titulodoCampeonato;
-    private int dificuldade;
+    private int ritmo;
     private List<Jogador> jogadores; // para facilitar a alteracao na quantidade de jogadores
     private List<Integer> sequenciaDeCores;
     private int indexJogadorAtual;
     private int tempoParaReagir; // A definir oq poderia ser considerado facil ou dificil
 
-    public Genius(Data data, String titulodoCampeonato, int dificuldade, List<Jogador> jogadores,
+    public Genius(Data data, String titulodoCampeonato, int ritmo, List<Jogador> jogadores,
             List<Integer> sequenciaDeCores, int indexJogadorAtual, int tempoParaReagir) {
         this.data = data;
         this.titulodoCampeonato = titulodoCampeonato;
-        this.dificuldade = dificuldade = 0; // 1 easy // 2 medio // 3 dificil
+        this.ritmo = ritmo = 0; // 1 lento // 2 cadenciado // 3 rapido
         this.jogadores = jogadores;
         this.sequenciaDeCores = sequenciaDeCores;
         this.indexJogadorAtual = indexJogadorAtual;
@@ -30,30 +30,30 @@ public class Genius {
         data = new Data(LocalDateTime.now().getDayOfMonth(), LocalDateTime.now().getMonthValue(),
                 LocalDateTime.now().getYear());
         this.titulodoCampeonato = titulodoCampeonato;
-        setDificuldade(1);
+        setRitmo(1);
         this.jogadores = new ArrayList<Jogador>();
         this.indexJogadorAtual = 0;
         geraSequencia();
     }
 
-    public void setDificuldade(int mudanca) {
-        if (mudanca + this.dificuldade < 1 || mudanca + this.dificuldade > 3) {
+    public void setRitmo(int mudanca) {
+        if (mudanca + this.ritmo < 1 || mudanca + this.ritmo > 3) {
             return;
         }
-        this.dificuldade += mudanca;
-        setTempodeReacao(this.dificuldade);
+        this.ritmo += mudanca;
+        setTempodeReacao(this.ritmo);
     }
 
-    private void setTempodeReacao(int dificuldade) {
-        if (dificuldade == 1) {
+    private void setTempodeReacao(int ritmo) {
+        if (ritmo == 1) {
             tempoParaReagir = 180000;
             return;
         }
-        if (dificuldade == 2) {
+        if (ritmo == 2) {
             tempoParaReagir = 3000;
             return;
         }
-        if (dificuldade == 3) {
+        if (ritmo == 3) {
             tempoParaReagir = 1000;
             return;
         }
