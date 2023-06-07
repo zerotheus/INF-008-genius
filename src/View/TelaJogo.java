@@ -6,6 +6,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import Enums.Cor;
 import Negocio.Genius;
 
 import java.awt.Color;
@@ -19,102 +20,35 @@ public class TelaJogo extends MyJPanel {
 	private final String imagensPath;
 	private Clock clock = Clock.systemDefaultZone();
 	private Genius jogo;
+	private int numerodaJogada = 0;
 
 	public TelaJogo(JTabbedPane tabbedPane, Genius jogo) {
 		super();
+		System.out.println(jogo);
 		imagensPath = this.getImagesPath();
 		this.setLayout(null);
 		JLabel lblAzul = new JLabel();
-		lblAzul.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (e.getSource() != lblAzul) {
-					return;
-				}
-				lblAzul.setIcon(new ImageIcon(imagensPath + "azul branco.png"));
-				// inicia uma thread que recebe uma funcao para executar
-				new java.util.Timer().schedule(
-						new java.util.TimerTask() {
-							@Override
-							public void run() {
-								lblAzul.setIcon(new ImageIcon(imagensPath + "azul.png"));
-							}
-						},
-						250);
-			}
-		});
-
-		lblAzul.setIcon(new ImageIcon(this.getImagesPath() + "azul.png"));
 		lblAzul.setBounds(447, 78, 322, 316);
+		lblAzul.setIcon(new ImageIcon(this.getImagesPath() + "azul.png"));
 		this.add(lblAzul);
 
-		JLabel lblVermelho = new JLabel("");
-		lblVermelho.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (e.getSource() != lblVermelho) {
-					return;
-				}
-				lblVermelho.setIcon(new ImageIcon(imagensPath + "vermelho branco.png"));
-				new java.util.Timer().schedule(
-						new java.util.TimerTask() {
-							@Override
-							public void run() {
-								lblVermelho.setIcon(new ImageIcon(imagensPath + "vermelho 1.png"));
-							}
-						},
-						250);
-			}
-		});
+		JLabel lblVermelho = new JLabel();
+
 		lblVermelho.setIcon(new ImageIcon(this.getImagesPath() + "vermelho 1.png"));
 		lblVermelho.setBounds(447, 474, 311, 316);
 		this.add(lblVermelho);
 
-		JLabel lblAmarelo = new JLabel("");
-		lblAmarelo.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (e.getSource() != lblAmarelo) {
-					return;
-				}
-				lblAmarelo.setIcon(new ImageIcon(imagensPath + "amarelo branco.png"));
-				new java.util.Timer().schedule(
-						new java.util.TimerTask() {
-							@Override
-							public void run() {
-								lblAmarelo.setIcon(new ImageIcon(imagensPath + "amarelo 1.png"));
-							}
-						},
-						250);
-			}
-		});
+		JLabel lblAmarelo = new JLabel();
 		lblAmarelo.setIcon(new ImageIcon(this.getImagesPath() + "amarelo 1.png"));
 		lblAmarelo.setBounds(807, 78, 322, 321);
 		this.add(lblAmarelo);
 
 		JLabel lblVerde = new JLabel();
-		lblVerde.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (e.getSource() != lblVerde) {
-					return;
-				}
-				lblVerde.setIcon(new ImageIcon(imagensPath + "verde branco.png"));
-				new java.util.Timer().schedule(
-						new java.util.TimerTask() {
-							@Override
-							public void run() {
-								lblVerde.setIcon(new ImageIcon(imagensPath + "verde 1.png"));
-							}
-						},
-						250);
-			}
-		});
 		lblVerde.setIcon(new ImageIcon(this.getImagesPath() + "verde 1.png"));
 		lblVerde.setBounds(800, 474, 329, 316);
 		this.add(lblVerde);
 
-		JButton btnDificuldade = new JButton("");
+		JButton btnDificuldade = new JButton();
 		btnDificuldade.setBounds(714, 405, 44, 45);
 		this.add(btnDificuldade);
 		btnDificuldade.setVisible(false);
@@ -151,6 +85,84 @@ public class TelaJogo extends MyJPanel {
 		this.add(btnIniciar);
 		btnIniciar.setEnabled(true);
 		btnIniciar.setVisible(true);
+
+		lblAzul.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getSource() != lblAzul) {
+					return;
+				}
+				System.out.println(jogo.analisaJogada((long) 0, (long) 0, Cor.azul));
+				lblAzul.setIcon(new ImageIcon(imagensPath + "azul branco.png"));
+				// inicia uma thread que recebe uma funcao para executar
+				new java.util.Timer().schedule(
+						new java.util.TimerTask() {
+							@Override
+							public void run() {
+								lblAzul.setIcon(new ImageIcon(imagensPath + "azul.png"));
+							}
+						},
+						250);
+			}
+		});
+
+		lblVermelho.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getSource() != lblVermelho) {
+					return;
+				}
+				System.out.println(jogo.analisaJogada((long) 0, (long) 0, Cor.vermelho));
+				lblVermelho.setIcon(new ImageIcon(imagensPath + "vermelho branco.png"));
+				new java.util.Timer().schedule(
+						new java.util.TimerTask() {
+							@Override
+							public void run() {
+								lblVermelho.setIcon(new ImageIcon(imagensPath + "vermelho 1.png"));
+							}
+						},
+						250);
+			}
+		});
+
+		lblAmarelo.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getSource() != lblAmarelo) {
+					return;
+				}
+				System.out.println(jogo.analisaJogada((long) 0, (long) 0, Cor.amarelo));
+				lblAmarelo.setIcon(new ImageIcon(imagensPath + "amarelo branco.png"));
+				new java.util.Timer().schedule(
+						new java.util.TimerTask() {
+							@Override
+							public void run() {
+								lblAmarelo.setIcon(new ImageIcon(imagensPath + "amarelo 1.png"));
+							}
+						},
+						250);
+
+			}
+		});
+
+		lblVerde.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getSource() != lblVerde) {
+					return;
+				}
+				System.out.println(jogo.analisaJogada((long) 0, (long) 0, Cor.verde));
+				lblVerde.setIcon(new ImageIcon(imagensPath + "verde branco.png"));
+				new java.util.Timer().schedule(
+						new java.util.TimerTask() {
+							@Override
+							public void run() {
+								lblVerde.setIcon(new ImageIcon(imagensPath + "verde 1.png"));
+							}
+						},
+						250);
+			}
+		});
 
 		btnIniciar.addMouseListener(new MouseAdapter() {
 			@Override
