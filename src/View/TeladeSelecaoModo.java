@@ -2,8 +2,6 @@ package View;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
-
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -18,7 +16,7 @@ public class TeladeSelecaoModo extends MyJPanel {
         this.setLayout(null);
         lblTeladeFundo = new JLabeldateladeFundo();
 
-        JLabel lblCampeonato = new JLabel();
+        MyJLabelwithSound lblCampeonato = new MyJLabelwithSound();
         lblCampeonato.setEnabled(true);
         lblCampeonato.setIcon(
                 new ImageIcon(this.getImagesPath() + "VARIOS JOGADORES.png"));
@@ -26,7 +24,7 @@ public class TeladeSelecaoModo extends MyJPanel {
         lblCampeonato.setVisible(true);
         this.add(lblCampeonato);
 
-        JLabel lblindividual = new JLabel();
+        MyJLabelwithSound lblindividual = new MyJLabelwithSound();
         lblindividual.setEnabled(true);
         lblindividual.setIcon(
                 new ImageIcon(this.getImagesPath() + "SOLO BOTAO.png"));
@@ -38,6 +36,14 @@ public class TeladeSelecaoModo extends MyJPanel {
         lblindividual.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                if (e.getSource() != lblindividual) {
+                    return;
+                }
+                try {
+                    lblindividual.startSound();
+                } catch (Exception e1) {
+                    System.out.println(e1.toString());
+                }
 
                 JPanel novoJPanel = new TelaIndividual(tabbedPane);
                 tabbedPane.insertTab("Individual", null, novoJPanel, TOOL_TIP_TEXT_KEY, 1);
@@ -49,7 +55,14 @@ public class TeladeSelecaoModo extends MyJPanel {
         lblCampeonato.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-
+                if (e.getSource() != lblCampeonato) {
+                    return;
+                }
+                try {
+                    lblCampeonato.startSound();
+                } catch (Exception e1) {
+                    System.out.println(e1.toString());
+                }
                 JPanel novoJPanel = new TelaCampeonatoSelecao(tabbedPane);
                 tabbedPane.insertTab("CampeonatoSelecao", null, novoJPanel, TOOL_TIP_TEXT_KEY, 1);
                 tabbedPane.removeTabAt(0);

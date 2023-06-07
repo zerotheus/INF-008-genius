@@ -4,8 +4,6 @@ import java.awt.Font;
 import java.awt.TextField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
-
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -31,17 +29,17 @@ public class TelaIndividual extends MyJPanel {
 		textNome.setBounds(482, 645, 515, 39);
 		textNome.setVisible(true);
 
-		JLabel lblProximo = new JLabel("");
-		lblProximo.setIcon(new ImageIcon(this.getImagesPath() + "Salvar.png"));
-		lblProximo.setBounds(680, 771, 133, 68);
-		lblProximo.setVisible(true);
+		MyJLabelwithSound lblSalvar = new MyJLabelwithSound();
+		lblSalvar.setIcon(new ImageIcon(this.getImagesPath() + "Salvar.png"));
+		lblSalvar.setBounds(680, 771, 133, 68);
+		lblSalvar.setVisible(true);
 
 		TextField textApelido = new TextField();
 		textApelido.setFont(new Font("Dialog", Font.PLAIN, 34));
 		textApelido.setBounds(482, 737, 515, 39);
 		textApelido.setVisible(true);
 		this.add(textApelido);
-		this.add(lblProximo);
+		this.add(lblSalvar);
 		this.add(textNome);
 
 		TextField textCampeonato = new TextField();
@@ -68,13 +66,13 @@ public class TelaIndividual extends MyJPanel {
 		lblCampeonatoNome.setBounds(482, 436, 211, 46);
 		lblCampeonatoNome.setVisible(true);
 
-		JLabel lblCadastro = new JLabel("");
+		JLabel lblCadastro = new JLabel();
 		lblCadastro.setIcon(
 				new ImageIcon(this.getImagesPath() + "cadastro.png"));
 		lblCadastro.setBounds(430, 339, 662, 531);
 		lblCadastro.setVisible(true);
 
-		JLabel lblLogo = new JLabel("");
+		JLabel lblLogo = new JLabel();
 		lblLogo.setIcon(
 				new ImageIcon(this.getImagesPath() + "geniuslogo.png"));
 		lblLogo.setBounds(395, 164, 734, 247);
@@ -86,10 +84,15 @@ public class TelaIndividual extends MyJPanel {
 		this.add(lblCadastro);
 		this.add(FundoSemLogo);
 
-		lblProximo.addMouseListener(new MouseAdapter() {
+		lblSalvar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO validar campos
+				try {
+					lblSalvar.startSound();
+				} catch (Exception e1) {
+					System.out.println(e1.toString());
+				}
 				Genius jogo = new Genius("Teste");
 				Jogador jogador;
 				try {
