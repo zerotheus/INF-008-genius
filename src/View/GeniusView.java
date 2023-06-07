@@ -54,8 +54,12 @@ public class GeniusView {
 		frame.setBounds(0, 0, 1440, 900);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setVisible(true);
-		tabbedPane.addTab("Tela Inicial", new TelaInicial(tabbedPane));
 		tabbedPane.setEnabled(false);
+		tabbedPane.setUI(new MyJTabbedPaneUI());
+		tabbedPane.addTab("Tela Inicial", new TelaInicial(tabbedPane));
+		System.out.println(tabbedPane.getUI());
+		System.out.println(tabbedPane.getUI().getClass());
+
 		frame.setContentPane(tabbedPane);
 
 	}
