@@ -24,11 +24,15 @@ public class TelaJogo extends MyJPanel {
 		super();
 		imagensPath = this.getImagesPath();
 		this.setLayout(null);
-		JLabel lblAzul = new JLabel("");
+		JLabel lblAzul = new JLabel();
 		lblAzul.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				if (e.getSource() != lblAzul) {
+					return;
+				}
 				lblAzul.setIcon(new ImageIcon(imagensPath + "azul branco.png"));
+				// inicia uma thread que recebe uma funcao para executar
 				new java.util.Timer().schedule(
 						new java.util.TimerTask() {
 							@Override
@@ -48,6 +52,9 @@ public class TelaJogo extends MyJPanel {
 		lblVermelho.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				if (e.getSource() != lblVermelho) {
+					return;
+				}
 				lblVermelho.setIcon(new ImageIcon(imagensPath + "vermelho branco.png"));
 				new java.util.Timer().schedule(
 						new java.util.TimerTask() {
@@ -67,6 +74,9 @@ public class TelaJogo extends MyJPanel {
 		lblAmarelo.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				if (e.getSource() != lblAmarelo) {
+					return;
+				}
 				lblAmarelo.setIcon(new ImageIcon(imagensPath + "amarelo branco.png"));
 				new java.util.Timer().schedule(
 						new java.util.TimerTask() {
@@ -82,10 +92,13 @@ public class TelaJogo extends MyJPanel {
 		lblAmarelo.setBounds(807, 78, 322, 321);
 		this.add(lblAmarelo);
 
-		JLabel lblVerde = new JLabel("");
+		JLabel lblVerde = new JLabel();
 		lblVerde.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				if (e.getSource() != lblVerde) {
+					return;
+				}
 				lblVerde.setIcon(new ImageIcon(imagensPath + "verde branco.png"));
 				new java.util.Timer().schedule(
 						new java.util.TimerTask() {
@@ -106,17 +119,17 @@ public class TelaJogo extends MyJPanel {
 		this.add(btnDificuldade);
 		btnDificuldade.setVisible(false);
 
-		JButton btnCarregar = new JButton("");
+		JButton btnCarregar = new JButton();
 		btnCarregar.setBounds(1223, 720, 164, 57);
 		this.add(btnCarregar);
 		btnCarregar.setVisible(false);
 
-		JButton btnSalvar = new JButton("");
+		JButton btnSalvar = new JButton();
 		btnSalvar.setBounds(1223, 405, 173, 57);
 		this.add(btnSalvar);
 		btnSalvar.setVisible(false);
 
-		JLabel lblPontos = new JLabel("");
+		JLabel lblPontos = new JLabel();
 		lblPontos.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 34));
 		lblPontos.setForeground(new Color(255, 255, 255));
 		lblPontos.setBounds(175, 589, 67, 57);
@@ -128,12 +141,12 @@ public class TelaJogo extends MyJPanel {
 		lblNomeJogador.setBounds(95, 221, 241, 39);
 		this.add(lblNomeJogador);
 
-		JLabel lblFundoJogo = new JLabel("");
+		JLabel lblFundoJogo = new JLabel();
 		lblFundoJogo.setIcon(new ImageIcon(this.getImagesPath() + "fundojOGO.png"));
 		lblFundoJogo.setBounds(0, 0, 1444, 881);
 		this.add(lblFundoJogo);
 
-		JLabel btnIniciar = new JLabel("");
+		JLabel btnIniciar = new JLabel();
 		btnIniciar.setBounds(1223, 89, 173, 55);
 		this.add(btnIniciar);
 		btnIniciar.setEnabled(true);
@@ -142,7 +155,6 @@ public class TelaJogo extends MyJPanel {
 		btnIniciar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.out.println("lcick");
 				JPanel telaPlacar = new TelaPlacar(tabbedPane, jogo);
 				tabbedPane.insertTab("Genius", null, telaPlacar, TOOL_TIP_TEXT_KEY, 1);
 				tabbedPane.removeTabAt(0);
