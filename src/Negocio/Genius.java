@@ -73,12 +73,23 @@ public class Genius {
         return this.titulodoCampeonato;
     }
 
+    public List<Integer> getSequencia() {
+        return this.sequenciaDeCores;
+    }
+
     private void alteraJogadorAtual() {
         if (this.indexJogadorAtual + 1 < this.jogadores.size()) {
             geraSequencia();
             this.indexdaJogadaAtual = 0;
             this.indexJogadorAtual++;
         }
+    }
+
+    public boolean ehUltimaJogaga() {
+        if (this.indexdaJogadaAtual + 1 == this.sequenciaDeCores.size()) {
+            return true;
+        }
+        return false;
     }
 
     public void adicionaJogador(Jogador novoJogador) {

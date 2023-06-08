@@ -20,13 +20,15 @@ public class TelaJogo extends MyJPanel {
 	private final String imagensPath;
 	private Clock clock = Clock.systemDefaultZone();
 	private Genius jogo;
-	private int numerodaJogada = 0;
+	private boolean eraUltimaJogada;
 
 	public TelaJogo(JTabbedPane tabbedPane, Genius jogo) {
 		super();
-		System.out.println(jogo);
+
 		imagensPath = this.getImagesPath();
 		this.setLayout(null);
+		this.jogo = jogo;
+
 		JLabel lblAzul = new JLabel();
 		lblAzul.setBounds(447, 78, 322, 316);
 		lblAzul.setIcon(new ImageIcon(this.getImagesPath() + "azul.png"));
@@ -173,6 +175,10 @@ public class TelaJogo extends MyJPanel {
 			}
 		});
 
+	}
+
+	public void exibeSequencia() {
+		System.out.println(jogo.getSequencia());
 	}
 
 }
