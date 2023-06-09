@@ -71,12 +71,15 @@ public class Genius {
     public Jogador getJogadorAtual() {
         return jogadores.get(indexJogadorAtual);
     }
-    public int qtdJogadores(){
+
+    public int qtdJogadores() {
         return this.jogadores.size();
     }
-    public List<Jogador> getListaJogadores(){
+
+    public List<Jogador> getListaJogadores() {
         return this.jogadores;
     }
+
     public String getTitulodoCampeonato() {
         return this.titulodoCampeonato;
     }
@@ -148,7 +151,6 @@ public class Genius {
         List<Integer> novaSequencia = new ArrayList<Integer>();
         for (int i = 0; i < 3; i++) {
             novaSequencia.add(geraNumeroAleatorio.nextInt(4));
-            System.out.println(novaSequencia.get(i));
         }
         this.sequenciaDeCores = novaSequencia;
         return;

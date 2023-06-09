@@ -17,6 +17,7 @@ import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.Clock;
+import java.util.List;
 
 public class TelaJogo extends MyJPanel {
 
@@ -25,11 +26,9 @@ public class TelaJogo extends MyJPanel {
 	long segundos = 0;
 	private Genius jogo;
 	private boolean eraUltimaJogada;
-	MyJLabelwithSound lblAzul = new MyJLabelwithSound();
-	MyJLabelwithSound lblVermelho = new MyJLabelwithSound();
-	MyJLabelwithSound lblAmarelo = new MyJLabelwithSound();
-	MyJLabelwithSound lblVerde = new MyJLabelwithSound();
-	MyJLabelwithSound btnIniciar = new MyJLabelwithSound();
+	private List<Integer> sequenciadeCoresaExibir;
+	private List<JLabel> geniusLabels;
+	private GeniusLabels lblAzul;
 
 	public TelaJogo(JTabbedPane tabbedPane, Genius jogo) {
 		super();
@@ -38,19 +37,23 @@ public class TelaJogo extends MyJPanel {
 		this.setLayout(null);
 		this.jogo = jogo;
 
+		JLabel lblAzul = new JLabel();
 		lblAzul.setBounds(447, 78, 322, 316);
 		lblAzul.setIcon(new ImageIcon(this.getImagesPath() + "azul.png"));
 		this.add(lblAzul);
 
-		JLabel lblVermelho = new JLabel();
+		GeniusLabels lblVermelho = new GeniusLabels("vermelho 1.png", "vermelho branco.png");
+
 		lblVermelho.setIcon(new ImageIcon(this.getImagesPath() + "vermelho 1.png"));
 		lblVermelho.setBounds(447, 474, 311, 316);
 		this.add(lblVermelho);
 
+		GeniusLabels lblAmarelo = new GeniusLabels("amarelo 1.png", "amarelo branco.png");
 		lblAmarelo.setIcon(new ImageIcon(this.getImagesPath() + "amarelo 1.png"));
 		lblAmarelo.setBounds(807, 78, 322, 321);
 		this.add(lblAmarelo);
 
+		GeniusLabels lblVerde = new GeniusLabels("verde 1.png", "verde branco.png");
 		lblVerde.setIcon(new ImageIcon(this.getImagesPath() + "verde 1.png"));
 		lblVerde.setBounds(800, 474, 329, 316);
 		this.add(lblVerde);
@@ -104,33 +107,8 @@ public class TelaJogo extends MyJPanel {
 				if (e.getSource() != lblAzul) {
 					return;
 				}
-				try {
-					lblAzul.startSound("La.wav");
-				} catch (Exception e1) {
-					System.out.println(e.toString());
-				}
-				lblAzul.setIcon(new ImageIcon(imagensPath + "azul branco.png"));
-				if (jogo.analisaJogada((long) 0, (long) 0, Cor.azul) == false) {
-					JOptionPane.showMessageDialog(lblFundoJogo, "Perdeu!");
-					if ((jogo.getListaJogadores().size() > 1) && (jogo.getJogadorAtual().getNome() != "Ultimo")) {
-						lblNomeJogador.setText(jogo.getJogadorAtual().getApelido());
-						lblPontos.setText("" + jogo.getJogadorAtual().getPontos());
-					} else {
-						JPanel telaPlacar = new TelaPlacar(tabbedPane, jogo);
-						tabbedPane.insertTab("Genius", null, telaPlacar, TOOL_TIP_TEXT_KEY, 1);
-						tabbedPane.removeTabAt(0);
-					}
-
-				}
-				// inicia uma thread que recebe uma funcao para executar
-				new java.util.Timer().schedule(
-						new java.util.TimerTask() {
-							@Override
-							public void run() {
-								lblAzul.setIcon(new ImageIcon(imagensPath + "azul.png"));
-							}
-						},
-						250);
+				System.out.println(jogo.analisaJogada((long) 0, (long) 0, Cor.azul));
+				lblAzul.pisca();
 			}
 		});
 
@@ -140,26 +118,8 @@ public class TelaJogo extends MyJPanel {
 				if (e.getSource() != lblVermelho) {
 					return;
 				}
-				try {
-					lblVermelho.startSound("Si.wav");
-				} catch (Exception e1) {
-					System.out.println(e.toString());
-				}
+				System.out.println(jogo.analisaJogada((long) 0, (long) 0, Cor.vermelho));
 				lblVermelho.setIcon(new ImageIcon(imagensPath + "vermelho branco.png"));
-				if (jogo.analisaJogada((long) 0, (long) 0, Cor.vermelho) == false) {
-					JOptionPane.showMessageDialog(lblFundoJogo, "Perdeu!");
-					if ((jogo.getListaJogadores().size() > 1) && (jogo.getJogadorAtual().getNome() != "Ultimo")) {
-						lblNomeJogador.setText(jogo.getJogadorAtual().getApelido());
-						lblPontos.setText("" + jogo.getJogadorAtual().getPontos());
-					} else {
-						JPanel telaPlacar = new TelaPlacar(tabbedPane, jogo);
-						tabbedPane.insertTab("Genius", null, telaPlacar, TOOL_TIP_TEXT_KEY, 1);
-						tabbedPane.removeTabAt(0);
-					}
-				}
-
-				else
-					lblPontos.setText("" + jogo.getJogadorAtual().getPontos());
 				new java.util.Timer().schedule(
 						new java.util.TimerTask() {
 							@Override
@@ -243,7 +203,7 @@ public class TelaJogo extends MyJPanel {
 			}
 		});
 
-		btnIniciar.addMouseListener(new MouseAdapter() {
+		btnCarregar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
@@ -258,6 +218,13 @@ public class TelaJogo extends MyJPanel {
 				 * tabbedPane.insertTab("Genius", null, telaPlacar, TOOL_TIP_TEXT_KEY, 1);
 				 * tabbedPane.removeTabAt(0);
 				 */
+			}
+		});
+
+		btnIniciar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				exibeSequencia();
 			}
 		});
 
@@ -296,7 +263,12 @@ public class TelaJogo extends MyJPanel {
 	// }
 
 	public void exibeSequencia() {
-		System.out.println(jogo.getSequencia());
+		this.sequenciadeCoresaExibir = jogo.getSequencia();
+		for (int i = 0; i < sequenciadeCoresaExibir.size(); i++) {
+			if (sequenciadeCoresaExibir.get(i) == 0) {
+				lblAzul.pisca();
+			}
+		}
 	}
 
 }

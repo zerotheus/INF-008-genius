@@ -2,12 +2,21 @@ package View;
 
 import java.awt.Font;
 import java.awt.TextField;
+import java.awt.RenderingHints.Key;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
+import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.KeyStroke;
 
 import Negocio.Genius;
 import Negocio.Jogador;
@@ -17,6 +26,7 @@ public class TelaIndividual extends MyJPanel {
 	public TelaIndividual(JTabbedPane tabbedPane) {
 		super();
 		this.setLayout(null);
+		this.requestFocusInWindow();
 
 		// CAMPO DE CADASTRO
 		JLabel lblJogador = new JLabel("Jogador");
@@ -108,5 +118,9 @@ public class TelaIndividual extends MyJPanel {
 			}
 		});
 
+		lblSalvar.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('a'), "A");
+		lblSalvar.getActionMap().put("A", new AcaoTrocaparaTeladoJogo(tabbedPane, lblSalvar));
+
 	}
+
 }
