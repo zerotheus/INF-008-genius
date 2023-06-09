@@ -5,18 +5,20 @@ import java.awt.TextField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.KeyStroke;
 
 import Negocio.Genius;
 import Negocio.Jogador;
 
 public class TelaCadastro extends MyJPanel {
 	private int qtdJogadores;
-	Genius jogo = new Genius("Teste");
-	
+	private Genius jogo = new Genius("Teste");
+
 	public TelaCadastro(JTabbedPane tabbedPane, int qtdJogadores) {
 		super();
 		this.setLayout(null);
@@ -103,21 +105,23 @@ public class TelaCadastro extends MyJPanel {
 					JOptionPane.showMessageDialog(FundoSemLogo, "Nome/apelido tem que ter pelo menos 3 letras!");
 					return;
 				}
-				if(jogo.getListaJogadores().size()<qtdJogadores) {
-					JOptionPane.showMessageDialog(FundoSemLogo, "Jogador salvo! Faltam " + (qtdJogadores - jogo.getListaJogadores().size())+" Jogadores.");
+				if (jogo.getListaJogadores().size() < qtdJogadores) {
+					JOptionPane.showMessageDialog(FundoSemLogo, "Jogador salvo! Faltam "
+							+ (qtdJogadores - jogo.getListaJogadores().size()) + " Jogadores.");
 					textCampeonato.setEditable(false);
 					textNome.setText(null);
 					textApelido.setText(null);
+					return;
 				}
-					
-				else {
-					JPanel teladeJogo = new TelaJogo(tabbedPane, jogo);
-					tabbedPane.insertTab("Genius", null, teladeJogo, TOOL_TIP_TEXT_KEY, 1);
-					tabbedPane.removeTabAt(0);
-				}
-				
+				JPanel teladeJogo = new TelaJogo(tabbedPane, jogo);
+				tabbedPane.insertTab("Genius", null, teladeJogo, TOOL_TIP_TEXT_KEY, 1);
+				tabbedPane.removeTabAt(0);
+
 			}
 		});
+		// shortcut somente para eu n ter que ficar preenchendo formulario
+		lblSalvar.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('a'), "A");
+		lblSalvar.getActionMap().put("A", new AcaoTrocaparaTeladoJogo(tabbedPane, lblSalvar));
 
 	}
 }

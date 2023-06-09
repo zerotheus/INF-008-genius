@@ -4,9 +4,6 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import java.io.File;
-import javax.swing.JLabel;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 
 public class GeniusView {
 
@@ -45,9 +42,9 @@ public class GeniusView {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.requestFocus();
+		frame.setFocusable(true);
+		frame.requestFocusInWindow();
 		System.out.println(frame.isFocused());
-
 		JTabbedPane tabbedPane = new JTabbedPane();
 		frame.setBounds(0, 0, 1440, 900);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -58,7 +55,6 @@ public class GeniusView {
 		tabbedPane.addTab("Tela Inicial", telaInicial);
 		System.out.println(tabbedPane.getUI());
 		System.out.println(tabbedPane.getUI().getClass());
-
 		frame.setContentPane(tabbedPane);
 
 	}
