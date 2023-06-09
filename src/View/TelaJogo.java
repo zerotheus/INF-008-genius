@@ -9,6 +9,7 @@ import javax.swing.JTabbedPane;
 
 import Enums.Cor;
 import Negocio.Genius;
+import Negocio.Jogador;
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -71,7 +72,7 @@ public class TelaJogo extends MyJPanel {
 		this.add(btnSalvar);
 		btnSalvar.setVisible(false);
 
-		JLabel lblPontos = new JLabel();
+		JLabel lblPontos = new JLabel(""+jogo.getJogadorAtual().getPontos());
 		lblPontos.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 34));
 		lblPontos.setForeground(new Color(255, 255, 255));
 		lblPontos.setBounds(175, 589, 67, 57);
@@ -93,6 +94,12 @@ public class TelaJogo extends MyJPanel {
 		btnIniciar.setEnabled(true);
 		btnIniciar.setVisible(true);
 
+		try {
+			jogo.adicionaJogador(new Jogador("Ultimo", "Ultimo"));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		lblAzul.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -105,8 +112,18 @@ public class TelaJogo extends MyJPanel {
                     System.out.println(e.toString());
                 }
 				lblAzul.setIcon(new ImageIcon(imagensPath + "azul branco.png"));
-				if(jogo.analisaJogada((long) 0, (long) 0, Cor.azul) == false)
+				if(jogo.analisaJogada((long) 0, (long) 0, Cor.azul) == false){
 					JOptionPane.showMessageDialog(lblFundoJogo,"Perdeu!");
+					if((jogo.getListaJogadores().size()>1) && (jogo.getJogadorAtual().getNome() != "Ultimo")) {
+						lblNomeJogador.setText(jogo.getJogadorAtual().getApelido());
+						lblPontos.setText(""+jogo.getJogadorAtual().getPontos());
+					}else {
+						JPanel telaPlacar = new TelaPlacar(tabbedPane, jogo);
+						tabbedPane.insertTab("Genius", null, telaPlacar, TOOL_TIP_TEXT_KEY, 1);
+						tabbedPane.removeTabAt(0);
+					}
+					
+				}
 				// inicia uma thread que recebe uma funcao para executar
 				new java.util.Timer().schedule(
 						new java.util.TimerTask() {
@@ -131,8 +148,20 @@ public class TelaJogo extends MyJPanel {
                     System.out.println(e.toString());
                 }
 				lblVermelho.setIcon(new ImageIcon(imagensPath + "vermelho branco.png"));
-				if(jogo.analisaJogada((long) 0, (long) 0, Cor.vermelho) == false)
+				if(jogo.analisaJogada((long) 0, (long) 0, Cor.vermelho) == false){
 					JOptionPane.showMessageDialog(lblFundoJogo,"Perdeu!");
+					if((jogo.getListaJogadores().size()>1) && (jogo.getJogadorAtual().getNome() != "Ultimo")) {
+						lblNomeJogador.setText(jogo.getJogadorAtual().getApelido());
+						lblPontos.setText(""+jogo.getJogadorAtual().getPontos());
+					}else {
+						JPanel telaPlacar = new TelaPlacar(tabbedPane, jogo);
+						tabbedPane.insertTab("Genius", null, telaPlacar, TOOL_TIP_TEXT_KEY, 1);
+						tabbedPane.removeTabAt(0);
+					}
+				}
+				
+				else
+					lblPontos.setText(""+jogo.getJogadorAtual().getPontos());
 				new java.util.Timer().schedule(
 						new java.util.TimerTask() {
 							@Override
@@ -156,8 +185,18 @@ public class TelaJogo extends MyJPanel {
                     System.out.println(e.toString());
                 }
 				lblAmarelo.setIcon(new ImageIcon(imagensPath + "amarelo branco.png"));
-				if(jogo.analisaJogada((long) 0, (long) 0, Cor.amarelo) == false)
+				if(jogo.analisaJogada((long) 0, (long) 0, Cor.amarelo) == false){
 					JOptionPane.showMessageDialog(lblFundoJogo,"Perdeu!");
+					if((jogo.getListaJogadores().size()>1) && (jogo.getJogadorAtual().getNome() != "Ultimo")) {
+						lblNomeJogador.setText(jogo.getJogadorAtual().getApelido());
+						lblPontos.setText(""+jogo.getJogadorAtual().getPontos());
+						
+					}else {
+						JPanel telaPlacar = new TelaPlacar(tabbedPane, jogo);
+						tabbedPane.insertTab("Genius", null, telaPlacar, TOOL_TIP_TEXT_KEY, 1);
+						tabbedPane.removeTabAt(0);
+					}
+				}
 				new java.util.Timer().schedule(
 						new java.util.TimerTask() {
 							@Override
@@ -184,7 +223,15 @@ public class TelaJogo extends MyJPanel {
 				lblVerde.setIcon(new ImageIcon(imagensPath + "verde branco.png"));
 				if(jogo.analisaJogada((long) 0, (long) 0, Cor.verde) == false) {
 					JOptionPane.showMessageDialog(lblFundoJogo,"Perdeu!");
-					
+
+					if((jogo.getListaJogadores().size()>1) && (jogo.getJogadorAtual().getNome() != "Ultimo")) {
+						lblNomeJogador.setText(jogo.getJogadorAtual().getApelido());
+						lblPontos.setText(""+jogo.getJogadorAtual().getPontos());
+					}else {
+						JPanel telaPlacar = new TelaPlacar(tabbedPane, jogo);
+						tabbedPane.insertTab("Genius", null, telaPlacar, TOOL_TIP_TEXT_KEY, 1);
+						tabbedPane.removeTabAt(0);
+					}
 				}
 					
 				new java.util.Timer().schedule(

@@ -105,6 +105,7 @@ public class TelaCadastro extends MyJPanel {
 				}
 				if(jogo.getListaJogadores().size()<qtdJogadores) {
 					JOptionPane.showMessageDialog(FundoSemLogo, "Jogador salvo! Faltam " + (qtdJogadores - jogo.getListaJogadores().size())+" Jogadores.");
+					textCampeonato.setEditable(false);
 					textNome.setText(null);
 					textApelido.setText(null);
 				}
