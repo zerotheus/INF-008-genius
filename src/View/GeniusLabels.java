@@ -19,7 +19,7 @@ public class GeniusLabels extends MyJLabelwithSound {
                 new java.util.TimerTask() {
                     @Override
                     public void run() {
-                        setIcon(new ImageIcon(imagensPath + "azul.png"));
+                        setIcon(new ImageIcon(imagensPath + nomedaImagemBase));
                     }
                 },
                 250);

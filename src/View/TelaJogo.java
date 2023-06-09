@@ -38,18 +38,18 @@ public class TelaJogo extends MyJPanel {
 		lblAzul.setIcon(new ImageIcon(this.getImagesPath() + "azul.png"));
 		this.add(lblAzul);
 
-		JLabel lblVermelho = new JLabel();
+		GeniusLabels lblVermelho = new GeniusLabels("vermelho 1.png", "vermelho branco.png");
 
 		lblVermelho.setIcon(new ImageIcon(this.getImagesPath() + "vermelho 1.png"));
 		lblVermelho.setBounds(447, 474, 311, 316);
 		this.add(lblVermelho);
 
-		JLabel lblAmarelo = new JLabel();
+		GeniusLabels lblAmarelo = new GeniusLabels("amarelo 1.png", "amarelo branco.png");
 		lblAmarelo.setIcon(new ImageIcon(this.getImagesPath() + "amarelo 1.png"));
 		lblAmarelo.setBounds(807, 78, 322, 321);
 		this.add(lblAmarelo);
 
-		JLabel lblVerde = new JLabel();
+		GeniusLabels lblVerde = new GeniusLabels("verde 1.png", "verde branco.png");
 		lblVerde.setIcon(new ImageIcon(this.getImagesPath() + "verde 1.png"));
 		lblVerde.setBounds(800, 474, 329, 316);
 		this.add(lblVerde);
@@ -110,15 +110,7 @@ public class TelaJogo extends MyJPanel {
 					return;
 				}
 				System.out.println(jogo.analisaJogada((long) 0, (long) 0, Cor.vermelho));
-				lblVermelho.setIcon(new ImageIcon(imagensPath + "vermelho branco.png"));
-				new java.util.Timer().schedule(
-						new java.util.TimerTask() {
-							@Override
-							public void run() {
-								lblVermelho.setIcon(new ImageIcon(imagensPath + "vermelho 1.png"));
-							}
-						},
-						250);
+				lblVermelho.pisca();
 			}
 		});
 
