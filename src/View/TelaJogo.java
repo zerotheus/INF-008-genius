@@ -14,6 +14,7 @@ import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.Clock;
+import java.util.List;
 
 public class TelaJogo extends MyJPanel {
 
@@ -21,6 +22,9 @@ public class TelaJogo extends MyJPanel {
 	private Clock clock = Clock.systemDefaultZone();
 	private Genius jogo;
 	private boolean eraUltimaJogada;
+	private List<Integer> sequenciadeCoresaExibir;
+	private List<JLabel> geniusLabels;
+	private GeniusLabels lblAzul;
 
 	public TelaJogo(JTabbedPane tabbedPane, Genius jogo) {
 		super();
@@ -29,7 +33,7 @@ public class TelaJogo extends MyJPanel {
 		this.setLayout(null);
 		this.jogo = jogo;
 
-		JLabel lblAzul = new JLabel();
+		lblAzul = new GeniusLabels("azul.png", "azul branco.png");
 		lblAzul.setBounds(447, 78, 322, 316);
 		lblAzul.setIcon(new ImageIcon(this.getImagesPath() + "azul.png"));
 		this.add(lblAzul);
@@ -95,16 +99,7 @@ public class TelaJogo extends MyJPanel {
 					return;
 				}
 				System.out.println(jogo.analisaJogada((long) 0, (long) 0, Cor.azul));
-				lblAzul.setIcon(new ImageIcon(imagensPath + "azul branco.png"));
-				// inicia uma thread que recebe uma funcao para executar
-				new java.util.Timer().schedule(
-						new java.util.TimerTask() {
-							@Override
-							public void run() {
-								lblAzul.setIcon(new ImageIcon(imagensPath + "azul.png"));
-							}
-						},
-						250);
+				lblAzul.pisca();
 			}
 		});
 
@@ -166,7 +161,7 @@ public class TelaJogo extends MyJPanel {
 			}
 		});
 
-		btnIniciar.addMouseListener(new MouseAdapter() {
+		btnCarregar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				JPanel telaPlacar = new TelaPlacar(tabbedPane, jogo);
@@ -175,10 +170,22 @@ public class TelaJogo extends MyJPanel {
 			}
 		});
 
+		btnIniciar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				exibeSequencia();
+			}
+		});
+
 	}
 
 	public void exibeSequencia() {
-		System.out.println(jogo.getSequencia());
+		this.sequenciadeCoresaExibir = jogo.getSequencia();
+		for (int i = 0; i < sequenciadeCoresaExibir.size(); i++) {
+			if (sequenciadeCoresaExibir.get(i) == 0) {
+				lblAzul.pisca();
+			}
+		}
 	}
 
 }

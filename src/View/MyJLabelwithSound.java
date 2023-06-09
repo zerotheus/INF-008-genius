@@ -2,7 +2,6 @@ package View;
 
 import java.io.File;
 import java.io.IOException;
-
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -13,11 +12,13 @@ import javax.swing.JLabel;
 public class MyJLabelwithSound extends JLabel {
 
     private final String sfxBotaoMenuBasePath;
+    private final String imagesBasePath;
     private AudioInputStream audioInputStream;
     private Clip clip;
 
     public MyJLabelwithSound() {
         this.sfxBotaoMenuBasePath = new File("src\\sfx").getPath() + "\\";
+        this.imagesBasePath = new File("src\\imagens").getPath() + "\\";
     }
 
     protected void startSound() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
@@ -35,6 +36,10 @@ public class MyJLabelwithSound extends JLabel {
         clip = AudioSystem.getClip();
         clip.open(audioInputStream);
         clip.start();
+    }
+
+    public String getImagesBasePath() {
+        return imagesBasePath;
     }
 
 }
