@@ -45,7 +45,7 @@ public class TeladeSelecaoModo extends MyJPanel {
                     System.out.println(e1.toString());
                 }
 
-                JPanel novoJPanel = new TelaIndividual(tabbedPane);
+                JPanel novoJPanel = new TelaCadastro(tabbedPane,1);
                 tabbedPane.insertTab("Individual", null, novoJPanel, TOOL_TIP_TEXT_KEY, 1);
                 tabbedPane.removeTabAt(0);
 

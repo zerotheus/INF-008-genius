@@ -4,6 +4,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import java.io.File;
+import javax.swing.JLabel;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class GeniusView {
 
@@ -48,7 +51,8 @@ public class GeniusView {
 		frame.getContentPane().setVisible(true);
 		tabbedPane.setEnabled(false);
 		tabbedPane.setUI(new MyJTabbedPaneUI());
-		tabbedPane.addTab("Tela Inicial", new TelaInicial(tabbedPane));
+		TelaInicial telaInicial = new TelaInicial(tabbedPane);
+		tabbedPane.addTab("Tela Inicial", telaInicial);
 		System.out.println(tabbedPane.getUI());
 		System.out.println(tabbedPane.getUI().getClass());
 

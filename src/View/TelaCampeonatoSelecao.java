@@ -25,7 +25,7 @@ public class TelaCampeonatoSelecao extends MyJPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
 
-                JPanel novoJPanel = new TelaIndividual(tabbedPane);
+                JPanel novoJPanel = new TelaCadastro(tabbedPane, 2);
                 tabbedPane.insertTab("jogadoresCadastro", null, novoJPanel, TOOL_TIP_TEXT_KEY, 1);
                 tabbedPane.removeTabAt(0);
 
@@ -45,7 +45,7 @@ public class TelaCampeonatoSelecao extends MyJPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
 
-                JPanel novoJPanel = new TelaIndividual(tabbedPane);
+                JPanel novoJPanel = new TelaCadastro(tabbedPane, 4);
                 tabbedPane.insertTab("jogadoresCadastro", null, novoJPanel, TOOL_TIP_TEXT_KEY, 1);
                 tabbedPane.removeTabAt(0);
 
@@ -62,7 +62,7 @@ public class TelaCampeonatoSelecao extends MyJPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
 
-                JPanel novoJPanel = new TelaIndividual(tabbedPane);
+                JPanel novoJPanel = new TelaCadastro(tabbedPane, 8);
                 tabbedPane.insertTab("jogadoresCadastro", null, novoJPanel, TOOL_TIP_TEXT_KEY, 1);
                 tabbedPane.removeTabAt(0);
 

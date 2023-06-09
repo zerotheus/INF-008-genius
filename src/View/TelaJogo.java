@@ -3,6 +3,7 @@ package View;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
@@ -10,6 +11,7 @@ import Enums.Cor;
 import Negocio.Genius;
 
 import java.awt.Color;
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -18,13 +20,15 @@ import java.time.Clock;
 public class TelaJogo extends MyJPanel {
 
 	private final String imagensPath;
-	private Clock clock = Clock.systemDefaultZone();
+	long millis = 0;
+	long  segundos = 0;
 	private Genius jogo;
 	private boolean eraUltimaJogada;
 	MyJLabelwithSound lblAzul = new MyJLabelwithSound();
 	MyJLabelwithSound lblVermelho = new MyJLabelwithSound();
 	MyJLabelwithSound lblAmarelo = new MyJLabelwithSound();
 	MyJLabelwithSound lblVerde = new MyJLabelwithSound();
+	MyJLabelwithSound btnIniciar = new MyJLabelwithSound();
 
 	public TelaJogo(JTabbedPane tabbedPane, Genius jogo) {
 		super();
@@ -84,7 +88,6 @@ public class TelaJogo extends MyJPanel {
 		lblFundoJogo.setBounds(0, 0, 1444, 881);
 		this.add(lblFundoJogo);
 
-		JLabel btnIniciar = new JLabel();
 		btnIniciar.setBounds(1223, 89, 173, 55);
 		this.add(btnIniciar);
 		btnIniciar.setEnabled(true);
@@ -101,8 +104,9 @@ public class TelaJogo extends MyJPanel {
                 } catch (Exception e1) {
                     System.out.println(e.toString());
                 }
-				System.out.println(jogo.analisaJogada((long) 0, (long) 0, Cor.azul));
 				lblAzul.setIcon(new ImageIcon(imagensPath + "azul branco.png"));
+				if(jogo.analisaJogada((long) 0, (long) 0, Cor.azul) == false)
+					JOptionPane.showMessageDialog(lblFundoJogo,"Perdeu!");
 				// inicia uma thread que recebe uma funcao para executar
 				new java.util.Timer().schedule(
 						new java.util.TimerTask() {
@@ -126,8 +130,9 @@ public class TelaJogo extends MyJPanel {
                 } catch (Exception e1) {
                     System.out.println(e.toString());
                 }
-				System.out.println(jogo.analisaJogada((long) 0, (long) 0, Cor.vermelho));
 				lblVermelho.setIcon(new ImageIcon(imagensPath + "vermelho branco.png"));
+				if(jogo.analisaJogada((long) 0, (long) 0, Cor.vermelho) == false)
+					JOptionPane.showMessageDialog(lblFundoJogo,"Perdeu!");
 				new java.util.Timer().schedule(
 						new java.util.TimerTask() {
 							@Override
@@ -150,8 +155,9 @@ public class TelaJogo extends MyJPanel {
                 } catch (Exception e1) {
                     System.out.println(e.toString());
                 }
-				System.out.println(jogo.analisaJogada((long) 0, (long) 0, Cor.amarelo));
 				lblAmarelo.setIcon(new ImageIcon(imagensPath + "amarelo branco.png"));
+				if(jogo.analisaJogada((long) 0, (long) 0, Cor.amarelo) == false)
+					JOptionPane.showMessageDialog(lblFundoJogo,"Perdeu!");
 				new java.util.Timer().schedule(
 						new java.util.TimerTask() {
 							@Override
@@ -175,8 +181,12 @@ public class TelaJogo extends MyJPanel {
                 } catch (Exception e1) {
                     System.out.println(e.toString());
                 }
-				System.out.println(jogo.analisaJogada((long) 0, (long) 0, Cor.verde));
 				lblVerde.setIcon(new ImageIcon(imagensPath + "verde branco.png"));
+				if(jogo.analisaJogada((long) 0, (long) 0, Cor.verde) == false) {
+					JOptionPane.showMessageDialog(lblFundoJogo,"Perdeu!");
+					
+				}
+					
 				new java.util.Timer().schedule(
 						new java.util.TimerTask() {
 							@Override
@@ -191,14 +201,56 @@ public class TelaJogo extends MyJPanel {
 		btnIniciar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				JPanel telaPlacar = new TelaPlacar(tabbedPane, jogo);
+				try {
+					btnIniciar.startSound("Sol.wav");
+                } catch (Exception e1) {
+                    System.out.println(e.toString());
+                }
+				//jogoIniciado();
+						
+				
+				/*JPanel telaPlacar = new TelaPlacar(tabbedPane, jogo);
 				tabbedPane.insertTab("Genius", null, telaPlacar, TOOL_TIP_TEXT_KEY, 1);
-				tabbedPane.removeTabAt(0);
+				tabbedPane.removeTabAt(0);*/
 			}
 		});
 
 	}
 
+//	public void jogoIniciado() {
+//		boolean naoPerdeu = true;
+//		while(naoPerdeu == true) {
+//			jogo.getSequencia();
+//			for(Cor cor:jogo.getSequencia()) {
+//				millis = System.currentTimeMillis();
+//				segundos = 0;
+//				if(cor == Cor.azul) {
+//					lblAzul.setIcon(new ImageIcon(imagensPath + "azul branco.png"));
+//				}
+//				else if(cor == Cor.vermelho) {
+//					lblVermelho.setIcon(new ImageIcon(imagensPath + "vermelho branco.png"));
+//				}
+//				else if(cor == Cor.amarelo) {
+//					lblAmarelo.setIcon(new ImageIcon(imagensPath + "amarelo branco.png"));
+//				}
+//				else if(cor == Cor.verde) {
+//					lblVerde.setIcon(new ImageIcon(imagensPath + "verde branco.png"));
+//				}
+//				while(segundos<1000) {
+//					segundos = System.currentTimeMillis() -  millis;
+//				}
+//				}
+//				
+//				lblAzul.setIcon(new ImageIcon(imagensPath + "azul.png"));
+//				lblVermelho.setIcon(new ImageIcon(imagensPath + "vermelho 1.png"));
+//				lblAmarelo.setIcon(new ImageIcon(imagensPath + "amarelo 1.png"));
+//				lblVerde.setIcon(new ImageIcon(imagensPath + "verde 1.png"));;
+//			}
+//			naoPerdeu = false;
+//		}
+	
+		
+			
 	public void exibeSequencia() {
 		System.out.println(jogo.getSequencia());
 	}
