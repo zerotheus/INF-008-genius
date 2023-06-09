@@ -5,7 +5,7 @@ public class Jogador {
     private String nome;
     private String apelido;
     private int pontos;
-    private int JogadaMaisRapidaEmUnidadedeTempo;
+    private long JogadaMaisRapidaEmUnidadedeTempo;
     private int TempoTotalJogado;
     private int recordPessoal;
 
@@ -58,8 +58,14 @@ public class Jogador {
         this.pontos += pontos;
     }
 
-    public int getJogadaMaisRapidaEmUnidadedeTempo() {
+    public long getJogadaMaisRapidaEmUnidadedeTempo() {
         return JogadaMaisRapidaEmUnidadedeTempo;
+    }
+
+    public void foiJogadaMaisRapida( Long jogada){
+    if (JogadaMaisRapidaEmUnidadedeTempo > jogada){
+    JogadaMaisRapidaEmUnidadedeTempo = jogada;
+    }
     }
 
     public int getTempoTotalJogado() {

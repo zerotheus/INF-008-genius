@@ -35,7 +35,6 @@ public class TelaJogo extends MyJPanel {
 		this.add(lblAzul);
 
 		JLabel lblVermelho = new JLabel();
-
 		lblVermelho.setIcon(new ImageIcon(this.getImagesPath() + "vermelho 1.png"));
 		lblVermelho.setBounds(447, 474, 311, 316);
 		this.add(lblVermelho);

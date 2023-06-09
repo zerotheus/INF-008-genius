@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Stream;
+
 import Enums.Cor;
 
 public class Genius {
@@ -40,9 +42,10 @@ public class Genius {
 
     public void setRitmo(int mudanca) {
         if (mudanca + this.ritmo < 1 || mudanca + this.ritmo > 3) {
-            return;
+            this.ritmo = 0;
         }
         this.ritmo += mudanca;
+        System.out.println(this.ritmo);
         setTempodeReacao(this.ritmo);
     }
 
@@ -68,7 +71,12 @@ public class Genius {
     public Jogador getJogadorAtual() {
         return jogadores.get(indexJogadorAtual);
     }
-
+    public int qtdJogadores(){
+        return this.jogadores.size();
+    }
+    public List<Jogador> getListaJogadores(){
+        return this.jogadores;
+    }
     public String getTitulodoCampeonato() {
         return this.titulodoCampeonato;
     }
@@ -102,11 +110,12 @@ public class Genius {
     }
 
     public boolean analisaJogada(Long instantedaExibicao, Long instantedaReacao, Cor jogada) {
+        this.getJogadorAtual().foiJogadaMaisRapida(instantedaExibicao - instantedaReacao);
+
         if (!reagiuEmTempo(instantedaExibicao, instantedaReacao)) {
             this.alteraJogadorAtual();
             return false;
         }
-
         return acertouaSequencia(jogada);
     }
 
