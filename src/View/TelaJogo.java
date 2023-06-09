@@ -21,6 +21,10 @@ public class TelaJogo extends MyJPanel {
 	private Clock clock = Clock.systemDefaultZone();
 	private Genius jogo;
 	private boolean eraUltimaJogada;
+	MyJLabelwithSound lblAzul = new MyJLabelwithSound();
+	MyJLabelwithSound lblVermelho = new MyJLabelwithSound();
+	MyJLabelwithSound lblAmarelo = new MyJLabelwithSound();
+	MyJLabelwithSound lblVerde = new MyJLabelwithSound();
 
 	public TelaJogo(JTabbedPane tabbedPane, Genius jogo) {
 		super();
@@ -29,23 +33,21 @@ public class TelaJogo extends MyJPanel {
 		this.setLayout(null);
 		this.jogo = jogo;
 
-		JLabel lblAzul = new JLabel();
 		lblAzul.setBounds(447, 78, 322, 316);
 		lblAzul.setIcon(new ImageIcon(this.getImagesPath() + "azul.png"));
 		this.add(lblAzul);
 
-		JLabel lblVermelho = new JLabel();
 
 		lblVermelho.setIcon(new ImageIcon(this.getImagesPath() + "vermelho 1.png"));
 		lblVermelho.setBounds(447, 474, 311, 316);
 		this.add(lblVermelho);
 
-		JLabel lblAmarelo = new JLabel();
+
 		lblAmarelo.setIcon(new ImageIcon(this.getImagesPath() + "amarelo 1.png"));
 		lblAmarelo.setBounds(807, 78, 322, 321);
 		this.add(lblAmarelo);
 
-		JLabel lblVerde = new JLabel();
+
 		lblVerde.setIcon(new ImageIcon(this.getImagesPath() + "verde 1.png"));
 		lblVerde.setBounds(800, 474, 329, 316);
 		this.add(lblVerde);
@@ -94,6 +96,11 @@ public class TelaJogo extends MyJPanel {
 				if (e.getSource() != lblAzul) {
 					return;
 				}
+				try {
+					lblAzul.startSound("La.wav");
+                } catch (Exception e1) {
+                    System.out.println(e.toString());
+                }
 				System.out.println(jogo.analisaJogada((long) 0, (long) 0, Cor.azul));
 				lblAzul.setIcon(new ImageIcon(imagensPath + "azul branco.png"));
 				// inicia uma thread que recebe uma funcao para executar
@@ -114,6 +121,11 @@ public class TelaJogo extends MyJPanel {
 				if (e.getSource() != lblVermelho) {
 					return;
 				}
+				try {
+					lblVermelho.startSound("Si.wav");
+                } catch (Exception e1) {
+                    System.out.println(e.toString());
+                }
 				System.out.println(jogo.analisaJogada((long) 0, (long) 0, Cor.vermelho));
 				lblVermelho.setIcon(new ImageIcon(imagensPath + "vermelho branco.png"));
 				new java.util.Timer().schedule(
@@ -133,6 +145,11 @@ public class TelaJogo extends MyJPanel {
 				if (e.getSource() != lblAmarelo) {
 					return;
 				}
+				try {
+					lblAmarelo.startSound("Re.wav");
+                } catch (Exception e1) {
+                    System.out.println(e.toString());
+                }
 				System.out.println(jogo.analisaJogada((long) 0, (long) 0, Cor.amarelo));
 				lblAmarelo.setIcon(new ImageIcon(imagensPath + "amarelo branco.png"));
 				new java.util.Timer().schedule(
@@ -153,6 +170,11 @@ public class TelaJogo extends MyJPanel {
 				if (e.getSource() != lblVerde) {
 					return;
 				}
+				try {
+					lblVerde.startSound("Mi.wav");
+                } catch (Exception e1) {
+                    System.out.println(e.toString());
+                }
 				System.out.println(jogo.analisaJogada((long) 0, (long) 0, Cor.verde));
 				lblVerde.setIcon(new ImageIcon(imagensPath + "verde branco.png"));
 				new java.util.Timer().schedule(
