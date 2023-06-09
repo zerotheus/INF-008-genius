@@ -17,6 +17,7 @@ import java.awt.event.MouseEvent;
 import java.time.Clock;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 public class TelaJogo extends MyJPanel {
@@ -179,12 +180,14 @@ public class TelaJogo extends MyJPanel {
 	public void exibeSequencia() {
 		this.sequenciadeCoresaExibir = jogo.getSequencia();
 		for (int i = 0; i < sequenciadeCoresaExibir.size(); i++) {
-			try {
-				this.geniusLabels.get(sequenciadeCoresaExibir.get(i)).pisca(250);
-			} catch (InterruptedException e) {
-				System.out.println(e.toString());
-				e.printStackTrace();
-			}
+			final int j = i;
+			new java.util.Timer().schedule(
+					new TimerTask() {
+						@Override
+						public void run() {
+							geniusLabels.get(sequenciadeCoresaExibir.get(j)).pisca();
+						}
+					}, 250, 250);
 
 		}
 	}
