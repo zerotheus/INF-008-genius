@@ -53,3 +53,21 @@ deverão ser apresentados no Laboratório.</p>
 
 <H1>Documentacao de desenvolvimento</H1>
 <p>Os commits ajudam muito a entender oq mudou no codigo mas nem sempre sao o bastante, entao qualquer coisa que precise de mais do que um commit -m "mensagem" pode ser escrita aqui</p>
+
+<p>Foi criado 5 pacotes para separar as funcionalidades do jogo, Audio, Enums, imagens, Negocio e View.
+
+
+
+<H2>Pacote Audio</H2>
+<p>Esse pacote contem todos os sons dos botões que foram utilizados no jogo.
+
+<H2>Pacote Enums</H2>
+<p>Esse pacote contem um conjunto fixo de cores para serem utilizado de forma mais legível
+
+
+<H2>Pacote imagens</H2>
+<p>Esse pacote contem todas as imagens que foram criadas para a construção da tela de fundo do jogo e dos botões.
+
+
+<H2>Pacote Negocio</H2>
+<p>Esse pacote contem um conjunto fixo de cores para serem utilizado de forma mais legível

@@ -49,11 +49,6 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		this.add(btnDificuldade);
 		btnDificuldade.setVisible(false);
 
-		JButton btnCarregar = new JButton();
-		btnCarregar.setBounds(1223, 720, 164, 57);
-		this.add(btnCarregar);
-		btnCarregar.setVisible(false);
-
 		JButton btnSalvar = new JButton();
 		btnSalvar.setBounds(1223, 405, 173, 57);
 		btnSalvar.setVisible(false);
@@ -75,6 +70,11 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		lblFundoJogo.setIcon(new ImageIcon(this.getImagesPath() + "fundojOGO.png"));
 		lblFundoJogo.setBounds(0, 0, 1444, 881);
 		this.add(lblFundoJogo);
+		
+		JLabel btnCarregar = new JLabel();
+		btnCarregar.setBounds(1223, 720, 164, 57);
+		this.add(btnCarregar);
+		btnCarregar.setVisible(true);
 
 		MyJLabelwithSound btnIniciar = new MyJLabelwithSound();
 		btnIniciar.setBounds(1223, 89, 173, 55);
@@ -86,7 +86,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					btnIniciar.startSound("Sol.wav");
+					btnIniciar.startSound();
 				} catch (Exception e1) {
 					System.out.println(e.toString());
 				}

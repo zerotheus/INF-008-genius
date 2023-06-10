@@ -37,15 +37,38 @@ public class TelaPlacar extends MyJPanel {
         lblTituloJogo.setBounds(675, 65, 640, 48);
         this.add(lblTituloJogo);
 
+        
+        MyJLabelwithSound lblVoltar = new MyJLabelwithSound();
+        lblVoltar.setIcon(new ImageIcon(this.getImagesPath() + "botaoVoltar.png"));
+        lblVoltar.setBounds(1270, 812, 152, 58);
+        lblVoltar.setVisible(true);
+        this.add(lblVoltar);
+        
         JLabel lblFundoJogo = new JLabel("");
         lblFundoJogo.setIcon(new ImageIcon(this.getImagesPath() + "tela placar.png"));
         lblFundoJogo.setBounds(0, 0, 1444, 881);
         this.add(lblFundoJogo);
+        
+             lblVoltar.addMouseListener(new MouseAdapter() { // colocar som ao clicar o botão
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getSource() != lblVoltar) {
+                    return;
+                }
+                try {
+                    lblVoltar.startSound();
+                } catch (Exception e1) {
+                    System.out.println(e.toString());
+                }
+                lblVoltar.setEnabled(false);
+                lblVoltar.setVisible(false);
+                JPanel telaInicial = new TelaInicial(tabbedPane);
+                tabbedPane.insertTab("Selecione o modo de Jogo", null, telaInicial, TOOL_TIP_TEXT_KEY, 1);
+                tabbedPane.removeTabAt(0);
 
-        JLabel lblVoltar = new JLabel("");
-        lblVoltar.setIcon(new ImageIcon(this.getImagesPath() + "botao voltar.png"));
-        lblVoltar.setBounds(680, 771, 133, 68);
-        lblVoltar.setVisible(true);
+            }
+        });
+
 
     }
 
@@ -110,4 +133,6 @@ public class TelaPlacar extends MyJPanel {
         }
         /*FIM MELHOR JOGADA */
     }
+
+
 }

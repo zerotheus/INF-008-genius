@@ -37,7 +37,7 @@ public class TelaCadastro extends MyJPanel {
 
 		MyJLabelwithSound lblSalvar = new MyJLabelwithSound();
 		lblSalvar.setIcon(new ImageIcon(this.getImagesPath() + "Salvar.png"));
-		lblSalvar.setBounds(680, 771, 133, 68);
+		lblSalvar.setBounds(550, 780, 117, 60);
 		lblSalvar.setVisible(true);
 
 		TextField textApelido = new TextField();
@@ -83,6 +83,35 @@ public class TelaCadastro extends MyJPanel {
 				new ImageIcon(this.getImagesPath() + "geniuslogo.png"));
 		lblLogo.setBounds(395, 164, 734, 247);
 		lblLogo.setVisible(true);
+
+		MyJLabelwithSound lblVoltar = new MyJLabelwithSound();
+        lblVoltar.setIcon(new ImageIcon(this.getImagesPath() + "botaoVoltar.png"));
+        lblVoltar.setBounds(813, 795, 106, 53);
+        lblVoltar.setVisible(true);
+        this.add(lblVoltar);
+
+ 		lblVoltar.addMouseListener(new MouseAdapter() { // colocar som ao clicar o botão
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getSource() != lblVoltar) {
+                    return;
+                }
+                try {
+                    lblVoltar.startSound();
+                } catch (Exception e1) {
+                    System.out.println(e.toString());
+                }
+                lblVoltar.setEnabled(false);
+                lblVoltar.setVisible(false);
+                JPanel telaInicial = new TelaInicial(tabbedPane);
+                tabbedPane.insertTab("Selecione o modo de Jogo", null, telaInicial, TOOL_TIP_TEXT_KEY, 1);
+                tabbedPane.removeTabAt(0);
+
+            }
+        });
+
+
+		//(847, 738, 111, 60);
 
 		JLabel FundoSemLogo = new JLabelFundoSemLogo();
 		this.add(lblCampeonatoNome);
