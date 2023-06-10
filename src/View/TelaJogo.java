@@ -2,10 +2,13 @@ package View;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.KeyStroke;
+
 import Enums.Cor;
 import Negocio.Genius;
 import Negocio.Jogador;
@@ -20,7 +23,7 @@ import java.util.List;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
-public class TelaJogo extends MyJPanel {
+public class TelaJogo extends MyJPanel implements Runnable {
 
 	private final String imagensPath;
 	long millis = 0;
@@ -29,15 +32,16 @@ public class TelaJogo extends MyJPanel {
 	private boolean eraUltimaJogada;
 	private List<Integer> sequenciadeCoresaExibir;
 	private List<GeniusLabels> geniusLabels = new ArrayList<>();
+	private Thread thread = new Thread(this);
+	private JTabbedPane tabbedPane;
 
 	public TelaJogo(JTabbedPane tabbedPane, Genius jogo) {
 		super();
-
+		this.tabbedPane = tabbedPane;
 		imagensPath = this.getImagesPath();
 		this.setLayout(null);
 		this.jogo = jogo;
 
-		// this.add(lblAzul);
 		this.instanciabotoes();
 
 		JButton btnDificuldade = new JButton();
@@ -97,11 +101,13 @@ public class TelaJogo extends MyJPanel {
 		btnIniciar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.out.println("teste");
-				exibeSequencia();
+				if (!thread.isAlive()) {
+					thread.start();
+					return;
+				}
+				thread.run();
 			}
 		});
-
 	}
 
 	public void instanciabotoes() {
@@ -115,7 +121,7 @@ public class TelaJogo extends MyJPanel {
 				if (e.getSource() != lblAzul) {
 					return;
 				}
-				System.out.println(jogo.analisaJogada((long) 0, (long) 0, Cor.azul));
+				jogo.analisaJogada((long) 0, (long) 0, Cor.azul);
 				lblAzul.pisca();
 			}
 		});
@@ -128,7 +134,7 @@ public class TelaJogo extends MyJPanel {
 				if (e.getSource() != lblVermelho) {
 					return;
 				}
-				System.out.println(jogo.analisaJogada((long) 0, (long) 0, Cor.vermelho));
+				jogo.analisaJogada((long) 0, (long) 0, Cor.vermelho);
 				lblVermelho.pisca();
 			}
 		});
@@ -148,7 +154,7 @@ public class TelaJogo extends MyJPanel {
 					System.out.println(e.toString());
 				}
 				lblAmarelo.pisca();
-
+				jogo.analisaJogada((long) 0, (long) 0, Cor.amarelo);
 			}
 		});
 		lblVerde.setIcon(new ImageIcon(this.getImagesPath() + "verde 1.png"));
@@ -164,32 +170,56 @@ public class TelaJogo extends MyJPanel {
 				} catch (Exception e1) {
 					System.out.println(e.toString());
 				}
+				jogo.analisaJogada((long) 0, (long) 0, Cor.verde);
 				lblVerde.pisca();
 			}
 		});
+		lblAzul.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('w'), "W");
+		lblAzul.getActionMap().put("W", new KeyButtonMaps(this.tabbedPane, lblAzul, this));
+
 		geniusLabels.add(lblAzul);
 		geniusLabels.add(lblAmarelo);
 		geniusLabels.add(lblVermelho);
 		geniusLabels.add(lblVerde);
 		for (int i = 0; i < geniusLabels.size(); i++) {
 			this.add(geniusLabels.get(i));
+
 		}
 
 	}
 
-	public void exibeSequencia() {
+	public synchronized void exibeSequencia() {
 		this.sequenciadeCoresaExibir = jogo.getSequencia();
 		for (int i = 0; i < sequenciadeCoresaExibir.size(); i++) {
-			final int j = i;
-			new java.util.Timer().schedule(
-					new TimerTask() {
-						@Override
-						public void run() {
-							geniusLabels.get(sequenciadeCoresaExibir.get(j)).pisca();
-						}
-					}, 250, 250);
+			// geniusLabels.get(sequenciadeCoresaExibir.get(i)).pisca();
+			final Thread thread = new Thread(geniusLabels.get(i));
+			try {
+				thread.start();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 
 		}
+	}
+
+	@Override
+	public synchronized void run() {
+
+		this.sequenciadeCoresaExibir = jogo.getSequencia();
+		System.out.println(sequenciadeCoresaExibir);
+		for (int i = 0; i < sequenciadeCoresaExibir.size(); i++) {
+			geniusLabels.get(sequenciadeCoresaExibir.get(i)).pisca();
+			try {
+				this.thread.join(300);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		this.thread = new Thread(this);
+	}
+
+	public Thread getThread() {
+		return this.thread;
 	}
 
 }

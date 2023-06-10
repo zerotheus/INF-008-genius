@@ -140,8 +140,10 @@ public class Genius {
             pontua();
             this.indexdaJogadaAtual = 0;
             adicionanaSequencia();
+            System.out.println("Acertou");
             return true;
         }
+        System.out.println("Acertou");
         this.indexdaJogadaAtual++;
         return true;
     }

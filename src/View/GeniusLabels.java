@@ -2,44 +2,42 @@ package View;
 
 import javax.swing.ImageIcon;
 
-public class GeniusLabels extends MyJLabelwithSound {
+public class GeniusLabels extends MyJLabelwithSound implements Runnable {
 
     private final String nomedaImagemBase;
     private final String nomedaImagemBranca;
-    private boolean espera = true;
 
     public GeniusLabels(String nomedaImagemBase, String nomedaImagemBranca) {
         this.nomedaImagemBase = nomedaImagemBase;
         this.nomedaImagemBranca = nomedaImagemBranca;
     }
 
-    public void pisca() {
+    public synchronized void pisca() {
         String imagensPath = this.getImagesBasePath();
         this.setIcon(new ImageIcon(this.getImagesBasePath() + this.nomedaImagemBranca));
         new java.util.Timer().schedule(
                 new java.util.TimerTask() {
                     @Override
-                    public void run() {
+                    public synchronized void run() {
                         setIcon(new ImageIcon(imagensPath + nomedaImagemBase));
                     }
                 },
                 250);
     }
 
-    public void pisca(int tempo) throws InterruptedException {
-
+    @Override
+    public void run() {
         String imagensPath = this.getImagesBasePath();
-
         this.setIcon(new ImageIcon(this.getImagesBasePath() + this.nomedaImagemBranca));
         new java.util.Timer().schedule(
                 new java.util.TimerTask() {
                     @Override
-                    public void run() {
+                    public synchronized void run() {
                         setIcon(new ImageIcon(imagensPath + nomedaImagemBase));
-                        espera = false;
                     }
                 },
                 250);
+        System.out.println("a");
     }
 
 }
