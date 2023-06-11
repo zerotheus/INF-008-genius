@@ -1,59 +1,65 @@
 package Negocio;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Stream;
+
 import Enums.Cor;
 
-public class Genius {
+public class Genius implements Serializable{
     private Data data;// mudar para tipo para Date;
     private String titulodoCampeonato;
+    private int ritmo;
     private int dificuldade;
     private List<Jogador> jogadores; // para facilitar a alteracao na quantidade de jogadores
     private List<Integer> sequenciaDeCores;
     private int indexJogadorAtual;
+    private int indexdaJogadaAtual;
     private int tempoParaReagir; // A definir oq poderia ser considerado facil ou dificil
 
-    public Genius(Data data, String titulodoCampeonato, int dificuldade, List<Jogador> jogadores,
-            List<Integer> sequenciaDeCores, int indexJogadorAtual, int tempoParaReagir) {
+    public Genius(Data data, String titulodoCampeonato, int ritmo, List<Jogador> jogadores,
+            List<Integer> sequenciaDeCores, int indexJogadorAtual, int tempoParaReagir, int indexdaJogadaAtual) {
         this.data = data;
         this.titulodoCampeonato = titulodoCampeonato;
-        this.dificuldade = dificuldade = 0; // 1 easy // 2 medio // 3 dificil
+        this.setRitmo(ritmo); // 1 lento // 2 cadenciado // 3 rapido
         this.jogadores = jogadores;
         this.sequenciaDeCores = sequenciaDeCores;
         this.indexJogadorAtual = indexJogadorAtual;
         this.tempoParaReagir = tempoParaReagir;
     }
 
-    public Genius(String titulodoCampeonato, int dificuldade) {
+    public Genius(String titulodoCampeonato) {
         data = new Data(LocalDateTime.now().getDayOfMonth(), LocalDateTime.now().getMonthValue(),
                 LocalDateTime.now().getYear());
         this.titulodoCampeonato = titulodoCampeonato;
-        setDificuldade(1);
+        setRitmo(1);
         this.jogadores = new ArrayList<Jogador>();
         this.indexJogadorAtual = 0;
         geraSequencia();
     }
 
-    public void setDificuldade(int mudanca) {
-        if (mudanca + this.dificuldade < 1 || mudanca + this.dificuldade > 3) {
-            return;
+    public void setRitmo(int mudanca) {
+        if (mudanca + this.ritmo < 1 || mudanca + this.ritmo > 3) {
+            this.ritmo = 0;
         }
-        this.dificuldade += mudanca;
-        setTempodeReacao(this.dificuldade);
+        this.ritmo += mudanca;
+        System.out.println(this.ritmo);
+        setTempodeReacao(this.ritmo);
     }
 
-    private void setTempodeReacao(int dificuldade) {
-        if (dificuldade == 1) {
+    private void setTempodeReacao(int ritmo) {
+        if (ritmo == 1) {
             tempoParaReagir = 180000;
             return;
         }
-        if (dificuldade == 2) {
+        if (ritmo == 2) {
             tempoParaReagir = 3000;
             return;
         }
-        if (dificuldade == 3) {
+        if (ritmo == 3) {
             tempoParaReagir = 1000;
             return;
         }
@@ -67,15 +73,43 @@ public class Genius {
         return jogadores.get(indexJogadorAtual);
     }
 
+    public int qtdJogadores() {
+        return this.jogadores.size();
+    }
+
+    public List<Jogador> getListaJogadores() {
+        return this.jogadores;
+    }
+
     public String getTitulodoCampeonato() {
         return this.titulodoCampeonato;
     }
 
+    public List<Integer> getSequencia() {
+        return this.sequenciaDeCores;
+    }
+    public Integer getUltimoElemento() {
+    	return this.sequenciaDeCores.get(sequenciaDeCores.size()-1);
+    }
+    
+    
     private void alteraJogadorAtual() {
-        if (this.indexJogadorAtual < this.jogadores.size()) {
+        if (this.indexJogadorAtual + 1 < this.jogadores.size()) {
             geraSequencia();
+            this.indexdaJogadaAtual = 0;
             this.indexJogadorAtual++;
         }
+    }
+
+    public boolean ehUltimaJogaga() {
+    	int i =-1;
+    	for(Integer elemento : sequenciaDeCores)
+    		i+=1;
+    	System.out.println("sequenciaDeCores.size(): "+ sequenciaDeCores.size());
+        if (this.indexdaJogadaAtual == sequenciaDeCores.size()-1) {
+            return true;
+        }
+        return false;
     }
 
     public void adicionaJogador(Jogador novoJogador) {
@@ -83,17 +117,18 @@ public class Genius {
         return;
     }
 
-    private void pontua(int numeroDaJogada) {
-        this.jogadores.get(this.indexJogadorAtual).pontua(numeroDaJogada);
+    private void pontua() {
+        this.jogadores.get(this.indexJogadorAtual).pontua(this.indexdaJogadaAtual);
     }
 
-    public boolean analisaJogada(Long instantedaExibicao, Long instantedaReacao, int numeroDaJogada, Cor jogada) {
+    public boolean analisaJogada(Long instantedaExibicao, Long instantedaReacao, Cor jogada) {
+        this.getJogadorAtual().foiJogadaMaisRapida(instantedaExibicao - instantedaReacao);
+
         if (!reagiuEmTempo(instantedaExibicao, instantedaReacao)) {
             this.alteraJogadorAtual();
             return false;
         }
-
-        return acertouaSequencia(numeroDaJogada, jogada);
+        return acertouaSequencia(jogada);
     }
 
     private boolean reagiuEmTempo(Long instantedaExibicao, Long instantedaReacao) {
@@ -103,17 +138,22 @@ public class Genius {
         return false;
     }
 
-    private boolean acertouaSequencia(int numerodaJogada, Cor cor) {
+    private boolean acertouaSequencia(Cor cor) {
 
-        if (cor.ordinal() != this.sequenciaDeCores.get(numerodaJogada)) {
+        if (cor.ordinal() != this.sequenciaDeCores.get(this.indexdaJogadaAtual)) {
             this.alteraJogadorAtual();
+            this.indexdaJogadaAtual = 0;
             return false;
         }
-        if (numerodaJogada == this.sequenciaDeCores.size()) {
-            pontua(numerodaJogada);
+        if (this.indexdaJogadaAtual + 1 == this.sequenciaDeCores.size()) {
+            pontua();
+            this.indexdaJogadaAtual = 0;
             adicionanaSequencia();
+            System.out.println("Acertou");
+            return true;
         }
-
+        System.out.println("Acertou");
+        this.indexdaJogadaAtual++;
         return true;
     }
 
@@ -130,6 +170,7 @@ public class Genius {
     private void adicionanaSequencia() {
         Random geraNumeroAleatorio = new Random();
         this.sequenciaDeCores.add(geraNumeroAleatorio.nextInt(4));
+        System.out.println(this.sequenciaDeCores.get(this.sequenciaDeCores.size() - 1));
     }
 
 }
