@@ -162,8 +162,9 @@ public class Genius implements Serializable {
             System.out.println("perdeu!");
             return false;
         }
+        pontua();
+
         if (this.indexdaJogadaAtual + 1 == this.sequenciaDeCores.size()) {
-            pontua();
             this.indexdaJogadaAtual = 0;
             adicionanaSequencia();
             System.out.println("Acertou");
