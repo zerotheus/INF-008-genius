@@ -62,10 +62,10 @@ public class Jogador {
         return JogadaMaisRapidaEmUnidadedeTempo;
     }
 
-    public void foiJogadaMaisRapida( Long jogada){
-    if (JogadaMaisRapidaEmUnidadedeTempo > jogada){
-    JogadaMaisRapidaEmUnidadedeTempo = jogada;
-    }
+    public void foiJogadaMaisRapida(Long jogada) {
+        if (JogadaMaisRapidaEmUnidadedeTempo > jogada) {
+            JogadaMaisRapidaEmUnidadedeTempo = jogada;
+        }
     }
 
     public int getTempoTotalJogado() {

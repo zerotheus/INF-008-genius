@@ -1,26 +1,24 @@
 package Negocio;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Stream;
-
 import Enums.Cor;
 
-public class Genius {
+public class Genius implements Serializable {
     private Data data;// mudar para tipo para Date;
     private String titulodoCampeonato;
     private int ritmo;
-    private int dificuldade;
     private List<Jogador> jogadores; // para facilitar a alteracao na quantidade de jogadores
     private List<Integer> sequenciaDeCores;
     private int indexJogadorAtual;
-    private int indexdaJogadaAtual;
+    private int indexdaJogadaAtual = 0;
     private int tempoParaReagir; // A definir oq poderia ser considerado facil ou dificil
 
     public Genius(Data data, String titulodoCampeonato, int ritmo, List<Jogador> jogadores,
-            List<Integer> sequenciaDeCores, int indexJogadorAtual, int tempoParaReagir, int indexdaJogadaAtual) {
+            List<Integer> sequenciaDeCores, int indexJogadorAtual, int tempoParaReagir) {
         this.data = data;
         this.titulodoCampeonato = titulodoCampeonato;
         this.setRitmo(ritmo); // 1 lento // 2 cadenciado // 3 rapido
@@ -38,6 +36,10 @@ public class Genius {
         this.jogadores = new ArrayList<Jogador>();
         this.indexJogadorAtual = 0;
         geraSequencia();
+    }
+
+    public void setTitulo(String tituloNovo) {
+        this.titulodoCampeonato = tituloNovo;
     }
 
     public void setRitmo(int mudanca) {
@@ -77,15 +79,15 @@ public class Genius {
     }
 
     public List<Jogador> getListaJogadores() {
-        return this.jogadores;
-    }
-
-    public String getTitulodoCampeonato() {
-        return this.titulodoCampeonato;
+        return List.copyOf(this.jogadores);
     }
 
     public List<Integer> getSequencia() {
         return this.sequenciaDeCores;
+    }
+
+    public String getTitulodoCampeonato() {
+        return this.titulodoCampeonato;
     }
 
     private void alteraJogadorAtual() {
@@ -97,7 +99,9 @@ public class Genius {
     }
 
     public boolean ehUltimaJogaga() {
-        if (this.indexdaJogadaAtual + 1 == this.sequenciaDeCores.size()) {
+
+        System.out.println("sequenciaDeCores.size(): " + sequenciaDeCores.size());
+        if (this.indexdaJogadaAtual == sequenciaDeCores.size() - 1) {
             return true;
         }
         return false;
@@ -117,6 +121,7 @@ public class Genius {
 
         if (!reagiuEmTempo(instantedaExibicao, instantedaReacao)) {
             this.alteraJogadorAtual();
+            System.out.println("perdeu!");
             return false;
         }
         return acertouaSequencia(jogada);
@@ -134,6 +139,7 @@ public class Genius {
         if (cor.ordinal() != this.sequenciaDeCores.get(this.indexdaJogadaAtual)) {
             this.alteraJogadorAtual();
             this.indexdaJogadaAtual = 0;
+            System.out.println("perdeu!");
             return false;
         }
         if (this.indexdaJogadaAtual + 1 == this.sequenciaDeCores.size()) {

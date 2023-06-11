@@ -37,34 +37,55 @@ public class TelaPlacar extends MyJPanel {
         lblTituloJogo.setBounds(675, 65, 640, 48);
         this.add(lblTituloJogo);
 
+        MyJLabelwithSound lblVoltar = new MyJLabelwithSound();
+        lblVoltar.setIcon(new ImageIcon(this.getImagesPath() + "botaoVoltar.png"));
+        lblVoltar.setBounds(1270, 812, 152, 58);
+        lblVoltar.setVisible(true);
+        this.add(lblVoltar);
+
         JLabel lblFundoJogo = new JLabel("");
         lblFundoJogo.setIcon(new ImageIcon(this.getImagesPath() + "tela placar.png"));
         lblFundoJogo.setBounds(0, 0, 1444, 881);
         this.add(lblFundoJogo);
 
-        JLabel lblVoltar = new JLabel("");
-        lblVoltar.setIcon(new ImageIcon(this.getImagesPath() + "botao voltar.png"));
-        lblVoltar.setBounds(680, 771, 133, 68);
-        lblVoltar.setVisible(true);
+        lblVoltar.addMouseListener(new MouseAdapter() { // colocar som ao clicar o botão
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getSource() != lblVoltar) {
+                    return;
+                }
+                try {
+                    lblVoltar.startSound();
+                } catch (Exception e1) {
+                    System.out.println(e.toString());
+                }
+                lblVoltar.setEnabled(false);
+                lblVoltar.setVisible(false);
+                JPanel telaInicial = new TelaInicial(tabbedPane);
+                tabbedPane.insertTab("Tela Inicial", null, telaInicial, TOOL_TIP_TEXT_KEY, 1);
+                tabbedPane.removeTabAt(0);
+
+            }
+        });
 
     }
 
-    public void desenhaPlacar(Genius jogo){
+    public void desenhaPlacar(Genius jogo) {
         int posicao = 70;
         int qtdJogadores = jogo.qtdJogadores();
 
-        /*inicio dos nomes */
+        /* inicio dos nomes */
         labelNomes = new ArrayList<JLabel>();
-        for(int i =0; i<qtdJogadores ; i++ ){
-        labelNomes.add(new JLabel(jogo.getJogadorAtual().getNome()));
-        labelNomes.get(i).setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 34));
-        labelNomes.get(i).setForeground(Color.WHITE);
-        labelNomes.get(i).setBounds(76, 267 + posicao * i, 315, 38);
-        this.add(labelNomes.get(i));
+        for (int i = 0; i < qtdJogadores; i++) {
+            labelNomes.add(new JLabel(jogo.getJogadorAtual().getNome()));
+            labelNomes.get(i).setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 34));
+            labelNomes.get(i).setForeground(Color.WHITE);
+            labelNomes.get(i).setBounds(76, 267 + posicao * i, 315, 38);
+            this.add(labelNomes.get(i));
         }
-        /*fim dos nomes */
+        /* fim dos nomes */
 
-        /*INICIO APELIDO */
+        /* INICIO APELIDO */
 
         labelApelidos = new ArrayList<JLabel>();
         for (int i = 0; i < qtdJogadores; i++) {
@@ -74,9 +95,9 @@ public class TelaPlacar extends MyJPanel {
             labelApelidos.get(i).setBounds(419, 267 + posicao * i, 308, 38);
             this.add(labelApelidos.get(i));
         }
-        /*FIM APELIDO */
+        /* FIM APELIDO */
 
-        /*INICIO TEMPO TOTAL */
+        /* INICIO TEMPO TOTAL */
         labelTempoTot = new ArrayList<JLabel>();
         for (int i = 0; i < qtdJogadores; i++) {
             labelTempoTot.add(new JLabel(jogo.getJogadorAtual().getTempoTotalJogado() + ""));
@@ -85,21 +106,24 @@ public class TelaPlacar extends MyJPanel {
             labelTempoTot.get(i).setBounds(786, 267 + posicao * i, 136, 38);
             this.add(labelTempoTot.get(i));
         }
-		
-        /*FIM TEMPO TOTAL */
 
-        /*INICIO PONTOS TOTAL */
+        /* FIM TEMPO TOTAL */
+
+        /* INICIO PONTOS TOTAL */
         labelPontosTot = new ArrayList<JLabel>();
-        for (int i = 0; i < qtdJogadores; i++) {
-            labelPontosTot.add(new JLabel(jogo.getJogadorAtual().getrecordPessoal() + ""));
+        for (int i = 0; i < qtdJogadores; i++) {// alterar dps, ele está preenchendo todos os campos com a mesma
+                                                // informação. talvez usar for each combinado com um contador
+            labelPontosTot.add(new JLabel(jogo.getJogadorAtual().getPontos() + "")); // temporariamente alterado para
+                                                                                     // pontos da partida não record
+                                                                                     // pessoal
             labelPontosTot.get(i).setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 34));
             labelPontosTot.get(i).setForeground(Color.WHITE);
             labelPontosTot.get(i).setBounds(986, 267 + posicao * i, 152, 38);
             this.add(labelPontosTot.get(i));
         }
-        /*FIM PONTOS TOTAL */
+        /* FIM PONTOS TOTAL */
 
-        /*INICIO MELHOR JOGADA */
+        /* INICIO MELHOR JOGADA */
         labelMelhorJgd = new ArrayList<JLabel>();
         for (int i = 0; i < qtdJogadores; i++) {
             labelMelhorJgd.add(new JLabel(jogo.getJogadorAtual().getJogadaMaisRapidaEmUnidadedeTempo() + ""));
@@ -108,6 +132,7 @@ public class TelaPlacar extends MyJPanel {
             labelMelhorJgd.get(i).setBounds(1223, 267 + posicao * i, 116, 38);
             this.add(labelMelhorJgd.get(i));
         }
-        /*FIM MELHOR JOGADA */
+        /* FIM MELHOR JOGADA */
     }
+
 }

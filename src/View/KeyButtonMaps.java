@@ -1,24 +1,28 @@
 package View;
 
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 
-import javax.swing.AbstractAction;
-import javax.swing.JTabbedPane;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.Unsuppoimport
+
+
+import View.geniusLabels.GeniusLabels;
 
 public class KeyButtonMaps extends AbstractAction {
 
     private final JTabbedPane tabbedPane;
     private final GeniusLabels botao;
-    private MyJPanel panel;
+    private Thread thread;
 
-    KeyButtonMaps(JTabbedPane tabbedPane, GeniusLabels botao, MyJPanel panel) {
-        this.tabbedPane = tabbedPane;
-        this.botao = botao;
-    }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        this.botao.pisca();
+    this.tabbedPane=tabbedPane;this.botao=botao;}
+
+    @Override oid actionPerf
+
+    
+
+r}    System.out.println("pisquei");
     }
 
 }

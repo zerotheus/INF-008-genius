@@ -19,6 +19,13 @@ public class TelaInicial extends MyJPanel {
                 new ImageIcon(this.getImagesPath() + "botão iniciar.png"));
         lblbutao.setBounds(587, 573, 276, 117);
         this.add(lblbutao);
+
+        MyJLabelwithSound lblFechar = new MyJLabelwithSound();
+        lblFechar.setIcon(new ImageIcon(this.getImagesPath() + "botaoVoltar.png"));
+        lblFechar.setBounds(650, 795, 106, 53);
+        lblFechar.setVisible(true);
+        this.add(lblFechar);
+
         lbltelaFundo = new JLabeldateladeFundo();
         this.add(lbltelaFundo);
 
@@ -38,6 +45,23 @@ public class TelaInicial extends MyJPanel {
                 JPanel teladeMododeJogo = new TeladeSelecaoModo(tabbedPane);
                 tabbedPane.insertTab("Selecione o modo de Jogo", null, teladeMododeJogo, TOOL_TIP_TEXT_KEY, 1);
                 tabbedPane.removeTabAt(0);
+
+            }
+        });
+
+        lblFechar.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getSource() != lblFechar) {
+                    return;
+                }
+                try {
+                    lblFechar.startSound();
+                } catch (Exception e1) {
+                    System.out.println(e1.toString());
+                }
+
+                System.exit(0);
 
             }
         });
