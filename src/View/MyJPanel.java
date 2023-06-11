@@ -11,7 +11,7 @@ public abstract class MyJPanel extends JPanel {
     protected MyJPanel() {
         this.imagesBasePath = new File("src\\imagens").getPath() + "\\";
         this.basePath = new File("").getAbsolutePath() + "\\";
-
+        this.setLayout(null);
     }
 
     protected String getImagesPath() {
