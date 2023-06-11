@@ -13,6 +13,7 @@ public class AcaoTrocaparaTeladoJogo extends AbstractAction {
 
     private final JTabbedPane tabbedPane;
     private final MyJLabelwithSound botao;
+    
 
     public AcaoTrocaparaTeladoJogo(JTabbedPane tabbedPane, MyJLabelwithSound botao) {
         this.tabbedPane = tabbedPane;

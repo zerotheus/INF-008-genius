@@ -2,7 +2,7 @@ package Negocio;
 
 import java.io.Serializable;
 
-public class Jogador implements Serializable{
+public class Jogador implements Serializable {
 
     private String nome;
     private String apelido;
@@ -64,10 +64,10 @@ public class Jogador implements Serializable{
         return JogadaMaisRapidaEmUnidadedeTempo;
     }
 
-    public void foiJogadaMaisRapida( Long jogada){
-    if (JogadaMaisRapidaEmUnidadedeTempo > jogada){
-    JogadaMaisRapidaEmUnidadedeTempo = jogada;
-    }
+    public void foiJogadaMaisRapida(Long jogada) {
+        if (JogadaMaisRapidaEmUnidadedeTempo > jogada) {
+            JogadaMaisRapidaEmUnidadedeTempo = jogada;
+        }
     }
 
     public int getTempoTotalJogado() {

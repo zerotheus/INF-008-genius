@@ -10,7 +10,6 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
 import javax.swing.plaf.FileChooserUI;
-
 import Enums.Cor;
 import Negocio.Genius;
 import Negocio.Jogador;
@@ -34,7 +33,6 @@ import java.util.concurrent.TimeUnit;
 
 public class TelaJogo extends MyJPanel implements Runnable {
 
-	private final String imagensPath;
 	long millis = 0;
 	long segundos = 0;
 	private Genius jogo;
@@ -48,7 +46,6 @@ public class TelaJogo extends MyJPanel implements Runnable {
 	public TelaJogo(JTabbedPane tabbedPane, Genius jogo) {
 		super();
 		this.tabbedPane = tabbedPane;
-		imagensPath = this.getImagesPath();
 		this.setLayout(null);
 		this.jogo = jogo;
 
@@ -80,7 +77,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		lblFundoJogo.setIcon(new ImageIcon(this.getImagesPath() + "fundojOGO.png"));
 		lblFundoJogo.setBounds(0, 0, 1444, 881);
 		this.add(lblFundoJogo);
-		
+
 		MyJLabelwithSound btnCarregar = new MyJLabelwithSound();
 		btnCarregar.setBounds(1223, 720, 164, 57);
 		this.add(btnCarregar);
@@ -91,7 +88,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		this.add(btnIniciar);
 		btnIniciar.setEnabled(true);
 		btnIniciar.setVisible(true);
-		
+
 		btnSalvar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -100,29 +97,28 @@ public class TelaJogo extends MyJPanel implements Runnable {
 				} catch (Exception e1) {
 					System.out.println(e.toString());
 				}
-				
+
 				final JFileChooser fc = new JFileChooser();
 				int returnVal = fc.showOpenDialog(lblFundoJogo);
-		        if (returnVal == JFileChooser.APPROVE_OPTION) {
-		            File file = fc.getSelectedFile();
-		            try {
-		            	FileOutputStream fileStream = new FileOutputStream(file);
-		                ObjectOutputStream os = new ObjectOutputStream(fileStream);
-		                os.writeObject(jogo);
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					File file = fc.getSelectedFile();
+					try {
+						FileOutputStream fileStream = new FileOutputStream(file);
+						ObjectOutputStream os = new ObjectOutputStream(fileStream);
+						os.writeObject(jogo);
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-		             
-		            //This is where a real application would open the file.
-		        }
-		        JPanel telaPlacar = new TelaPlacar(tabbedPane, jogo);
+
+					// This is where a real application would open the file.
+				}
+				JPanel telaPlacar = new TelaPlacar(tabbedPane, jogo);
 				tabbedPane.insertTab("Genius", null, telaPlacar, TOOL_TIP_TEXT_KEY, 1);
 				tabbedPane.removeTabAt(0);
 
 			}
 		});
-
 
 		btnCarregar.addMouseListener(new MouseAdapter() {
 			@Override
@@ -136,19 +132,19 @@ public class TelaJogo extends MyJPanel implements Runnable {
 				final JFileChooser fc = new JFileChooser();
 				int returnVal = fc.showOpenDialog(lblFundoJogo);
 
-		        if (returnVal == JFileChooser.APPROVE_OPTION) {
-		            File file = fc.getSelectedFile();
-		            try {
-						FileInputStream  fis = new java.io.FileInputStream(file);
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					File file = fc.getSelectedFile();
+					try {
+						FileInputStream fis = new java.io.FileInputStream(file);
 						ObjectInputStream is = new ObjectInputStream(fis);
 						jogoCarregado = (Genius) is.readObject();
 					} catch (IOException | ClassNotFoundException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-		             
-		            //This is where a real application would open the file.
-		        }
+
+					// This is where a real application would open the file.
+				}
 				JPanel telaPlacar = new TelaPlacar(tabbedPane, jogoCarregado);
 				tabbedPane.insertTab("Genius", null, telaPlacar, TOOL_TIP_TEXT_KEY, 1);
 				tabbedPane.removeTabAt(0);
@@ -162,9 +158,9 @@ public class TelaJogo extends MyJPanel implements Runnable {
 				if (!thread.isAlive()) {
 					thread.start();
 					return;
-				}		
+				}
 				thread.run();
-				
+
 			}
 		});
 	}
@@ -180,23 +176,16 @@ public class TelaJogo extends MyJPanel implements Runnable {
 				if (e.getSource() != lblAzul) {
 					return;
 				}
+				eraUltimaJogada = jogo.ehUltimaJogaga();
+				System.out.println("É o último:" + jogo.ehUltimaJogaga());
 				naoPerdeu = jogo.analisaJogada((long) 0, (long) 0, Cor.azul);
 				lblAzul.pisca();
-				System.out.println("É o último:"+jogo.ehUltimaJogaga());
-				if(jogo.ehUltimaJogaga() == true && naoPerdeu == true) {
-					if(Cor.azul.ordinal() == jogo.getUltimoElemento()) {
-						if (!thread.isAlive()) {
-							thread.start();
-							return;
-						}	
-						try {
-							thread.wait(300);
-						} catch (InterruptedException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-						JOptionPane.showMessageDialog( lblAzul, "Acertou!");
-						thread.run();
+				if (eraUltimaJogada && naoPerdeu) {
+
+					if (!thread.isAlive()) {
+						thread.start();
+						return;
+
 					}
 				}
 			}
@@ -205,28 +194,22 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		lblVermelho.setIcon(new ImageIcon(this.getImagesPath() + "vermelho 1.png"));
 		lblVermelho.setBounds(447, 474, 322, 316);
 		lblVermelho.addMouseListener(new MouseAdapter() {
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getSource() != lblVermelho) {
 					return;
 				}
+				eraUltimaJogada = jogo.ehUltimaJogaga();
+				System.out.println("É o último:" + jogo.ehUltimaJogaga());
 				naoPerdeu = jogo.analisaJogada((long) 0, (long) 0, Cor.vermelho);
 				lblVermelho.pisca();
-				System.out.println("É o último:"+jogo.ehUltimaJogaga());
-				if(jogo.ehUltimaJogaga() == true && naoPerdeu == true) {
-					if(Cor.vermelho.ordinal() == jogo.getUltimoElemento()) {
-						if (!thread.isAlive()) {
-							thread.start();
-							return;
-						}	
-						try {
-							thread.wait(300);
-						} catch (InterruptedException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-						JOptionPane.showMessageDialog( lblVermelho, "Acertou!");
-						thread.run();
+				if (eraUltimaJogada && naoPerdeu) {
+
+					if (!thread.isAlive()) {
+						thread.start();
+						return;
+
 					}
 				}
 			}
@@ -234,6 +217,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		GeniusLabels lblAmarelo = new GeniusLabels("amarelo 1.png", "amarelo branco.png", "Re.wav");
 		lblAmarelo.setIcon(new ImageIcon(this.getImagesPath() + "amarelo 1.png"));
 		lblAmarelo.setBounds(807, 78, 322, 316);
+
 		GeniusLabels lblVerde = new GeniusLabels("verde 1.png", "verde branco.png", "Mi.wav");
 		lblAmarelo.addMouseListener(new MouseAdapter() {
 			@Override
@@ -241,22 +225,17 @@ public class TelaJogo extends MyJPanel implements Runnable {
 				if (e.getSource() != lblAmarelo) {
 					return;
 				}
-				lblAmarelo.pisca();
-				System.out.println("É o último:"+jogo.ehUltimaJogaga());
+				eraUltimaJogada = jogo.ehUltimaJogaga();
+				System.out.println("É o último:" + jogo.ehUltimaJogaga());
 				naoPerdeu = jogo.analisaJogada((long) 0, (long) 0, Cor.amarelo);
-				if(jogo.ehUltimaJogaga() == true && naoPerdeu == true) {
-					if(Cor.amarelo.ordinal() == jogo.getUltimoElemento()) {
+				lblAmarelo.pisca();
+				if (eraUltimaJogada && naoPerdeu) {
+
+					if (!thread.isAlive()) {
 						thread.start();
 						return;
-					}	
-					try {
-						thread.wait(200);
-					} catch (InterruptedException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+
 					}
-					JOptionPane.showMessageDialog( lblAmarelo, "Acertou!");
-					thread.run();
 				}
 			}
 		});
@@ -268,23 +247,16 @@ public class TelaJogo extends MyJPanel implements Runnable {
 				if (e.getSource() != lblVerde) {
 					return;
 				}
+				eraUltimaJogada = jogo.ehUltimaJogaga();
+				System.out.println("É o último:" + jogo.ehUltimaJogaga());
 				naoPerdeu = jogo.analisaJogada((long) 0, (long) 0, Cor.verde);
 				lblVerde.pisca();
-				System.out.println("É o último:"+jogo.ehUltimaJogaga());
-				if(jogo.ehUltimaJogaga() == true && naoPerdeu == true) {
-					if(Cor.verde.ordinal() == jogo.getUltimoElemento()) {
-						if (!thread.isAlive()) {
-							thread.start();
-							return;
-						}	
-						try {
-							thread.wait(300);
-						} catch (InterruptedException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-						JOptionPane.showMessageDialog( lblVerde, "Acertou!");
-						thread.run();
+				if (eraUltimaJogada && naoPerdeu) {
+
+					if (!thread.isAlive()) {
+						thread.start();
+						return;
+
 					}
 				}
 			}
@@ -321,6 +293,11 @@ public class TelaJogo extends MyJPanel implements Runnable {
 	public synchronized void run() {
 		this.sequenciadeCoresaExibir = jogo.getSequencia();
 		System.out.println(sequenciadeCoresaExibir);
+		try {
+			this.thread.join(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		for (int i = 0; i < sequenciadeCoresaExibir.size(); i++) {
 			geniusLabels.get(sequenciadeCoresaExibir.get(i)).pisca();
 			try {
