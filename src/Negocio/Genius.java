@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Stream;
 
 import Enums.Cor;
 
@@ -41,9 +40,10 @@ public class Genius implements Serializable {
         geraSequencia();
     }
 
-    public void setTitulo(String tituloNovo){
+    public void setTitulo(String tituloNovo) {
         this.titulodoCampeonato = tituloNovo;
     }
+
     public void setRitmo(int mudanca) {
         if (mudanca + this.ritmo < 1 || mudanca + this.ritmo > 3) {
             this.ritmo = 0;
@@ -73,6 +73,9 @@ public class Genius implements Serializable {
     }
 
     public Jogador getJogadorAtual() {
+        if (jogoEstaAtivo()) {
+            jogadores.get(indexJogadorAtual);
+        }
         return jogadores.get(indexJogadorAtual);
     }
 
@@ -101,13 +104,24 @@ public class Genius implements Serializable {
             geraSequencia();
             this.indexdaJogadaAtual = 0;
             this.indexJogadorAtual++;
+            return;
         }
+        this.encerraJogo();
+        return;
+    }
+
+    private void encerraJogo() {
+        indexJogadorAtual++;
+    }
+
+    public boolean jogoEstaAtivo() {
+        if (indexJogadorAtual == this.jogadores.size()) {
+            return false;
+        }
+        return true;
     }
 
     public boolean ehUltimaJogaga() {
-        int i = -1;
-        for (Integer elemento : sequenciaDeCores)
-            i += 1;
         System.out.println("sequenciaDeCores.size(): " + sequenciaDeCores.size());
         if (this.indexdaJogadaAtual == sequenciaDeCores.size() - 1) {
             return true;
@@ -125,6 +139,9 @@ public class Genius implements Serializable {
     }
 
     public boolean analisaJogada(Long instantedaExibicao, Long instantedaReacao, Cor jogada) {
+        if (!jogoEstaAtivo()) {
+            return false;
+        }
         this.getJogadorAtual().foiJogadaMaisRapida(instantedaExibicao - instantedaReacao);
 
         if (!reagiuEmTempo(instantedaExibicao, instantedaReacao)) {
