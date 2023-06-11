@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 
 import Enums.Cor;
 
-public class Genius implements Serializable{
+public class Genius implements Serializable {
     private Data data;// mudar para tipo para Date;
     private String titulodoCampeonato;
     private int ritmo;
@@ -88,11 +88,11 @@ public class Genius implements Serializable{
     public List<Integer> getSequencia() {
         return this.sequenciaDeCores;
     }
+
     public Integer getUltimoElemento() {
-    	return this.sequenciaDeCores.get(sequenciaDeCores.size()-1);
+        return this.sequenciaDeCores.get(sequenciaDeCores.size() - 1);
     }
-    
-    
+
     private void alteraJogadorAtual() {
         if (this.indexJogadorAtual + 1 < this.jogadores.size()) {
             geraSequencia();
@@ -102,11 +102,11 @@ public class Genius implements Serializable{
     }
 
     public boolean ehUltimaJogaga() {
-    	int i =-1;
-    	for(Integer elemento : sequenciaDeCores)
-    		i+=1;
-    	System.out.println("sequenciaDeCores.size(): "+ sequenciaDeCores.size());
-        if (this.indexdaJogadaAtual == sequenciaDeCores.size()-1) {
+        int i = -1;
+        for (Integer elemento : sequenciaDeCores)
+            i += 1;
+        System.out.println("sequenciaDeCores.size(): " + sequenciaDeCores.size());
+        if (this.indexdaJogadaAtual == sequenciaDeCores.size() - 1) {
             return true;
         }
         return false;
@@ -135,6 +135,7 @@ public class Genius implements Serializable{
         if (instantedaExibicao + tempoParaReagir > instantedaReacao) {
             return true;
         }
+        return false;
     }
 
     private boolean acertouaSequencia(Cor cor) {
