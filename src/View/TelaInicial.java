@@ -3,9 +3,11 @@ package View;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.KeyStroke;
 
 public class TelaInicial extends MyJPanel {
     private JLabel lbltelaFundo;
@@ -49,7 +51,9 @@ public class TelaInicial extends MyJPanel {
 
             }
         });
-        
+        lblbutao.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('.'), "A");
+	    lblbutao.getActionMap().put("A", new AcaoTrocaparaTeladoJogo(tabbedPane, lblbutao));
+
         lblFechar.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -68,5 +72,7 @@ public class TelaInicial extends MyJPanel {
             }
         });
     }
+
+    
 
 }

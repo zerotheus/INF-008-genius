@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
 import javax.swing.plaf.FileChooserUI;
+import javax.swing.ImageIcon;
 import Enums.Cor;
 import Negocio.Genius;
 import Negocio.Jogador;
@@ -38,7 +39,8 @@ public class TelaJogo extends MyJPanel implements Runnable {
 	long millis = 0;
 	long segundos = 0;
 	private Genius jogo;
-	private boolean eraUltimaJogada;
+	private boolean eraUltimaJogada = true;
+	private boolean eraUltimoPlayer = false;
 	private List<Integer> sequenciadeCoresaExibir;
 	private List<GeniusLabels> geniusLabels = new ArrayList<>();
 	private Thread thread = new Thread(this);
@@ -57,12 +59,21 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		this.add(btnDificuldade);
 		btnDificuldade.setVisible(false);
 
+		MyJLabelwithSound btnIniciar = new MyJLabelwithSound();
+		btnIniciar.setBounds(1212, 87, 190, 70);
+		btnIniciar.setVisible(true);
+		this.add(btnIniciar);
+		
+
 		MyJLabelwithSound btnSalvar = new MyJLabelwithSound();
 		btnSalvar.setBounds(1223, 405, 173, 57);
 		btnSalvar.setVisible(true);
 		this.add(btnSalvar);
 
-		
+		MyJLabelwithSound btnCarregar = new MyJLabelwithSound();
+		btnCarregar.setBounds(1206, 716, 190, 70);
+		btnCarregar.setVisible(true);
+		this.add(btnCarregar);
 		
 
 		JLabel lblFundoJogo = new JLabel();
@@ -70,16 +81,32 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		lblFundoJogo.setBounds(0, 0, 1444, 881);
 		this.add(lblFundoJogo);
 
-		MyJLabelwithSound btnCarregar = new MyJLabelwithSound();
-		btnCarregar.setBounds(1223, 720, 164, 57);
-		this.add(btnCarregar);
-		btnCarregar.setVisible(true);
+		
+		
 
-		MyJLabelwithSound btnIniciar = new MyJLabelwithSound();
-		btnIniciar.setBounds(1223, 89, 173, 55);
-		this.add(btnIniciar);
-		btnIniciar.setEnabled(true);
-		btnIniciar.setVisible(true);
+		btnIniciar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(eraUltimoPlayer == true){
+					btnIniciar.setEnabled(false);
+					btnIniciar.setIcon(
+							new ImageIcon((btnIniciar.getImagesBasePath()+"botao inica_desabilitado.png")));
+				}
+				else{
+					try {
+						btnIniciar.startSound("Sol.wav");
+					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					if (!thread.isAlive()) {
+						thread.start();
+						return;
+					}
+					thread.run();
+				}
+			}
+		});
 
 		btnSalvar.addMouseListener(new MouseAdapter() {
 			@Override
@@ -115,52 +142,46 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		btnCarregar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				try {
-					btnCarregar.startSound();
-				} catch (Exception e1) {
-					System.out.println(e.toString());
+				if(eraUltimoPlayer == true){
+					btnCarregar.setEnabled(false);
+					btnCarregar.setIcon(
+							new ImageIcon((btnCarregar.getImagesBasePath()+"botao carregar_desabilitado.png")));
 				}
-				Genius jogoCarregado = null;
-				final JFileChooser fc = new JFileChooser();
-				int returnVal = fc.showOpenDialog(lblFundoJogo);
-
-				if (returnVal == JFileChooser.APPROVE_OPTION) {
-					File file = fc.getSelectedFile();
+					
+				else{
 					try {
-						FileInputStream fis = new java.io.FileInputStream(file);
-						ObjectInputStream is = new ObjectInputStream(fis);
-						jogoCarregado = (Genius) is.readObject();
-					} catch (IOException | ClassNotFoundException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+						btnCarregar.startSound();
+					} catch (Exception e1) {
+						System.out.println(e.toString());
 					}
+					Genius jogoCarregado = null;
+					final JFileChooser fc = new JFileChooser();
+					int returnVal = fc.showOpenDialog(lblFundoJogo);
 
-					// This is where a real application would open the file.
+					if (returnVal == JFileChooser.APPROVE_OPTION) {
+						File file = fc.getSelectedFile();
+						try {
+							FileInputStream fis = new java.io.FileInputStream(file);
+							ObjectInputStream is = new ObjectInputStream(fis);
+							jogoCarregado = (Genius) is.readObject();
+						} catch (IOException | ClassNotFoundException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+
+						// This is where a real application would open the file.
+					}
+					JPanel telaPlacar = new TelaPlacar(tabbedPane, jogoCarregado);
+					tabbedPane.insertTab("Genius", null, telaPlacar, TOOL_TIP_TEXT_KEY, 1);
+					tabbedPane.removeTabAt(0);
 				}
-				JPanel telaPlacar = new TelaPlacar(tabbedPane, jogoCarregado);
-				tabbedPane.insertTab("Genius", null, telaPlacar, TOOL_TIP_TEXT_KEY, 1);
-				tabbedPane.removeTabAt(0);
+				
+				
 
 			}
 		});
 
-		btnIniciar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				try {
-					btnIniciar.startSound("Sol.wav");
-				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				if (!thread.isAlive()) {
-					thread.start();
-					return;
-				}
-				thread.run();
-
-			}
-		});
+		
 	}
 
 	public void atualizaTela(JLabel lblNomeJogador, JLabel lblPontos){
@@ -192,8 +213,6 @@ public class TelaJogo extends MyJPanel implements Runnable {
 				if (e.getSource() != lblAzul) {
 					return;
 				}
-				eraUltimaJogada = jogo.ehUltimaJogaga();
-				System.out.println("É o último:" + jogo.ehUltimaJogaga());
 				naoPerdeu = jogo.analisaJogada((long) 0, (long) 0, Cor.azul);
 				lblAzul.pisca();
 				if (eraUltimaJogada && naoPerdeu) {
@@ -203,7 +222,10 @@ public class TelaJogo extends MyJPanel implements Runnable {
 						return;
 
 					}
+				}if(jogo.getJogadorAtual() == jogo.getListaJogadores().get(jogo.getListaJogadores().size()-1)){
+					eraUltimoPlayer = true;
 				}
+				System.out.println("É o último jogador:" + eraUltimoPlayer);
 			}
 		});
 		GeniusLabels lblVermelho = new GeniusLabels("vermelho 1.png", "vermelho branco.png", "Si.wav");
@@ -228,7 +250,10 @@ public class TelaJogo extends MyJPanel implements Runnable {
 						return;
 
 					}
+				}if(jogo.getJogadorAtual() == jogo.getListaJogadores().get(jogo.getListaJogadores().size()-1)){
+					eraUltimoPlayer = true;
 				}
+				System.out.println("É o último jogador:" + eraUltimoPlayer);
 			}
 		});
 		GeniusLabels lblAmarelo = new GeniusLabels("amarelo 1.png", "amarelo branco.png", "Re.wav");
@@ -255,6 +280,10 @@ public class TelaJogo extends MyJPanel implements Runnable {
 
 					}
 				}
+				if(jogo.getJogadorAtual() == jogo.getListaJogadores().get(jogo.getListaJogadores().size()-1)){
+					eraUltimoPlayer = true;
+				}
+				System.out.println("É o último jogador:" + eraUltimoPlayer);
 			}
 		});
 		lblVerde.setIcon(new ImageIcon(this.getImagesPath() + "verde 1.png"));
@@ -278,6 +307,10 @@ public class TelaJogo extends MyJPanel implements Runnable {
 
 					}
 				}
+				if(jogo.getJogadorAtual() == jogo.getListaJogadores().get(jogo.getListaJogadores().size()-1)){
+					eraUltimoPlayer = true;
+				}
+				System.out.println("É o último jogador:" + eraUltimoPlayer);
 			}
 		});
 		lblAzul.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('w'), "W");
@@ -326,6 +359,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 			}
 		}
 		this.thread = new Thread(this);
+		
 	}
 
 	public Thread getThread() {
