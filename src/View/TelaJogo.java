@@ -39,6 +39,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 	private JTabbedPane tabbedPane;
 	private JLabel lblNomeJogador;
 	private JLabel lblPontos;
+	private MyJLabelwithSound btnIniciar;
 
 	public TelaJogo(JTabbedPane tabbedPane, Genius jogo) {
 		super();
@@ -50,7 +51,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		this.add(btnDificuldade);
 		btnDificuldade.setVisible(false);
 
-		MyJLabelwithSound btnIniciar = new MyJLabelwithSound();
+		btnIniciar = new MyJLabelwithSound();
 		btnIniciar.setBounds(1212, 87, 190, 70);
 		btnIniciar.setVisible(true);
 		this.add(btnIniciar);
@@ -73,25 +74,22 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		btnIniciar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (jogo.jogoEstaAtivo()) {
-					btnIniciar.setEnabled(false);
-					btnIniciar.setIcon(
-							new ImageIcon((btnIniciar.getImagesBasePath() + "botao inica_desabilitado.png")));
-				} else {
-					try {
-						btnIniciar.startSound("Sol.wav");
-					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
-						e1.printStackTrace();
-					}
-					if (!thread.isAlive()) {
-						thread.start();
-						return;
-					}
+				btnIniciar.setEnabled(false);
+				try {
+					btnIniciar.startSound("Sol.wav");
+				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
+					e1.printStackTrace();
 				}
+				if (!thread.isAlive()) {
+					thread.start();
+					return;
+				}
+
 			}
 		});
 
 		btnSalvar.addMouseListener(new MouseAdapter() {
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
@@ -175,12 +173,11 @@ public class TelaJogo extends MyJPanel implements Runnable {
 					thread.start();
 					return;
 				}
-
 			}
 		});
 	}
 
-	public void instanciabotoes() {
+	private void instanciabotoes() {
 
 		lblPontos = new JLabel("" + jogo.getJogadorAtual().getPontos());
 		lblPontos.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 34));
@@ -245,13 +242,13 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		});
 		// Start key Mapping
 		lblAzul.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('w'), "W");
-		lblAzul.getActionMap().put("W", new KeyButtonMaps(this.tabbedPane, lblAzul, this));
+		lblAzul.getActionMap().put("W", new KeyButtonMaps(lblAzul, this));
 		lblAmarelo.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('a'), "A");
-		lblAmarelo.getActionMap().put("A", new KeyButtonMaps(this.tabbedPane, lblAmarelo, this));
+		lblAmarelo.getActionMap().put("A", new KeyButtonMaps(lblAmarelo, this));
 		lblVermelho.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('s'), "S");
-		lblVermelho.getActionMap().put("S", new KeyButtonMaps(this.tabbedPane, lblVermelho, this));
+		lblVermelho.getActionMap().put("S", new KeyButtonMaps(lblVermelho, this));
 		lblVerde.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('d'), "D");
-		lblVerde.getActionMap().put("D", new KeyButtonMaps(this.tabbedPane, lblVerde, this));
+		lblVerde.getActionMap().put("D", new KeyButtonMaps(lblVerde, this));
 		// end key Mapping
 		geniusLabels.add(lblAzul);
 		geniusLabels.add(lblAmarelo);
@@ -274,18 +271,20 @@ public class TelaJogo extends MyJPanel implements Runnable {
 			e.printStackTrace();
 		}
 		this.atualizaInformacoes();
+		if (!naoPerdeu) {// ou seja perdeu
+			btnIniciar.setEnabled(true);
+		}
 		if (eraUltimaJogada && naoPerdeu) {
 			if (!thread.isAlive()) {
 				thread.start();
-				return;
 			}
 		}
+		return;
 	};
 
-	public void atualizaInformacoes() {
+	private void atualizaInformacoes() {
 		lblNomeJogador.setText(jogo.getJogadorAtual().getApelido());
 		lblPontos.setText("" + jogo.getJogadorAtual().getPontos());
-		System.out.println("Set text");
 	}
 
 	public Thread getThread() {
@@ -297,7 +296,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		this.sequenciadeCoresaExibir = jogo.getSequencia();
 		System.out.println(sequenciadeCoresaExibir);
 		try {
-			this.thread.join(500);
+			this.thread.join(300);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

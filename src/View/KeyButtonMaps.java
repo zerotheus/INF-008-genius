@@ -13,30 +13,17 @@ import View.geniusLabels.GeniusLabels;
 
 public class KeyButtonMaps extends AbstractAction {
 
-    private final JTabbedPane tabbedPane;
     private final GeniusLabels botao;
-    private Thread thread;
+    private final TelaJogo teladoJogo;
 
-    public KeyButtonMaps(JTabbedPane tabbedPane, GeniusLabels botao, Thread thread) {
-        this.tabbedPane = tabbedPane;
+    public KeyButtonMaps(GeniusLabels botao, TelaJogo telaJogo) {
         this.botao = botao;
-        this.thread = thread;
-    }
-
-    public KeyButtonMaps(JTabbedPane tabbedPane, GeniusLabels botao, JPanel panel) {
-        this.tabbedPane = tabbedPane;
-        this.botao = botao;
-        // this.thread = thread;
+        this.teladoJogo = telaJogo;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        try {
-            botao.pisca();
-        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
-            e1.printStackTrace();
-        }
-        System.out.println("pisquei");
+        teladoJogo.getInformacoes(botao);
     }
 
 }
