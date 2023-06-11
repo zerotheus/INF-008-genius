@@ -11,7 +11,7 @@ import View.MyJLabelwithSound;
 
 public abstract class GeniusLabels extends MyJLabelwithSound {
 
-    private final String nomedaImagemBase;
+    private String nomedaImagemBase;
     private final String nomedaImagemBranca;
     private final String arquivoSom;
     private final Cor cor;
@@ -36,6 +36,14 @@ public abstract class GeniusLabels extends MyJLabelwithSound {
                 },
                 250);
     }
+
+    protected void setImagem(String nomeDaImagem ){
+    this.nomedaImagemBase = nomeDaImagem;
+    }
+
+    public abstract void setImagemParaRosa();
+
+    public abstract void setImagemPadrao();
 
     public Cor getCor() {
         return this.cor;

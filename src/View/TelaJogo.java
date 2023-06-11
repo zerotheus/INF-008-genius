@@ -7,6 +7,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
@@ -49,10 +50,45 @@ public class TelaJogo extends MyJPanel implements Runnable {
 
 		this.instanciabotoes();
 
-		JButton btnDificuldade = new JButton();
-		btnDificuldade.setBounds(714, 405, 44, 45);
+		MyJLabelwithSound btnRitmSound = new MyJLabelwithSound();
+		btnRitmSound.setBounds(714, 405, 44, 45);
+		this.add(btnRitmSound);
+		btnRitmSound.setVisible(true);
+
+		MyJLabelwithSound btnDificuldade = new MyJLabelwithSound();
+		btnDificuldade.setBounds(800, 405, 44, 45);
 		this.add(btnDificuldade);
-		btnDificuldade.setVisible(false);
+		btnDificuldade.setVisible(true);
+
+			btnDificuldade.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					btnRitmSound.startSound();
+				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			jogo.setRitmo(1);
+			JOptionPane.showMessageDialog(null,"Dificuldade mudada para " + jogo.getRitmo(),"DIFICULDADE", 1);
+			}
+		});
+
+
+
+			btnRitmSound.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					btnRitmSound.startSound();
+				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			jogo.setRitmo(1);
+			JOptionPane.showMessageDialog(null,"Ritmo mudado para " + jogo.getRitmo(),"RITMO", 1);
+			}
+		});
 
 		MyJLabelwithSound btnSalvar = new MyJLabelwithSound();
 		btnSalvar.setBounds(1223, 405, 173, 57);
@@ -142,7 +178,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					btnIniciar.startSound("Sol.wav");
+					btnIniciar.startSound();
 				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

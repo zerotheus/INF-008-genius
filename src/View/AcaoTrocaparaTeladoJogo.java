@@ -21,6 +21,7 @@ public class AcaoTrocaparaTeladoJogo extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        
         try {
             botao.startSound();
         } catch (Exception e1) {

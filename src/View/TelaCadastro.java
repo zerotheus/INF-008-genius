@@ -20,6 +20,8 @@ public class TelaCadastro extends MyJPanel {
 	private Genius jogo = new Genius("Teste");
 
 	public TelaCadastro(JTabbedPane tabbedPane, int qtdJogadores) {
+
+		
 		super();
 		this.setLayout(null);
 		this.qtdJogadores = qtdJogadores;

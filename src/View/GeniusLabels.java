@@ -6,6 +6,7 @@ public class GeniusLabels extends MyJLabelwithSound implements Runnable {
 
     private final String nomedaImagemBase;
     private final String nomedaImagemBranca;
+    
 
     public GeniusLabels(String nomedaImagemBase, String nomedaImagemBranca) {
         this.nomedaImagemBase = nomedaImagemBase;

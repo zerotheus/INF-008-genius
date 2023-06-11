@@ -48,7 +48,16 @@ public class Genius implements Serializable {
         }
         this.ritmo += mudanca;
         System.out.println(this.ritmo);
-        setTempodeReacao(this.ritmo);
+        setTempodeReacao(this.ritmo);  
+    }
+
+    public void setDificuldade(){
+
+    }
+
+
+    public String getRitmo(){
+        return Integer.toString(ritmo);
     }
 
     private void setTempodeReacao(int ritmo) {
@@ -157,7 +166,7 @@ public class Genius implements Serializable {
     private void geraSequencia() {
         Random geraNumeroAleatorio = new Random();
         List<Integer> novaSequencia = new ArrayList<Integer>();
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 1; i++) {
             novaSequencia.add(geraNumeroAleatorio.nextInt(4));
         }
         this.sequenciaDeCores = novaSequencia;

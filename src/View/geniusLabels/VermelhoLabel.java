@@ -8,4 +8,14 @@ public class VermelhoLabel extends GeniusLabels {
         super("vermelho 1.png", "vermelho branco.png", "Si.wav", Cor.vermelho);
     }
 
+    @Override
+    public void setImagemParaRosa() {
+        this.setImagem("vermelho rosa.png");   
+    }
+
+    @Override
+    public void setImagemPadrao() {
+        this.setImagem("vermelho 1.png");
+    }
+
 }

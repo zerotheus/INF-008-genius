@@ -77,7 +77,7 @@ public class TelaPlacar extends MyJPanel {
         /* inicio dos nomes */
         labelNomes = new ArrayList<JLabel>();
         for (int i = 0; i < qtdJogadores; i++) {
-            labelNomes.add(new JLabel(jogo.getJogadorAtual().getNome()));
+            labelNomes.add(new JLabel(jogo.getListaJogadores().get(i).getNome()));
             labelNomes.get(i).setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 34));
             labelNomes.get(i).setForeground(Color.WHITE);
             labelNomes.get(i).setBounds(76, 267 + posicao * i, 315, 38);
@@ -89,7 +89,7 @@ public class TelaPlacar extends MyJPanel {
 
         labelApelidos = new ArrayList<JLabel>();
         for (int i = 0; i < qtdJogadores; i++) {
-            labelApelidos.add(new JLabel(jogo.getJogadorAtual().getApelido()));
+            labelApelidos.add(new JLabel(jogo.getListaJogadores().get(i).getApelido()));
             labelApelidos.get(i).setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 34));
             labelApelidos.get(i).setForeground(Color.WHITE);
             labelApelidos.get(i).setBounds(419, 267 + posicao * i, 308, 38);
@@ -100,7 +100,7 @@ public class TelaPlacar extends MyJPanel {
         /* INICIO TEMPO TOTAL */
         labelTempoTot = new ArrayList<JLabel>();
         for (int i = 0; i < qtdJogadores; i++) {
-            labelTempoTot.add(new JLabel(jogo.getJogadorAtual().getTempoTotalJogado() + ""));
+            labelTempoTot.add(new JLabel(jogo.getListaJogadores().get(i).getTempoTotalJogado() + ""));
             labelTempoTot.get(i).setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 34));
             labelTempoTot.get(i).setForeground(Color.WHITE);
             labelTempoTot.get(i).setBounds(786, 267 + posicao * i, 136, 38);
@@ -111,9 +111,8 @@ public class TelaPlacar extends MyJPanel {
 
         /* INICIO PONTOS TOTAL */
         labelPontosTot = new ArrayList<JLabel>();
-        for (int i = 0; i < qtdJogadores; i++) {// alterar dps, ele está preenchendo todos os campos com a mesma
-                                                // informação. talvez usar for each combinado com um contador
-            labelPontosTot.add(new JLabel(jogo.getJogadorAtual().getPontos() + "")); // temporariamente alterado para
+        for (int i = 0; i < qtdJogadores; i++) {
+            labelPontosTot.add(new JLabel(jogo.getListaJogadores().get(i).getPontos() + "")); // temporariamente alterado para
                                                                                      // pontos da partida não record
                                                                                      // pessoal
             labelPontosTot.get(i).setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 34));
@@ -126,7 +125,7 @@ public class TelaPlacar extends MyJPanel {
         /* INICIO MELHOR JOGADA */
         labelMelhorJgd = new ArrayList<JLabel>();
         for (int i = 0; i < qtdJogadores; i++) {
-            labelMelhorJgd.add(new JLabel(jogo.getJogadorAtual().getJogadaMaisRapidaEmUnidadedeTempo() + ""));
+            labelMelhorJgd.add(new JLabel(jogo.getListaJogadores().get(i).getJogadaMaisRapidaEmUnidadedeTempo() + ""));
             labelMelhorJgd.get(i).setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 34));
             labelMelhorJgd.get(i).setForeground(Color.WHITE);
             labelMelhorJgd.get(i).setBounds(1223, 267 + posicao * i, 116, 38);
