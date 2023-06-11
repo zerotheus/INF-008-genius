@@ -1,25 +1,115 @@
 package Negocio;
 
-import java.time.Clock;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Stream;
 
-public class Genius {
+import Enums.Cor;
+
+public class Genius implements Serializable{
     private Data data;// mudar para tipo para Date;
     private String titulodoCampeonato;
-    private String difuculdade;
+    private int ritmo;
+    private int dificuldade;
     private List<Jogador> jogadores; // para facilitar a alteracao na quantidade de jogadores
-    private List<Integer> sequenciadeCores;
+    private List<Integer> sequenciaDeCores;
+    private int indexJogadorAtual;
+    private int indexdaJogadaAtual;
     private int tempoParaReagir; // A definir oq poderia ser considerado facil ou dificil
-    private Clock relogio = Clock.systemDefaultZone();
 
-    public Genius(String titulodoCampeonato, String dificuldade) {
+    public Genius(Data data, String titulodoCampeonato, int ritmo, List<Jogador> jogadores,
+            List<Integer> sequenciaDeCores, int indexJogadorAtual, int tempoParaReagir, int indexdaJogadaAtual) {
+        this.data = data;
+        this.titulodoCampeonato = titulodoCampeonato;
+        this.setRitmo(ritmo); // 1 lento // 2 cadenciado // 3 rapido
+        this.jogadores = jogadores;
+        this.sequenciaDeCores = sequenciaDeCores;
+        this.indexJogadorAtual = indexJogadorAtual;
+        this.tempoParaReagir = tempoParaReagir;
+    }
+
+    public Genius(String titulodoCampeonato) {
         data = new Data(LocalDateTime.now().getDayOfMonth(), LocalDateTime.now().getMonthValue(),
                 LocalDateTime.now().getYear());
         this.titulodoCampeonato = titulodoCampeonato;
-        this.difuculdade = dificuldade;
+        setRitmo(1);
+        this.jogadores = new ArrayList<Jogador>();
+        this.indexJogadorAtual = 0;
+        geraSequencia();
+    }
+
+    public void setRitmo(int mudanca) {
+        if (mudanca + this.ritmo < 1 || mudanca + this.ritmo > 3) {
+            this.ritmo = 0;
+        }
+        this.ritmo += mudanca;
+        System.out.println(this.ritmo);
+        setTempodeReacao(this.ritmo);
+    }
+
+    private void setTempodeReacao(int ritmo) {
+        if (ritmo == 1) {
+            tempoParaReagir = 180000;
+            return;
+        }
+        if (ritmo == 2) {
+            tempoParaReagir = 3000;
+            return;
+        }
+        if (ritmo == 3) {
+            tempoParaReagir = 1000;
+            return;
+        }
+    }
+
+    public Data getData() {
+        return this.data;
+    }
+
+    public Jogador getJogadorAtual() {
+        return jogadores.get(indexJogadorAtual);
+    }
+
+    public int qtdJogadores() {
+        return this.jogadores.size();
+    }
+
+    public List<Jogador> getListaJogadores() {
+        return this.jogadores;
+    }
+
+    public String getTitulodoCampeonato() {
+        return this.titulodoCampeonato;
+    }
+
+    public List<Integer> getSequencia() {
+        return this.sequenciaDeCores;
+    }
+    public Integer getUltimoElemento() {
+    	return this.sequenciaDeCores.get(sequenciaDeCores.size()-1);
+    }
+    
+    
+    private void alteraJogadorAtual() {
+        if (this.indexJogadorAtual + 1 < this.jogadores.size()) {
+            geraSequencia();
+            this.indexdaJogadaAtual = 0;
+            this.indexJogadorAtual++;
+        }
+    }
+
+    public boolean ehUltimaJogaga() {
+    	int i =-1;
+    	for(Integer elemento : sequenciaDeCores)
+    		i+=1;
+    	System.out.println("sequenciaDeCores.size(): "+ sequenciaDeCores.size());
+        if (this.indexdaJogadaAtual == sequenciaDeCores.size()-1) {
+            return true;
+        }
+        return false;
     }
 
     public void adicionaJogador(Jogador novoJogador) {
@@ -27,47 +117,59 @@ public class Genius {
         return;
     }
 
-    public boolean analisaJogada(Long instantedaReacao, int numerodaJogada, int codigodaCor) {
-        if (!reagiuemTempo(instantedaReacao)) {
+    private void pontua() {
+        this.jogadores.get(this.indexJogadorAtual).pontua(this.indexdaJogadaAtual);
+    }
+
+    public boolean analisaJogada(Long instantedaExibicao, Long instantedaReacao, Cor jogada) {
+        this.getJogadorAtual().foiJogadaMaisRapida(instantedaExibicao - instantedaReacao);
+
+        if (!reagiuEmTempo(instantedaExibicao, instantedaReacao)) {
+            this.alteraJogadorAtual();
             return false;
         }
-        acertouaSequencia(numerodaJogada, codigodaCor);
+        return acertouaSequencia(jogada);
+    }
+
+    private boolean reagiuEmTempo(Long instantedaExibicao, Long instantedaReacao) {
+        if (instantedaExibicao + tempoParaReagir > instantedaReacao) {
+            return true;
+        }
+    }
+
+    private boolean acertouaSequencia(Cor cor) {
+
+        if (cor.ordinal() != this.sequenciaDeCores.get(this.indexdaJogadaAtual)) {
+            this.alteraJogadorAtual();
+            this.indexdaJogadaAtual = 0;
+            return false;
+        }
+        if (this.indexdaJogadaAtual + 1 == this.sequenciaDeCores.size()) {
+            pontua();
+            this.indexdaJogadaAtual = 0;
+            adicionanaSequencia();
+            System.out.println("Acertou");
+            return true;
+        }
+        System.out.println("Acertou");
+        this.indexdaJogadaAtual++;
         return true;
     }
 
-    public boolean reagiuemTempo(Long instantedaReacao) {
-        Long tempoAtual = relogio.millis();
-        if (tempoAtual < instantedaReacao) {
-            return true;
-        }
-        return false;
-    }
-
-    public Data getData() {
-        return this.data;
-    }
-
-    private void geraSequenciaInicial() {
-        List<Integer> sequenciaInicialdeCores = new ArrayList<Integer>();
-        Random numeroAleotoriRandom = new Random();
+    private void geraSequencia() {
+        Random geraNumeroAleatorio = new Random();
+        List<Integer> novaSequencia = new ArrayList<Integer>();
         for (int i = 0; i < 3; i++) {
-            sequenciaInicialdeCores.add(numeroAleotoriRandom.nextInt(4));
+            novaSequencia.add(geraNumeroAleatorio.nextInt(4));
         }
+        this.sequenciaDeCores = novaSequencia;
+        return;
     }
 
     private void adicionanaSequencia() {
-        List<Integer> sequenciaInicialdeCores = new ArrayList<Integer>();
-        Random numeroAleotoriRandom = new Random();
-        sequenciaInicialdeCores.add(numeroAleotoriRandom.nextInt(4));
-    }
-
-    public boolean acertouaSequencia(int numerodaJogada, int codigodaCor) {
-
-        if (codigodaCor != sequenciadeCores.get(numerodaJogada)) {
-            return false;
-        }
-
-        return true;
+        Random geraNumeroAleatorio = new Random();
+        this.sequenciaDeCores.add(geraNumeroAleatorio.nextInt(4));
+        System.out.println(this.sequenciaDeCores.get(this.sequenciaDeCores.size() - 1));
     }
 
 }
