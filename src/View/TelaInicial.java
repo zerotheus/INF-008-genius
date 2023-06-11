@@ -14,8 +14,6 @@ public class TelaInicial extends MyJPanel {
 
     public TelaInicial(JTabbedPane tabbedPane) {
 
-        this.setLayout(null);
-
         MyJLabelwithSound lblbutao = new MyJLabelwithSound();
         lblbutao.setIcon(
                 new ImageIcon(this.getImagesPath() + "botão iniciar.png"));
