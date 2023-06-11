@@ -38,6 +38,7 @@ public class TelaCadastro extends MyJPanel {
 		MyJLabelwithSound lblSalvar = new MyJLabelwithSound();
 		lblSalvar.setIcon(new ImageIcon(this.getImagesPath() + "Salvar.png"));
 		lblSalvar.setBounds(550, 780, 117, 60);
+		lblSalvar.setBounds(550, 780, 117, 60);
 		lblSalvar.setVisible(true);
 
 		TextField textApelido = new TextField();
