@@ -7,42 +7,39 @@ import javax.swing.JFileChooser;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
-import javax.swing.plaf.FileChooserUI;
-import Enums.Cor;
 import Negocio.Genius;
-import Negocio.Jogador;
+import View.geniusLabels.AmareloLabel;
+import View.geniusLabels.AzulLabel;
+import View.geniusLabels.GeniusLabels;
+import View.geniusLabels.VerdeLabel;
+import View.geniusLabels.VermelhoLabel;
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.time.Clock;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
 
 public class TelaJogo extends MyJPanel implements Runnable {
 
 	long millis = 0;
 	long segundos = 0;
 	private Genius jogo;
-	private boolean eraUltimaJogada;
 	private List<Integer> sequenciadeCoresaExibir;
 	private List<GeniusLabels> geniusLabels = new ArrayList<>();
 	private Thread thread = new Thread(this);
 	private JTabbedPane tabbedPane;
+	private JLabel lblNomeJogador;
+	private JLabel lblPontos;
 
 	public TelaJogo(JTabbedPane tabbedPane, Genius jogo) {
 		super();
@@ -154,129 +151,75 @@ public class TelaJogo extends MyJPanel implements Runnable {
 					thread.start();
 					return;
 				}
-				thread.run();
 
 			}
 		});
 	}
 
-	public void atualizaTela(JLabel lblNomeJogador, JLabel lblPontos) {
-		lblNomeJogador.setText("" + jogo.getJogadorAtual().getApelido());
-		lblPontos.setText("" + jogo.getJogadorAtual().getPontos());
-	}
-
 	public void instanciabotoes() {
 
-		JLabel lblPontos = new JLabel("" + jogo.getJogadorAtual().getPontos());
+		lblPontos = new JLabel("" + jogo.getJogadorAtual().getPontos());
 		lblPontos.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 34));
 		lblPontos.setForeground(new Color(255, 255, 255));
 		lblPontos.setBounds(175, 589, 67, 57);
 		this.add(lblPontos);
 
-		JLabel lblNomeJogador = new JLabel(jogo.getJogadorAtual().getApelido());
+		lblNomeJogador = new JLabel(jogo.getJogadorAtual().getApelido());
 		lblNomeJogador.setForeground(new Color(255, 255, 255));
 		lblNomeJogador.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 22));
 		lblNomeJogador.setBounds(95, 221, 241, 39);
 		this.add(lblNomeJogador);
 
-		GeniusLabels lblAzul = new GeniusLabels("azul.png", "azul branco.png", "La.wav");
+		GeniusLabels lblAzul = new AzulLabel();
 		lblAzul.setBounds(447, 78, 322, 316);
 		lblAzul.setIcon(new ImageIcon(this.getImagesPath() + "azul.png"));
 		lblAzul.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				boolean naoPerdeu;
 				if (e.getSource() != lblAzul) {
 					return;
 				}
-				eraUltimaJogada = jogo.ehUltimaJogaga();
-				System.out.println("É o último:" + jogo.ehUltimaJogaga());
-				naoPerdeu = jogo.analisaJogada((long) 0, (long) 0, Cor.azul);
-				lblAzul.pisca();
-				if (eraUltimaJogada && naoPerdeu) {
-					atualizaTela(lblNomeJogador, lblPontos);
-					if (!thread.isAlive()) {
-						thread.start();
-						return;
-
-					}
-				}
+				getInformacoes(lblAzul);
 			}
 		});
-		GeniusLabels lblVermelho = new GeniusLabels("vermelho 1.png", "vermelho branco.png", "Si.wav");
+		GeniusLabels lblVermelho = new VermelhoLabel();
 		lblVermelho.setIcon(new ImageIcon(this.getImagesPath() + "vermelho 1.png"));
 		lblVermelho.setBounds(447, 474, 322, 316);
 		lblVermelho.addMouseListener(new MouseAdapter() {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				boolean naoPerdeu;
 				if (e.getSource() != lblVermelho) {
 					return;
 				}
-				eraUltimaJogada = jogo.ehUltimaJogaga();
-				System.out.println("É o último:" + jogo.ehUltimaJogaga());
-				naoPerdeu = jogo.analisaJogada((long) 0, (long) 0, Cor.vermelho);
-				lblVermelho.pisca();
-				if (eraUltimaJogada && naoPerdeu) {
-					atualizaTela(lblNomeJogador, lblPontos);
-					if (!thread.isAlive()) {
-						thread.start();
-						return;
-
-					}
-				}
+				getInformacoes(lblVermelho);
 			}
 		});
-		GeniusLabels lblAmarelo = new GeniusLabels("amarelo 1.png", "amarelo branco.png", "Re.wav");
+		GeniusLabels lblAmarelo = new AmareloLabel();
 		lblAmarelo.setIcon(new ImageIcon(this.getImagesPath() + "amarelo 1.png"));
 		lblAmarelo.setBounds(807, 78, 322, 316);
-
-		GeniusLabels lblVerde = new GeniusLabels("verde 1.png", "verde branco.png", "Mi.wav");
 		lblAmarelo.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				boolean naoPerdeu;
 				if (e.getSource() != lblAmarelo) {
 					return;
 				}
-				eraUltimaJogada = jogo.ehUltimaJogaga();
-				System.out.println("É o último:" + jogo.ehUltimaJogaga());
-				naoPerdeu = jogo.analisaJogada((long) 0, (long) 0, Cor.amarelo);
-				lblAmarelo.pisca();
-				if (eraUltimaJogada && naoPerdeu) {
-					atualizaTela(lblNomeJogador, lblPontos);
-					if (!thread.isAlive()) {
-						thread.start();
-						return;
-
-					}
-				}
+				getInformacoes(lblAmarelo);
 			}
 		});
+		GeniusLabels lblVerde = new VerdeLabel();
 		lblVerde.setIcon(new ImageIcon(this.getImagesPath() + "verde 1.png"));
 		lblVerde.setBounds(807, 474, 322, 316);
 		lblVerde.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				final boolean naoPerdeu;
 				if (e.getSource() != lblVerde) {
 					return;
 				}
-				eraUltimaJogada = jogo.ehUltimaJogaga();
-				System.out.println("É o último:" + jogo.ehUltimaJogaga());
-				naoPerdeu = jogo.analisaJogada((long) 0, (long) 0, Cor.verde);
-				lblVerde.pisca();
-				if (eraUltimaJogada && naoPerdeu) {
-					atualizaTela(lblNomeJogador, lblPontos);
-					if (!thread.isAlive()) {
-						thread.start();
-						return;
-
-					}
-				}
+				getInformacoes(lblVerde);
 			}
 		});
+		// Start key Mapping
 		lblAzul.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('w'), "W");
 		lblAzul.getActionMap().put("W", new KeyButtonMaps(this.tabbedPane, lblAzul, this));
 		lblAmarelo.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('a'), "A");
@@ -285,7 +228,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		lblVermelho.getActionMap().put("S", new KeyButtonMaps(this.tabbedPane, lblVermelho, this));
 		lblVerde.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('d'), "D");
 		lblVerde.getActionMap().put("D", new KeyButtonMaps(this.tabbedPane, lblVerde, this));
-
+		// end key Mapping
 		geniusLabels.add(lblAzul);
 		geniusLabels.add(lblAmarelo);
 		geniusLabels.add(lblVermelho);
@@ -294,6 +237,34 @@ public class TelaJogo extends MyJPanel implements Runnable {
 			this.add(geniusLabels.get(i));
 		}
 
+	}
+
+	public void getInformacoes(final GeniusLabels botao) {
+		final boolean naoPerdeu;
+		final boolean eraUltimaJogada = jogo.ehUltimaJogaga();
+		System.out.println("É o último:" + jogo.ehUltimaJogaga());
+		naoPerdeu = jogo.analisaJogada((long) 0, (long) 0, botao.getCor());
+		try {
+			botao.pisca();
+		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+			e.printStackTrace();
+		}
+		this.atualizaInformacoes(lblNomeJogador, lblPontos);
+		if (eraUltimaJogada && naoPerdeu) {
+			if (!thread.isAlive()) {
+				thread.start();
+				return;
+			}
+		}
+	};
+
+	public void atualizaInformacoes(JLabel lblNomeJogador, JLabel lblPontos) {
+		lblNomeJogador.setText(jogo.getJogadorAtual().getApelido());
+		lblPontos.setText("" + jogo.getJogadorAtual().getPontos());
+	}
+
+	public Thread getThread() {
+		return this.thread;
 	}
 
 	@Override
@@ -306,7 +277,11 @@ public class TelaJogo extends MyJPanel implements Runnable {
 			e.printStackTrace();
 		}
 		for (int i = 0; i < sequenciadeCoresaExibir.size(); i++) {
-			geniusLabels.get(sequenciadeCoresaExibir.get(i)).pisca();
+			try {
+				geniusLabels.get(sequenciadeCoresaExibir.get(i)).pisca();
+			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+				e.printStackTrace();
+			}
 			try {
 				this.thread.join(300);
 			} catch (InterruptedException e) {
@@ -314,10 +289,6 @@ public class TelaJogo extends MyJPanel implements Runnable {
 			}
 		}
 		this.thread = new Thread(this);
-	}
-
-	public Thread getThread() {
-		return this.thread;
 	}
 
 }
