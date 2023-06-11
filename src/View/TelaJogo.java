@@ -62,9 +62,6 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		btnSalvar.setVisible(true);
 		this.add(btnSalvar);
 
-		
-		
-
 		JLabel lblFundoJogo = new JLabel();
 		lblFundoJogo.setIcon(new ImageIcon(this.getImagesPath() + "fundojOGO.png"));
 		lblFundoJogo.setBounds(0, 0, 1444, 881);
@@ -163,9 +160,9 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		});
 	}
 
-	public void atualizaTela(JLabel lblNomeJogador, JLabel lblPontos){
-		lblNomeJogador.setText(""+jogo.getJogadorAtual().getApelido());
-		lblPontos.setText(""+jogo.getJogadorAtual().getPontos());
+	public void atualizaTela(JLabel lblNomeJogador, JLabel lblPontos) {
+		lblNomeJogador.setText("" + jogo.getJogadorAtual().getApelido());
+		lblPontos.setText("" + jogo.getJogadorAtual().getPontos());
 	}
 
 	public void instanciabotoes() {
@@ -262,7 +259,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		lblVerde.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				boolean naoPerdeu;
+				final boolean naoPerdeu;
 				if (e.getSource() != lblVerde) {
 					return;
 				}
@@ -282,6 +279,12 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		});
 		lblAzul.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('w'), "W");
 		lblAzul.getActionMap().put("W", new KeyButtonMaps(this.tabbedPane, lblAzul, this));
+		lblAmarelo.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('a'), "A");
+		lblAmarelo.getActionMap().put("A", new KeyButtonMaps(this.tabbedPane, lblAmarelo, this));
+		lblVermelho.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('s'), "S");
+		lblVermelho.getActionMap().put("S", new KeyButtonMaps(this.tabbedPane, lblVermelho, this));
+		lblVerde.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('d'), "D");
+		lblVerde.getActionMap().put("D", new KeyButtonMaps(this.tabbedPane, lblVerde, this));
 
 		geniusLabels.add(lblAzul);
 		geniusLabels.add(lblAmarelo);
@@ -289,23 +292,8 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		geniusLabels.add(lblVerde);
 		for (int i = 0; i < geniusLabels.size(); i++) {
 			this.add(geniusLabels.get(i));
-
 		}
 
-	}
-
-	public synchronized void exibeSequencia() {
-		this.sequenciadeCoresaExibir = jogo.getSequencia();
-		for (int i = 0; i < sequenciadeCoresaExibir.size(); i++) {
-			// geniusLabels.get(sequenciadeCoresaExibir.get(i)).pisca();
-			final Thread thread = new Thread(geniusLabels.get(i));
-			try {
-				thread.start();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-		}
 	}
 
 	@Override
