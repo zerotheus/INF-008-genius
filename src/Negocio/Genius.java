@@ -40,8 +40,6 @@ public class Genius implements Serializable {
     }
 
     public void setTitulo(String tituloNovo) {
-
-    public void setTitulo(String tituloNovo) {
         this.titulodoCampeonato = tituloNovo;
     }
 
@@ -77,7 +75,7 @@ public class Genius implements Serializable {
         if (jogoEstaAtivo()) {
             jogadores.get(indexJogadorAtual);
         }
-        return jogadores.get(indexJogadorAtual);
+        return jogadores.get(indexJogadorAtual - 1);
     }
 
     public int qtdJogadores() {
