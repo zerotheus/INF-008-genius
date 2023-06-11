@@ -13,7 +13,6 @@ public class TeladeSelecaoModo extends MyJPanel {
 
     public TeladeSelecaoModo(JTabbedPane tabbedPane) {
         super();
-        this.setLayout(null);
         lblTeladeFundo = new JLabeldateladeFundo();
 
         MyJLabelwithSound lblCampeonato = new MyJLabelwithSound();
@@ -45,7 +44,7 @@ public class TeladeSelecaoModo extends MyJPanel {
                     System.out.println(e1.toString());
                 }
 
-                JPanel novoJPanel = new TelaCadastro(tabbedPane,1);
+                JPanel novoJPanel = new TelaCadastro(tabbedPane, 1);
                 tabbedPane.insertTab("Individual", null, novoJPanel, TOOL_TIP_TEXT_KEY, 1);
                 tabbedPane.removeTabAt(0);
 
@@ -69,7 +68,7 @@ public class TeladeSelecaoModo extends MyJPanel {
             }
 
         });
-        
+
     }
 
 }
