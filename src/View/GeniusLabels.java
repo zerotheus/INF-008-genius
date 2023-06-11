@@ -2,7 +2,7 @@ package View;
 
 import javax.swing.ImageIcon;
 
-public class GeniusLabels extends MyJLabelwithSound implements Runnable {
+public class GeniusLabels extends MyJLabelwithSound {
 
     private final String nomedaImagemBase;
     private final String nomedaImagemBranca;
@@ -18,10 +18,10 @@ public class GeniusLabels extends MyJLabelwithSound implements Runnable {
         String imagensPath = this.getImagesBasePath();
         this.setIcon(new ImageIcon(this.getImagesBasePath() + this.nomedaImagemBranca));
         try {
-			this.startSound(arquivoSom);
-		} catch (Exception e1) {
-			System.out.println(e1.toString());
-		}
+            this.startSound(arquivoSom);
+        } catch (Exception e1) {
+            System.out.println(e1.toString());
+        }
         new java.util.Timer().schedule(
                 new java.util.TimerTask() {
                     @Override
@@ -30,21 +30,6 @@ public class GeniusLabels extends MyJLabelwithSound implements Runnable {
                     }
                 },
                 250);
-    }
-
-    @Override
-    public void run() {
-        String imagensPath = this.getImagesBasePath();
-        this.setIcon(new ImageIcon(this.getImagesBasePath() + this.nomedaImagemBranca));
-        new java.util.Timer().schedule(
-                new java.util.TimerTask() {
-                    @Override
-                    public synchronized void run() {
-                        setIcon(new ImageIcon(imagensPath + nomedaImagemBase));
-                    }
-                },
-                250);
-        System.out.println("a");
     }
 
 }
