@@ -73,7 +73,7 @@ public class Genius implements Serializable {
 
     public Jogador getJogadorAtual() {
         if (jogoEstaAtivo()) {
-            jogadores.get(indexJogadorAtual);
+            return jogadores.get(indexJogadorAtual);
         }
         return jogadores.get(indexJogadorAtual - 1);
     }
