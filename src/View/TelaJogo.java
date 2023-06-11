@@ -7,12 +7,10 @@ import javax.swing.JFileChooser;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
-import javax.swing.plaf.FileChooserUI;
-import javax.swing.ImageIcon;
-import Enums.Cor;
 import Negocio.Genius;
 import View.geniusLabels.AmareloLabel;
 import View.geniusLabels.AzulLabel;
@@ -45,11 +43,8 @@ public class TelaJogo extends MyJPanel implements Runnable {
 	public TelaJogo(JTabbedPane tabbedPane, Genius jogo) {
 		super();
 		this.tabbedPane = tabbedPane;
-		this.setLayout(null);
 		this.jogo = jogo;
-
 		this.instanciabotoes();
-
 		JButton btnDificuldade = new JButton();
 		btnDificuldade.setBounds(714, 405, 44, 45);
 		this.add(btnDificuldade);
@@ -86,14 +81,12 @@ public class TelaJogo extends MyJPanel implements Runnable {
 					try {
 						btnIniciar.startSound("Sol.wav");
 					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 					if (!thread.isAlive()) {
 						thread.start();
 						return;
 					}
-					thread.run();
 				}
 			}
 		});
@@ -280,7 +273,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
 			e.printStackTrace();
 		}
-		this.atualizaInformacoes(lblNomeJogador, lblPontos);
+		this.atualizaInformacoes();
 		if (eraUltimaJogada && naoPerdeu) {
 			if (!thread.isAlive()) {
 				thread.start();
@@ -289,9 +282,10 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		}
 	};
 
-	public void atualizaInformacoes(JLabel lblNomeJogador, JLabel lblPontos) {
+	public void atualizaInformacoes() {
 		lblNomeJogador.setText(jogo.getJogadorAtual().getApelido());
 		lblPontos.setText("" + jogo.getJogadorAtual().getPontos());
+		System.out.println("Set text");
 	}
 
 	public Thread getThread() {
