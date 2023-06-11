@@ -130,6 +130,7 @@ public class TelaCadastro extends MyJPanel {
 				}
 				try {
 					jogo.adicionaJogador(new Jogador(textNome.getText(), textApelido.getText()));
+					jogo.setTitulo(textCampeonato.getText());
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(FundoSemLogo, "Nome/apelido tem que ter pelo menos 3 letras!");
 					return;

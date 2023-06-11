@@ -1,5 +1,7 @@
 package View;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JButton;
@@ -37,7 +39,6 @@ public class TelaJogo extends MyJPanel implements Runnable {
 	long segundos = 0;
 	private Genius jogo;
 	private boolean eraUltimaJogada;
-	private boolean naoPerdeu = true;
 	private List<Integer> sequenciadeCoresaExibir;
 	private List<GeniusLabels> geniusLabels = new ArrayList<>();
 	private Thread thread = new Thread(this);
@@ -61,17 +62,8 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		btnSalvar.setVisible(true);
 		this.add(btnSalvar);
 
-		JLabel lblPontos = new JLabel("" + jogo.getJogadorAtual().getPontos());
-		lblPontos.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 34));
-		lblPontos.setForeground(new Color(255, 255, 255));
-		lblPontos.setBounds(175, 589, 67, 57);
-		this.add(lblPontos);
-
-		JLabel lblNomeJogador = new JLabel(jogo.getJogadorAtual().getApelido());
-		lblNomeJogador.setForeground(new Color(255, 255, 255));
-		lblNomeJogador.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 22));
-		lblNomeJogador.setBounds(95, 221, 241, 39);
-		this.add(lblNomeJogador);
+		
+		
 
 		JLabel lblFundoJogo = new JLabel();
 		lblFundoJogo.setIcon(new ImageIcon(this.getImagesPath() + "fundojOGO.png"));
@@ -155,6 +147,12 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		btnIniciar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				try {
+					btnIniciar.startSound("Sol.wav");
+				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				if (!thread.isAlive()) {
 					thread.start();
 					return;
@@ -165,7 +163,24 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		});
 	}
 
+	public void atualizaTela(JLabel lblNomeJogador, JLabel lblPontos){
+		lblNomeJogador.setText(""+jogo.getJogadorAtual().getApelido());
+		lblPontos.setText(""+jogo.getJogadorAtual().getPontos());
+	}
+
 	public void instanciabotoes() {
+
+		JLabel lblPontos = new JLabel("" + jogo.getJogadorAtual().getPontos());
+		lblPontos.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 34));
+		lblPontos.setForeground(new Color(255, 255, 255));
+		lblPontos.setBounds(175, 589, 67, 57);
+		this.add(lblPontos);
+
+		JLabel lblNomeJogador = new JLabel(jogo.getJogadorAtual().getApelido());
+		lblNomeJogador.setForeground(new Color(255, 255, 255));
+		lblNomeJogador.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 22));
+		lblNomeJogador.setBounds(95, 221, 241, 39);
+		this.add(lblNomeJogador);
 
 		GeniusLabels lblAzul = new GeniusLabels("azul.png", "azul branco.png", "La.wav");
 		lblAzul.setBounds(447, 78, 322, 316);
@@ -173,6 +188,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		lblAzul.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				boolean naoPerdeu;
 				if (e.getSource() != lblAzul) {
 					return;
 				}
@@ -181,7 +197,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 				naoPerdeu = jogo.analisaJogada((long) 0, (long) 0, Cor.azul);
 				lblAzul.pisca();
 				if (eraUltimaJogada && naoPerdeu) {
-
+					atualizaTela(lblNomeJogador, lblPontos);
 					if (!thread.isAlive()) {
 						thread.start();
 						return;
@@ -197,6 +213,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				boolean naoPerdeu;
 				if (e.getSource() != lblVermelho) {
 					return;
 				}
@@ -205,7 +222,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 				naoPerdeu = jogo.analisaJogada((long) 0, (long) 0, Cor.vermelho);
 				lblVermelho.pisca();
 				if (eraUltimaJogada && naoPerdeu) {
-
+					atualizaTela(lblNomeJogador, lblPontos);
 					if (!thread.isAlive()) {
 						thread.start();
 						return;
@@ -222,6 +239,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		lblAmarelo.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				boolean naoPerdeu;
 				if (e.getSource() != lblAmarelo) {
 					return;
 				}
@@ -230,7 +248,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 				naoPerdeu = jogo.analisaJogada((long) 0, (long) 0, Cor.amarelo);
 				lblAmarelo.pisca();
 				if (eraUltimaJogada && naoPerdeu) {
-
+					atualizaTela(lblNomeJogador, lblPontos);
 					if (!thread.isAlive()) {
 						thread.start();
 						return;
@@ -244,6 +262,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		lblVerde.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				boolean naoPerdeu;
 				if (e.getSource() != lblVerde) {
 					return;
 				}
@@ -252,7 +271,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 				naoPerdeu = jogo.analisaJogada((long) 0, (long) 0, Cor.verde);
 				lblVerde.pisca();
 				if (eraUltimaJogada && naoPerdeu) {
-
+					atualizaTela(lblNomeJogador, lblPontos);
 					if (!thread.isAlive()) {
 						thread.start();
 						return;

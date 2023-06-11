@@ -115,8 +115,8 @@ public class TelaPlacar extends MyJPanel {
 
         /*INICIO PONTOS TOTAL */
         labelPontosTot = new ArrayList<JLabel>();
-        for (int i = 0; i < qtdJogadores; i++) {
-            labelPontosTot.add(new JLabel(jogo.getJogadorAtual().getrecordPessoal() + ""));
+        for (int i = 0; i < qtdJogadores; i++) {//alterar dps, ele está preenchendo todos os campos com a mesma informação. talvez usar for each combinado com um contador
+            labelPontosTot.add(new JLabel(jogo.getJogadorAtual().getPontos() + "")); //temporariamente alterado para pontos da partida não record pessoal
             labelPontosTot.get(i).setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 34));
             labelPontosTot.get(i).setForeground(Color.WHITE);
             labelPontosTot.get(i).setBounds(986, 267 + posicao * i, 152, 38);

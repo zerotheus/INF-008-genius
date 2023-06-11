@@ -41,6 +41,9 @@ public class Genius implements Serializable {
         geraSequencia();
     }
 
+    public void setTitulo(String tituloNovo){
+        this.titulodoCampeonato = tituloNovo;
+    }
     public void setRitmo(int mudanca) {
         if (mudanca + this.ritmo < 1 || mudanca + this.ritmo > 3) {
             this.ritmo = 0;
@@ -126,6 +129,7 @@ public class Genius implements Serializable {
 
         if (!reagiuEmTempo(instantedaExibicao, instantedaReacao)) {
             this.alteraJogadorAtual();
+            System.out.println("perdeu!");
             return false;
         }
         return acertouaSequencia(jogada);
@@ -143,6 +147,7 @@ public class Genius implements Serializable {
         if (cor.ordinal() != this.sequenciaDeCores.get(this.indexdaJogadaAtual)) {
             this.alteraJogadorAtual();
             this.indexdaJogadaAtual = 0;
+            System.out.println("perdeu!");
             return false;
         }
         if (this.indexdaJogadaAtual + 1 == this.sequenciaDeCores.size()) {
