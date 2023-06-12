@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
@@ -32,8 +33,6 @@ import java.util.List;
 
 public class TelaJogo extends MyJPanel implements Runnable {
 
-	long millis = 0;
-	long segundos = 0;
 	private Genius jogo;
 	private List<Integer> sequenciadeCoresaExibir;
 	private List<GeniusLabels> geniusLabels = new ArrayList<>();
@@ -41,13 +40,12 @@ public class TelaJogo extends MyJPanel implements Runnable {
 	private JTabbedPane tabbedPane;
 	private JLabel lblNomeJogador;
 	private JLabel lblPontos;
+	private MyJLabelwithSound btnIniciar;
 
 	public TelaJogo(JTabbedPane tabbedPane, Genius jogo) {
 		super();
 		this.tabbedPane = tabbedPane;
-		this.setLayout(null);
 		this.jogo = jogo;
-
 		this.instanciabotoes();
 
 		MyJLabelwithSound btnRitmSound = new MyJLabelwithSound();
@@ -88,28 +86,45 @@ public class TelaJogo extends MyJPanel implements Runnable {
 			}
 		});
 
+		btnIniciar = new MyJLabelwithSound();
+		btnIniciar.setBounds(1212, 87, 190, 70);
+		btnIniciar.setVisible(true);
+		this.add(btnIniciar);
+
 		MyJLabelwithSound btnSalvar = new MyJLabelwithSound();
 		btnSalvar.setBounds(1223, 405, 173, 57);
 		btnSalvar.setVisible(true);
 		this.add(btnSalvar);
+
+		MyJLabelwithSound btnCarregar = new MyJLabelwithSound();
+		btnCarregar.setBounds(1206, 716, 190, 70);
+		btnCarregar.setVisible(true);
+		this.add(btnCarregar);
 
 		JLabel lblFundoJogo = new JLabel();
 		lblFundoJogo.setIcon(new ImageIcon(this.getImagesPath() + "fundojOGO.png"));
 		lblFundoJogo.setBounds(0, 0, 1444, 881);
 		this.add(lblFundoJogo);
 
-		MyJLabelwithSound btnCarregar = new MyJLabelwithSound();
-		btnCarregar.setBounds(1223, 720, 164, 57);
-		this.add(btnCarregar);
-		btnCarregar.setVisible(true);
+		btnIniciar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				btnIniciar.setEnabled(false);
+				try {
+					btnIniciar.startSound("Sol.wav");
+				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
+					e1.printStackTrace();
+				}
+				if (!thread.isAlive()) {
+					thread.start();
+					return;
+				}
 
-		MyJLabelwithSound btnIniciar = new MyJLabelwithSound();
-		btnIniciar.setBounds(1223, 89, 173, 55);
-		this.add(btnIniciar);
-		btnIniciar.setEnabled(true);
-		btnIniciar.setVisible(true);
+			}
+		});
 
 		btnSalvar.addMouseListener(new MouseAdapter() {
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
@@ -143,31 +158,39 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		btnCarregar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				try {
-					btnCarregar.startSound();
-				} catch (Exception e1) {
-					System.out.println(e.toString());
+				if (jogo.jogoEstaAtivo()) {
+					btnCarregar.setEnabled(false);
+					btnCarregar.setIcon(
+							new ImageIcon((btnCarregar.getImagesBasePath() + "botao carregar_desabilitado.png")));
 				}
-				Genius jogoCarregado = null;
-				final JFileChooser fc = new JFileChooser();
-				int returnVal = fc.showOpenDialog(lblFundoJogo);
 
-				if (returnVal == JFileChooser.APPROVE_OPTION) {
-					File file = fc.getSelectedFile();
+				else {
 					try {
-						FileInputStream fis = new java.io.FileInputStream(file);
-						ObjectInputStream is = new ObjectInputStream(fis);
-						jogoCarregado = (Genius) is.readObject();
-					} catch (IOException | ClassNotFoundException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+						btnCarregar.startSound();
+					} catch (Exception e1) {
+						System.out.println(e.toString());
 					}
+					Genius jogoCarregado = null;
+					final JFileChooser fc = new JFileChooser();
+					int returnVal = fc.showOpenDialog(lblFundoJogo);
 
-					// This is where a real application would open the file.
+					if (returnVal == JFileChooser.APPROVE_OPTION) {
+						File file = fc.getSelectedFile();
+						try {
+							FileInputStream fis = new java.io.FileInputStream(file);
+							ObjectInputStream is = new ObjectInputStream(fis);
+							jogoCarregado = (Genius) is.readObject();
+						} catch (IOException | ClassNotFoundException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+
+						// This is where a real application would open the file.
+					}
+					JPanel telaPlacar = new TelaPlacar(tabbedPane, jogoCarregado);
+					tabbedPane.insertTab("Genius", null, telaPlacar, TOOL_TIP_TEXT_KEY, 1);
+					tabbedPane.removeTabAt(0);
 				}
-				JPanel telaPlacar = new TelaPlacar(tabbedPane, jogoCarregado);
-				tabbedPane.insertTab("Genius", null, telaPlacar, TOOL_TIP_TEXT_KEY, 1);
-				tabbedPane.removeTabAt(0);
 
 			}
 		});
@@ -185,12 +208,11 @@ public class TelaJogo extends MyJPanel implements Runnable {
 					thread.start();
 					return;
 				}
-
 			}
 		});
 	}
 
-	public void instanciabotoes() {
+	private void instanciabotoes() {
 
 		lblPontos = new JLabel("" + jogo.getJogadorAtual().getPontos());
 		lblPontos.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 34));
@@ -255,13 +277,13 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		});
 		// Start key Mapping
 		lblAzul.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('w'), "W");
-		lblAzul.getActionMap().put("W", new KeyButtonMaps(this.tabbedPane, lblAzul, this));
+		lblAzul.getActionMap().put("W", new KeyButtonMaps(lblAzul, this));
 		lblAmarelo.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('a'), "A");
-		lblAmarelo.getActionMap().put("A", new KeyButtonMaps(this.tabbedPane, lblAmarelo, this));
+		lblAmarelo.getActionMap().put("A", new KeyButtonMaps(lblAmarelo, this));
 		lblVermelho.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('s'), "S");
-		lblVermelho.getActionMap().put("S", new KeyButtonMaps(this.tabbedPane, lblVermelho, this));
+		lblVermelho.getActionMap().put("S", new KeyButtonMaps(lblVermelho, this));
 		lblVerde.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('d'), "D");
-		lblVerde.getActionMap().put("D", new KeyButtonMaps(this.tabbedPane, lblVerde, this));
+		lblVerde.getActionMap().put("D", new KeyButtonMaps(lblVerde, this));
 		// end key Mapping
 		geniusLabels.add(lblAzul);
 		geniusLabels.add(lblAmarelo);
@@ -283,16 +305,19 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
 			e.printStackTrace();
 		}
-		this.atualizaInformacoes(lblNomeJogador, lblPontos);
+		this.atualizaInformacoes();
+		if (!naoPerdeu) {// ou seja perdeu
+			btnIniciar.setEnabled(true);
+		}
 		if (eraUltimaJogada && naoPerdeu) {
 			if (!thread.isAlive()) {
 				thread.start();
-				return;
 			}
 		}
+		return;
 	};
 
-	public void atualizaInformacoes(JLabel lblNomeJogador, JLabel lblPontos) {
+	private void atualizaInformacoes() {
 		lblNomeJogador.setText(jogo.getJogadorAtual().getApelido());
 		lblPontos.setText("" + jogo.getJogadorAtual().getPontos());
 	}
@@ -306,7 +331,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		this.sequenciadeCoresaExibir = jogo.getSequencia();
 		System.out.println(sequenciadeCoresaExibir);
 		try {
-			this.thread.join(500);
+			this.thread.join(300);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

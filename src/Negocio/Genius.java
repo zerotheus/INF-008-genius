@@ -171,6 +171,7 @@ public class Genius implements Serializable {
             return false;
         }
         pontua();
+
         if (this.indexdaJogadaAtual + 1 == this.sequenciaDeCores.size()) {
             this.indexdaJogadaAtual = 0;
             adicionanaSequencia();
