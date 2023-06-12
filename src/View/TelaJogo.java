@@ -60,7 +60,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		this.add(btnDificuldade);
 		btnDificuldade.setVisible(true);
 
-			btnDificuldade.addMouseListener(new MouseAdapter() {
+		btnDificuldade.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
@@ -69,14 +69,12 @@ public class TelaJogo extends MyJPanel implements Runnable {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-			jogo.setRitmo(1);
-			JOptionPane.showMessageDialog(null,"Dificuldade mudada para " + jogo.getRitmo(),"DIFICULDADE", 1);
+				jogo.setRitmo(1);
+				JOptionPane.showMessageDialog(null, "Dificuldade mudada para " + jogo.getRitmo(), "DIFICULDADE", 1);
 			}
 		});
 
-
-
-			btnRitmSound.addMouseListener(new MouseAdapter() {
+		btnRitmSound.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
@@ -85,8 +83,8 @@ public class TelaJogo extends MyJPanel implements Runnable {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-			jogo.setRitmo(1);
-			JOptionPane.showMessageDialog(null,"Ritmo mudado para " + jogo.getRitmo(),"RITMO", 1);
+				jogo.setRitmo(1);
+				JOptionPane.showMessageDialog(null, "Ritmo mudado para " + jogo.getRitmo(), "RITMO", 1);
 			}
 		});
 
