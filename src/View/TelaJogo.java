@@ -4,15 +4,14 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
 import Negocio.Genius;
+import Negocio.Jogador;
 import View.geniusLabels.AmareloLabel;
 import View.geniusLabels.AzulLabel;
 import View.geniusLabels.GeniusLabels;
@@ -28,6 +27,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.time.Clock;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,12 +35,14 @@ public class TelaJogo extends MyJPanel implements Runnable {
 
 	private Genius jogo;
 	private List<Integer> sequenciadeCoresaExibir;
-	private List<GeniusLabels> geniusLabels = new ArrayList<>();
+	private List<GeniusLabels> geniusLabels = new ArrayList<GeniusLabels>();
 	private Thread thread = new Thread(this);
 	private JTabbedPane tabbedPane;
 	private JLabel lblNomeJogador;
 	private JLabel lblPontos;
 	private MyJLabelwithSound btnIniciar;
+	private final Clock clock = Clock.systemDefaultZone();
+	private long instantedofimdaExibicao;
 
 	public TelaJogo(JTabbedPane tabbedPane, Genius jogo) {
 		super();
@@ -64,10 +66,9 @@ public class TelaJogo extends MyJPanel implements Runnable {
 				try {
 					btnRitmSound.startSound();
 				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				jogo.setRitmo(1);
+				jogo.setRitmo();
 				JOptionPane.showMessageDialog(null, "Dificuldade mudada para " + jogo.getRitmo(), "DIFICULDADE", 1);
 			}
 		});
@@ -78,10 +79,9 @@ public class TelaJogo extends MyJPanel implements Runnable {
 				try {
 					btnRitmSound.startSound();
 				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				jogo.setRitmo(1);
+				jogo.setRitmo();
 				JOptionPane.showMessageDialog(null, "Ritmo mudado para " + jogo.getRitmo(), "RITMO", 1);
 			}
 		});
@@ -110,8 +110,9 @@ public class TelaJogo extends MyJPanel implements Runnable {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				btnIniciar.setEnabled(false);
+				System.out.println("btn ini " + btnIniciar.isEnabled());
 				try {
-					btnIniciar.startSound("Sol.wav");
+					btnIniciar.startSound();
 				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
 					e1.printStackTrace();
 				}
@@ -142,7 +143,6 @@ public class TelaJogo extends MyJPanel implements Runnable {
 						ObjectOutputStream os = new ObjectOutputStream(fileStream);
 						os.writeObject(jogo);
 					} catch (IOException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 
@@ -181,7 +181,6 @@ public class TelaJogo extends MyJPanel implements Runnable {
 							ObjectInputStream is = new ObjectInputStream(fis);
 							jogoCarregado = (Genius) is.readObject();
 						} catch (IOException | ClassNotFoundException e1) {
-							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
 
@@ -201,9 +200,9 @@ public class TelaJogo extends MyJPanel implements Runnable {
 				try {
 					btnIniciar.startSound();
 				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				btnIniciar.setEnabled(false);
 				if (!thread.isAlive()) {
 					thread.start();
 					return;
@@ -296,18 +295,28 @@ public class TelaJogo extends MyJPanel implements Runnable {
 	}
 
 	public void getInformacoes(final GeniusLabels botao) {
-		final boolean naoPerdeu;
-		final boolean eraUltimaJogada = jogo.ehUltimaJogaga();
-		System.out.println("É o último:" + jogo.ehUltimaJogaga());
-		naoPerdeu = jogo.analisaJogada((long) 0, (long) 0, botao.getCor());
+		final Jogador jogador = jogo.getJogadorAtual();
+		final boolean eraUltimaJogada = jogo.ehUltimaJogada();
+		System.out.println("É o último:" + jogo.ehUltimaJogada());
+		final boolean naoPerdeu = jogo.analisaJogada(instantedofimdaExibicao, botao.getCor());
 		try {
 			botao.pisca();
 		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
 			e.printStackTrace();
 		}
 		this.atualizaInformacoes();
+		if (!jogo.jogoEstaAtivo()) {
+			MyJPanel telaPlacar = new TelaPlacar(tabbedPane, jogo);
+			JOptionPane.showMessageDialog(null, "Fim de jogo", "Fim de jogo", 2);
+			this.tabbedPane.insertTab("Placar", null, telaPlacar, TOOL_TIP_TEXT_KEY, 1);
+			this.tabbedPane.remove(0);
+			return;
+		}
 		if (!naoPerdeu) {// ou seja perdeu
 			btnIniciar.setEnabled(true);
+			JOptionPane.showMessageDialog(null, jogador.getApelido() + " Por favor passe a vez", "Errou a Sequencia",
+					2);
+			return;
 		}
 		if (eraUltimaJogada && naoPerdeu) {
 			if (!thread.isAlive()) {
@@ -320,10 +329,6 @@ public class TelaJogo extends MyJPanel implements Runnable {
 	private void atualizaInformacoes() {
 		lblNomeJogador.setText(jogo.getJogadorAtual().getApelido());
 		lblPontos.setText("" + jogo.getJogadorAtual().getPontos());
-	}
-
-	public Thread getThread() {
-		return this.thread;
 	}
 
 	@Override
@@ -347,6 +352,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 				e.printStackTrace();
 			}
 		}
+		instantedofimdaExibicao = clock.millis();
 		this.thread = new Thread(this);
 	}
 
