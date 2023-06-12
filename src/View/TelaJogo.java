@@ -10,6 +10,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 import Negocio.Genius;
 import Negocio.Jogador;
 import View.geniusLabels.AmareloLabel;
@@ -48,7 +50,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		super();
 		this.tabbedPane = tabbedPane;
 		this.genius = jogo;
-		this.instanciabotoes();
+		this.instanciaBotoes();
 
 		MyJLabelwithSound btnRitmSound = new MyJLabelwithSound();
 		btnRitmSound.setBounds(714, 405, 44, 45);
@@ -137,38 +139,35 @@ public class TelaJogo extends MyJPanel implements Runnable {
 				} catch (Exception e1) {
 					System.out.println(e.toString());
 				}
-
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("JPEG file", "jpg", "jpeg");
 				final JFileChooser fc = new JFileChooser();
 				int returnVal = fc.showOpenDialog(lblFundoJogo);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					File file = fc.getSelectedFile();
+					/*if(!filter.accept(file)){
+						
+					}*/
 					try {
 						FileOutputStream fileStream = new FileOutputStream(file);
 						ObjectOutputStream os = new ObjectOutputStream(fileStream);
+						
 						os.writeObject(genius);
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
-
+					}
 					// This is where a real application would open the file.
 				}
-				JPanel telaPlacar = new TelaPlacar(tabbedPane, jogo);
+				//JPanel telaPlacar = new TelaPlacar(tabbedPane, jogo);
 				// tabbedPane.insertTab("Genius", null, telaPlacar, TOOL_TIP_TEXT_KEY, 1);
 				// tabbedPane.removeTabAt(0);
 
-			}
+			
 		});
 
 		btnCarregar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (jogo.jogoEstaAtivo()) {
-					btnCarregar.setEnabled(false);
-					btnCarregar.setIcon(
-							new ImageIcon((btnCarregar.getImagesBasePath() + "botao carregar_desabilitado.png")));
-				}
-
-				else {
 					try {
 						btnCarregar.startSound();
 					} catch (Exception e1) {
@@ -184,6 +183,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 							FileInputStream fis = new java.io.FileInputStream(file);
 							ObjectInputStream is = new ObjectInputStream(fis);
 							jogoCarregado = (Genius) is.readObject();
+
 						} catch (IOException | ClassNotFoundException e1) {
 							e1.printStackTrace();
 						}
@@ -193,14 +193,12 @@ public class TelaJogo extends MyJPanel implements Runnable {
 					JPanel telaPlacar = new TelaPlacar(tabbedPane, jogoCarregado);
 					// tabbedPane.insertTab("Genius", null, telaPlacar, TOOL_TIP_TEXT_KEY, 1);
 					// tabbedPane.removeTabAt(0);
-				}
-
 			}
 		});
 
 	}
 
-	private void instanciabotoes() {
+	private void instanciaBotoes() {
 
 		lblPontos = new JLabel("" + genius.getJogadorAtual().getPontos());
 		lblPontos.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 34));
