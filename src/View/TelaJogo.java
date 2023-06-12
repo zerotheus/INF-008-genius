@@ -286,7 +286,13 @@ public class TelaJogo extends MyJPanel implements Runnable {
 				thread.start();
 				return;
 			}
-		}
+		}/*else{
+			if(!jogo.getStatus()){
+			JPanel TelaJogoFinalizado = new TelaJogoFinalizado(tabbedPane, jogo);
+			tabbedPane.insertTab("Jogo Finalizado", null, TelaJogoFinalizado, TOOL_TIP_TEXT_KEY, 1);
+			tabbedPane.removeTabAt(0);
+			} 
+		}*/
 	};
 
 	public void atualizaInformacoes(JLabel lblNomeJogador, JLabel lblPontos) {
