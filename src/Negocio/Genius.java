@@ -187,6 +187,7 @@ public class Genius implements Serializable {
         if (!oinstanteEstaValido) {// se nao esta valido
             if (instantedaExibicao + tempoParaReagir > instantedeReacao) {
                 instantedaUltimaReacaodoJogadorAtual = instantedeReacao;
+                validaInstante();
                 this.getJogadorAtual().foiJogadaMaisRapida(instantedeReacao - instantedaExibicao);
                 return true;
             }
