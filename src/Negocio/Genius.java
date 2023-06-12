@@ -1,8 +1,10 @@
 package Negocio;
 
 import java.io.Serializable;
+import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -17,6 +19,9 @@ public class Genius implements Serializable {
     private int indexJogadorAtual;
     private int indexdaJogadaAtual = 0;
     private int tempoParaReagir; // A definir oq poderia ser considerado facil ou dificil
+    private final Clock clock = Clock.systemDefaultZone();
+    private long instantedaUltimaReacaodoJogadorAtual;
+    private boolean oinstanteEstaValido;
 
     public Genius(Data data, String titulodoCampeonato, int ritmo, List<Jogador> jogadores,
             List<Integer> sequenciaDeCores, int indexJogadorAtual, int tempoParaReagir) {
@@ -26,6 +31,8 @@ public class Genius implements Serializable {
         this.jogadores = jogadores;
         this.sequenciaDeCores = sequenciaDeCores;
         this.indexJogadorAtual = indexJogadorAtual;
+        this.instantedaUltimaReacaodoJogadorAtual = 0;
+        this.oinstanteEstaValido = false;
         this.tempoParaReagir = tempoParaReagir;
     }
 
@@ -36,6 +43,8 @@ public class Genius implements Serializable {
         setRitmo(1);
         this.jogadores = new ArrayList<Jogador>();
         this.indexJogadorAtual = 0;
+        this.instantedaUltimaReacaodoJogadorAtual = 0;
+        this.oinstanteEstaValido = false;
         geraSequencia();
     }
 
@@ -43,7 +52,11 @@ public class Genius implements Serializable {
         this.titulodoCampeonato = tituloNovo;
     }
 
-    public void setRitmo(int mudanca) {
+    public void setRitmo() {
+        setRitmo(1);
+    }
+
+    private void setRitmo(int mudanca) {
         if (mudanca + this.ritmo < 1 || mudanca + this.ritmo > 3) {
             this.ritmo = 0;
         }
@@ -94,6 +107,12 @@ public class Genius implements Serializable {
         return List.copyOf(this.jogadores);
     }
 
+    public List<Jogador> getVencedores() {
+        final List<Jogador> ordenadosPorPontos = getListaJogadores();
+        Collections.sort(ordenadosPorPontos);
+        return ordenadosPorPontos;
+    }
+
     public List<Integer> getSequencia() {
         return this.sequenciaDeCores;
     }
@@ -103,6 +122,7 @@ public class Genius implements Serializable {
     }
 
     private void alteraJogadorAtual() {
+        this.invalidaInstante();
         if (this.indexJogadorAtual + 1 < this.jogadores.size()) {
             geraSequencia();
             this.indexdaJogadaAtual = 0;
@@ -111,6 +131,14 @@ public class Genius implements Serializable {
         }
         this.encerraJogo();
         return;
+    }
+
+    private void validaInstante() {
+        this.oinstanteEstaValido = true;
+    }
+
+    private void invalidaInstante() {
+        this.oinstanteEstaValido = false;
     }
 
     private void encerraJogo() {
@@ -124,7 +152,7 @@ public class Genius implements Serializable {
         return true;
     }
 
-    public boolean ehUltimaJogaga() {
+    public boolean ehUltimaJogada() {
         System.out.println("sequenciaDeCores.size(): " + sequenciaDeCores.size());
         if (this.indexdaJogadaAtual == sequenciaDeCores.size() - 1) {
             return true;
@@ -141,13 +169,11 @@ public class Genius implements Serializable {
         this.jogadores.get(this.indexJogadorAtual).pontua(this.indexdaJogadaAtual);
     }
 
-    public boolean analisaJogada(Long instantedaExibicao, Long instantedaReacao, Cor jogada) {
+    public boolean analisaJogada(Long instantedaExibicao, Cor jogada) {
         if (!jogoEstaAtivo()) {
             return false;
         }
-        this.getJogadorAtual().foiJogadaMaisRapida(instantedaExibicao - instantedaReacao);
-
-        if (!reagiuEmTempo(instantedaExibicao, instantedaReacao)) {
+        if (!reagiuEmTempo(instantedaExibicao)) {
             this.alteraJogadorAtual();
             System.out.println("perdeu!");
             return false;
@@ -155,8 +181,19 @@ public class Genius implements Serializable {
         return acertouaSequencia(jogada);
     }
 
-    private boolean reagiuEmTempo(Long instantedaExibicao, Long instantedaReacao) {
-        if (instantedaExibicao + tempoParaReagir > instantedaReacao) {
+    private boolean reagiuEmTempo(Long instantedaExibicao) {
+        final Long instantedeReacao = clock.millis();
+        System.out.println(instantedeReacao);
+        if (!oinstanteEstaValido) {// se nao esta valido
+            if (instantedaExibicao + tempoParaReagir > instantedeReacao) {
+                instantedaUltimaReacaodoJogadorAtual = instantedeReacao;
+                this.getJogadorAtual().foiJogadaMaisRapida(instantedeReacao - instantedaExibicao);
+                return true;
+            }
+        }
+        if (instantedaUltimaReacaodoJogadorAtual + tempoParaReagir > instantedeReacao) {
+            instantedaUltimaReacaodoJogadorAtual = instantedeReacao;
+            this.getJogadorAtual().foiJogadaMaisRapida(instantedeReacao - instantedaExibicao);
             return true;
         }
         return false;
@@ -176,6 +213,7 @@ public class Genius implements Serializable {
             this.indexdaJogadaAtual = 0;
             adicionanaSequencia();
             System.out.println("Acertou");
+            this.invalidaInstante();
             return true;
         }
         System.out.println("Acertou");
