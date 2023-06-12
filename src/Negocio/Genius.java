@@ -13,9 +13,10 @@ import Enums.Cor;
 public class Genius implements Serializable {
     private Data data;// mudar para tipo para Date;
     private String titulodoCampeonato;
-    private int ritmo;
+    protected int ritmo;
+    private int dificuldade;
     private List<Jogador> jogadores; // para facilitar a alteracao na quantidade de jogadores
-    private List<Integer> sequenciaDeCores;
+    protected List<Integer> sequenciaDeCores;
     private int indexJogadorAtual;
     private int indexdaJogadaAtual = 0;
     private int tempoParaReagir; // A definir oq poderia ser considerado facil ou dificil
@@ -23,29 +24,41 @@ public class Genius implements Serializable {
     private long instantedaUltimaReacaodoJogadorAtual;
     private boolean oinstanteEstaValido;
 
-    public Genius(Data data, String titulodoCampeonato, int ritmo, List<Jogador> jogadores,
-            List<Integer> sequenciaDeCores, int indexJogadorAtual, int tempoParaReagir) {
+    protected Genius(Data data, String titulodoCampeonato, int ritmo, int dificuldade, List<Jogador> jogadores,
+            List<Integer> sequenciaDeCores, int indexJogadorAtual, int indexdaJogadaAtual, int tempoParaReagir,
+            long instantedaUltimaReacaodoJogadorAtual, boolean oinstanteEstaValido) {
         this.data = data;
         this.titulodoCampeonato = titulodoCampeonato;
-        this.setRitmo(ritmo); // 1 lento // 2 cadenciado // 3 rapido
+        this.ritmo = ritmo;
+        this.dificuldade = dificuldade;
         this.jogadores = jogadores;
         this.sequenciaDeCores = sequenciaDeCores;
         this.indexJogadorAtual = indexJogadorAtual;
-        this.instantedaUltimaReacaodoJogadorAtual = 0;
-        this.oinstanteEstaValido = false;
+        this.indexdaJogadaAtual = indexdaJogadaAtual;
         this.tempoParaReagir = tempoParaReagir;
+        this.instantedaUltimaReacaodoJogadorAtual = instantedaUltimaReacaodoJogadorAtual;
+        this.oinstanteEstaValido = oinstanteEstaValido;
+    }
+
+    protected Genius(Data data, String titulodoCampeonato, int ritmo, int dificuldade, List<Jogador> jogadores) {
+        this.data = data;
+        this.titulodoCampeonato = titulodoCampeonato;
+        this.ritmo = ritmo;
+        this.dificuldade = dificuldade;
+        this.jogadores = jogadores;
     }
 
     public Genius(String titulodoCampeonato) {
         data = new Data(LocalDateTime.now().getDayOfMonth(), LocalDateTime.now().getMonthValue(),
                 LocalDateTime.now().getYear());
         this.titulodoCampeonato = titulodoCampeonato;
-        setRitmo(1);
+        this.setRitmo();
         this.jogadores = new ArrayList<Jogador>();
         this.indexJogadorAtual = 0;
         this.instantedaUltimaReacaodoJogadorAtual = 0;
         this.oinstanteEstaValido = false;
-        geraSequencia();
+        this.setDificuldade();
+        this.geraSequencia();
     }
 
     public void setTitulo(String tituloNovo) {
@@ -53,20 +66,39 @@ public class Genius implements Serializable {
     }
 
     public void setRitmo() {
-        setRitmo(1);
-    }
-
-    private void setRitmo(int mudanca) {
-        if (mudanca + this.ritmo < 1 || mudanca + this.ritmo > 3) {
+        if (this.ritmo < 1 || this.ritmo > 2) {
             this.ritmo = 0;
         }
-        this.ritmo += mudanca;
+        this.ritmo++;
         System.out.println(this.ritmo);
         setTempodeReacao(this.ritmo);
     }
 
     public void setDificuldade() {
+        if (this.dificuldade < 1 || this.dificuldade > 2) {
+            this.dificuldade = 0;
+        }
+        this.dificuldade++;
+    }
 
+    public String getDificuldade() {
+        return Integer.toString(this.dificuldade);
+    }
+
+    public Genius mudaDificuldade() {
+        setDificuldade();
+        if (this.dificuldade == 1) {
+            return this;
+        }
+        if (this.dificuldade == 2) {
+            return this;
+        }
+        if (this.dificuldade == 3) {
+            return new GeniusDificil(data, titulodoCampeonato, ritmo, dificuldade, jogadores, sequenciaDeCores,
+                    indexJogadorAtual, indexdaJogadaAtual, tempoParaReagir, instantedaUltimaReacaodoJogadorAtual,
+                    oinstanteEstaValido);
+        }
+        return this;
     }
 
     public String getRitmo() {
@@ -222,7 +254,7 @@ public class Genius implements Serializable {
         return true;
     }
 
-    private void geraSequencia() {
+    protected void geraSequencia() {
         Random geraNumeroAleatorio = new Random();
         List<Integer> novaSequencia = new ArrayList<Integer>();
         for (int i = 0; i < 1; i++) {
@@ -232,7 +264,7 @@ public class Genius implements Serializable {
         return;
     }
 
-    private void adicionanaSequencia() {
+    protected void adicionanaSequencia() {
         Random geraNumeroAleatorio = new Random();
         this.sequenciaDeCores.add(geraNumeroAleatorio.nextInt(4));
         System.out.println(this.sequenciaDeCores.get(this.sequenciaDeCores.size() - 1));
