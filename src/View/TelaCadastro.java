@@ -13,11 +13,12 @@ import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
 
 import Negocio.Genius;
+import Negocio.GeniusBase;
 import Negocio.Jogador;
 
 public class TelaCadastro extends MyJPanel {
 	private int qtdJogadores;
-	private Genius jogo = new Genius("Teste");
+	private Genius jogo = new GeniusBase("Teste");
 
 	public TelaCadastro(JTabbedPane tabbedPane, int qtdJogadores) {
 

@@ -12,6 +12,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
 
 import Negocio.Genius;
+import Negocio.GeniusBase;
 import Negocio.Jogador;
 
 public class TelaIndividual extends MyJPanel {
@@ -96,7 +97,7 @@ public class TelaIndividual extends MyJPanel {
 				} catch (Exception e1) {
 					System.out.println(e1.toString());
 				}
-				Genius jogo = new Genius("Teste");
+				Genius jogo = new GeniusBase("Teste");
 				Jogador jogador;
 				try {
 					jogador = new Jogador("Irineu", "Sla");

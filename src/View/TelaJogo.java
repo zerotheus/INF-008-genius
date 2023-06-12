@@ -68,7 +68,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
 					e1.printStackTrace();
 				}
-				genius = jogo.mudaDificuldade();
+				genius = genius.mudaDificuldade();
 				JOptionPane.showMessageDialog(null, "Dificuldade mudada para " + genius.getDificuldade(), "DIFICULDADE",
 						1);
 			}
@@ -82,8 +82,8 @@ public class TelaJogo extends MyJPanel implements Runnable {
 				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
 					e1.printStackTrace();
 				}
-				jogo.setRitmo();
-				JOptionPane.showMessageDialog(null, "Ritmo mudado para " + jogo.getRitmo(), "RITMO", 1);
+				genius.setRitmo();
+				JOptionPane.showMessageDialog(null, "Ritmo mudado para " + genius.getRitmo(), "RITMO", 1);
 			}
 		});
 
@@ -145,7 +145,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 					try {
 						FileOutputStream fileStream = new FileOutputStream(file);
 						ObjectOutputStream os = new ObjectOutputStream(fileStream);
-						os.writeObject(jogo);
+						os.writeObject(genius);
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}

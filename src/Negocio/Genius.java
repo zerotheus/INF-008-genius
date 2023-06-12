@@ -10,11 +10,11 @@ import java.util.Random;
 
 import Enums.Cor;
 
-public class Genius implements Serializable {
+public abstract class Genius implements Serializable {
     private Data data;// mudar para tipo para Date;
     private String titulodoCampeonato;
     protected int ritmo;
-    private int dificuldade;
+    protected int dificuldade;
     private List<Jogador> jogadores; // para facilitar a alteracao na quantidade de jogadores
     protected List<Integer> sequenciaDeCores;
     private int indexJogadorAtual;
@@ -46,6 +46,8 @@ public class Genius implements Serializable {
         this.ritmo = ritmo;
         this.dificuldade = dificuldade;
         this.jogadores = jogadores;
+        geraSequencia();
+
     }
 
     public Genius(String titulodoCampeonato) {
@@ -85,21 +87,7 @@ public class Genius implements Serializable {
         return Integer.toString(this.dificuldade);
     }
 
-    public Genius mudaDificuldade() {
-        setDificuldade();
-        if (this.dificuldade == 1) {
-            return this;
-        }
-        if (this.dificuldade == 2) {
-            return this;
-        }
-        if (this.dificuldade == 3) {
-            return new GeniusDificil(data, titulodoCampeonato, ritmo, dificuldade, jogadores, sequenciaDeCores,
-                    indexJogadorAtual, indexdaJogadaAtual, tempoParaReagir, instantedaUltimaReacaodoJogadorAtual,
-                    oinstanteEstaValido);
-        }
-        return this;
-    }
+    public abstract Genius mudaDificuldade();
 
     public String getRitmo() {
         return Integer.toString(ritmo);
@@ -233,11 +221,11 @@ public class Genius implements Serializable {
     }
 
     private boolean acertouaSequencia(Cor cor) {
-
+        System.out.println(sequenciaDeCores);
         if (cor.ordinal() != this.sequenciaDeCores.get(this.indexdaJogadaAtual)) {
             this.alteraJogadorAtual();
             this.indexdaJogadaAtual = 0;
-            System.out.println("perdeu!");
+            System.out.println("Sequencia");
             return false;
         }
         pontua();

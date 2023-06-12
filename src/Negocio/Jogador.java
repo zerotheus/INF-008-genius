@@ -1,6 +1,8 @@
 package Negocio;
 
-public class Jogador implements Comparable<Jogador> {
+import java.io.Serializable;
+
+public class Jogador implements Comparable<Jogador>, Serializable{
 
     private String nome;
     private String apelido;
@@ -9,11 +11,11 @@ public class Jogador implements Comparable<Jogador> {
     private int TempoTotalJogado;
     private int recordPessoal;
 
-    public Jogador(String nome, String apelido) throws Exception {
+    public Jogador(String nome, String apelido) throws Exception  {
         this.setNome(nome);
         this.setApelido(apelido);
         this.pontos = 0;
-        jogadaMaisRapidaEmUnidadedeTempo = null;
+        jogadaMaisRapidaEmUnidadedeTempo = Long.MAX_VALUE;
         TempoTotalJogado = 0;
         recordPessoal = 0;
     }
