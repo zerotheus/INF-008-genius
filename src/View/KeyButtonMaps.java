@@ -1,13 +1,7 @@
 package View;
 
 import java.awt.event.ActionEvent;
-import java.io.IOException;
-
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.AbstractAction;
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
 
 import View.geniusLabels.GeniusLabels;
 
