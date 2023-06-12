@@ -1,11 +1,11 @@
 package Negocio;
 
-public class Jogador {
+public class Jogador implements Comparable<Jogador> {
 
     private String nome;
     private String apelido;
     private int pontos;
-    private long JogadaMaisRapidaEmUnidadedeTempo;
+    private Long jogadaMaisRapidaEmUnidadedeTempo;
     private int TempoTotalJogado;
     private int recordPessoal;
 
@@ -13,17 +13,17 @@ public class Jogador {
         this.setNome(nome);
         this.setApelido(apelido);
         this.pontos = 0;
-        JogadaMaisRapidaEmUnidadedeTempo = 0;
+        jogadaMaisRapidaEmUnidadedeTempo = null;
         TempoTotalJogado = 0;
         recordPessoal = 0;
     }
 
-    public Jogador(String nome, String apelido, int pontos, int jogadaMaisRapidaEmUnidadedeTempo, int tempoTotalJogado,
+    public Jogador(String nome, String apelido, int pontos, long jogadaMaisRapidaEmUnidadedeTempo, int tempoTotalJogado,
             int recordPessoal) {
         this.nome = nome;
         this.apelido = apelido;
         this.pontos = pontos;
-        JogadaMaisRapidaEmUnidadedeTempo = jogadaMaisRapidaEmUnidadedeTempo;
+        this.jogadaMaisRapidaEmUnidadedeTempo = jogadaMaisRapidaEmUnidadedeTempo;
         TempoTotalJogado = tempoTotalJogado;
         this.recordPessoal = recordPessoal;
     }
@@ -59,12 +59,16 @@ public class Jogador {
     }
 
     public long getJogadaMaisRapidaEmUnidadedeTempo() {
-        return JogadaMaisRapidaEmUnidadedeTempo;
+        return jogadaMaisRapidaEmUnidadedeTempo;
     }
 
     public void foiJogadaMaisRapida(Long jogada) {
-        if (JogadaMaisRapidaEmUnidadedeTempo > jogada) {
-            JogadaMaisRapidaEmUnidadedeTempo = jogada;
+        if (this.jogadaMaisRapidaEmUnidadedeTempo == null) {
+            this.jogadaMaisRapidaEmUnidadedeTempo = jogada;
+            return;
+        }
+        if (this.jogadaMaisRapidaEmUnidadedeTempo > jogada) {
+            this.jogadaMaisRapidaEmUnidadedeTempo = jogada;
         }
     }
 
@@ -74,6 +78,17 @@ public class Jogador {
 
     public int getrecordPessoal() {
         return this.recordPessoal;
+    }
+
+    @Override
+    public int compareTo(Jogador outroJogador) {
+        if (this.pontos > outroJogador.pontos) {
+            return 1;
+        }
+        if (this.pontos < outroJogador.pontos) {
+            return -1;
+        }
+        return 0;
     }
 
 }
