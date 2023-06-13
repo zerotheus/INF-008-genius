@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class GeniusMedio extends Genius{
+public class GeniusMedio extends Genius {
 
     protected GeniusMedio(Data data, String titulodoCampeonato, int ritmo, int dificuldade, List<Jogador> jogadores) {
         super(data, titulodoCampeonato, ritmo, dificuldade, jogadores);
@@ -22,8 +22,19 @@ public class GeniusMedio extends Genius{
     }
 
     @Override
-    public Genius mudaDificuldade() {
-        return new GeniusDificil(getData(), getTitulodoCampeonato(), super.ritmo, this.dificuldade, getListaJogadores());
+    protected void adicionanaSequencia() {
+        Random geraNumeroAleatorio = new Random();
+        for (int i = 0; i < 3; i++) {
+            this.sequenciaDeCores.add(geraNumeroAleatorio.nextInt(4));
+        }
+        System.out.println(this.sequenciaDeCores.get(this.sequenciaDeCores.size() - 1));
     }
-    
+
+    @Override
+    public Genius mudaDificuldade() {
+        setDificuldade();
+        return new GeniusDificil(getData(), getTitulodoCampeonato(), super.ritmo, this.dificuldade,
+                getListaJogadores());
+    }
+
 }
