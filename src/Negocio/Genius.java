@@ -169,13 +169,6 @@ public abstract class Genius implements Serializable {
     }
 
     public boolean jogoEstaAtivo() {
-        boolean temEmpate = this.temEmpate();
-        /*
-         * if (temEmpate) {
-         * indexdaJogadaAtual = 0;
-         * return true;
-         * }
-         */
         if (indexJogadorAtual == this.jogadores.size()) {
             return false;
         }
@@ -242,7 +235,7 @@ public abstract class Genius implements Serializable {
         if (this.indexdaJogadaAtual + 1 == this.sequenciaDeCores.size()) {
             this.indexdaJogadaAtual = 0;
             adicionanaSequencia();
-            System.out.println("Acertou");
+            System.out.println("invalidaInstante");
             this.invalidaInstante();
             return true;
         }
@@ -276,15 +269,18 @@ public abstract class Genius implements Serializable {
         return false;
     }
 
-    private boolean temEmpate() {
+    public boolean temEmpate() {
         int contaMaiorPontucao = 0;
         for (int i = 0; i < jogadores.size(); i++) {
             if (jogadores.get(i).getPontos() == this.maiorPontuacao) {
                 contaMaiorPontucao++;
+                
             }
         }
         if (contaMaiorPontucao > 1) {
             Collections.sort(jogadores);
+            indexdaJogadaAtual = 0;
+            indexJogadorAtual = 0;
             return true;
         }
         return false;
