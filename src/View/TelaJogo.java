@@ -295,6 +295,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		final boolean eraUltimaJogada = genius.ehUltimaJogada();
 		System.out.println("É o último:" + genius.ehUltimaJogada());
 		final boolean naoPerdeu = genius.analisaJogada(instantedofimdaExibicao, botao.getCor());
+		if(!thread.isAlive()){
 		try {
 			botao.pisca();
 		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
@@ -321,7 +322,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 				thread.start();
 			}
 		}
-		return;
+		return;}
 	};
 
 	private void atualizaInformacoes() {
