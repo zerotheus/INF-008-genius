@@ -5,12 +5,12 @@ import Enums.Cor;
 public class VermelhoLabel extends GeniusLabels {
 
     public VermelhoLabel() {
-        super("vermelho 1.png", "vermelho branco.png", "Si.wav", Cor.vermelho);
+        super("vermelho 1.png", "vermelho branco.png", "Si.wav", Cor.vermelho, 's');
     }
 
     @Override
     public void setImagemParaRosa() {
-        this.setImagem("vermelho rosa.png");   
+        this.setImagem("vermelho rosa.png");
     }
 
     @Override
