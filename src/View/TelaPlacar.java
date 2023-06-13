@@ -13,7 +13,6 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import Negocio.Genius;
-import Negocio.Jogador;
 
 public class TelaPlacar extends MyJPanel {
     private List<JLabel> labelNomes;
@@ -23,7 +22,6 @@ public class TelaPlacar extends MyJPanel {
     private List<JLabel> labelMelhorJgd;
 
     public TelaPlacar(JTabbedPane tabbedPane, Genius jogo) {
-        this.setLayout(null);
         this.desenhaPlacar(jogo);
         JLabel lblDataJogo = new JLabel(jogo.getData().toString());
         lblDataJogo.setForeground(new Color(255, 255, 255));
@@ -67,7 +65,6 @@ public class TelaPlacar extends MyJPanel {
 
             }
         });
-
     }
 
     public void desenhaPlacar(Genius jogo) {
@@ -112,9 +109,10 @@ public class TelaPlacar extends MyJPanel {
         /* INICIO PONTOS TOTAL */
         labelPontosTot = new ArrayList<JLabel>();
         for (int i = 0; i < qtdJogadores; i++) {
-            labelPontosTot.add(new JLabel(jogo.getListaJogadores().get(i).getPontos() + "")); // temporariamente alterado para
-                                                                                     // pontos da partida não record
-                                                                                     // pessoal
+            labelPontosTot.add(new JLabel(jogo.getListaJogadores().get(i).getPontos() + "")); // temporariamente
+                                                                                              // alterado para
+            // pontos da partida não record
+            // pessoal
             labelPontosTot.get(i).setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 34));
             labelPontosTot.get(i).setForeground(Color.WHITE);
             labelPontosTot.get(i).setBounds(986, 267 + posicao * i, 152, 38);
