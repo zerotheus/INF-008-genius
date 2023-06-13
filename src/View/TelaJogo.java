@@ -144,14 +144,15 @@ public class TelaJogo extends MyJPanel implements Runnable {
 				int returnVal = fc.showOpenDialog(lblFundoJogo);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					File file = fc.getSelectedFile();
-					/*if(!filter.accept(file)){
-						
-					}*/
+					if(!filter.accept(file)){
+						File newFile = new File(file.toString()+".obj");
+						file = newFile;
+					}
 					try {
 						FileOutputStream fileStream = new FileOutputStream(file);
 						ObjectOutputStream os = new ObjectOutputStream(fileStream);
-						
 						os.writeObject(genius);
+						os.close();
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
