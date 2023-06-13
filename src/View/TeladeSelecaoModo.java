@@ -8,7 +8,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -43,19 +42,17 @@ public class TeladeSelecaoModo extends MyJPanel {
         MyJLabelwithSound lblCarregar = new MyJLabelwithSound();
         lblCarregar.setIcon(new ImageIcon(this.getImagesPath() + "Carregar.png"));
         lblCarregar.setBounds(894, 583, 264, 95);
-        
+
         MyJLabelwithSound lblExtra = new MyJLabelwithSound();
         lblExtra.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 34));
         lblExtra.setForeground(Color.RED);
         lblExtra.setText("EXTRAS");
         lblExtra.setBounds(629, 783, 264, 95);
-        
-        
+
         this.add(lblCarregar);
         this.add(lblindividual);
         this.add(lblExtra);
         this.add(lblTeladeFundo);
-        
 
         lblindividual.addMouseListener(new MouseAdapter() {
             @Override
@@ -94,56 +91,57 @@ public class TeladeSelecaoModo extends MyJPanel {
 
         });
 
-
-        	lblCarregar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				try {
-					lblCarregar.startSound();
-				} catch (Exception e1) {
-					System.out.println(e.toString());
-				}
-				Genius jogoCarregado = null;
-				final JFileChooser fc = new JFileChooser();
-				int returnVal = fc.showOpenDialog(null);
-				if (returnVal == JFileChooser.APPROVE_OPTION) {
-					File file = fc.getSelectedFile();
-					try {
-						FileInputStream fis = new java.io.FileInputStream(file);
-						ObjectInputStream is = new ObjectInputStream(fis);
-						jogoCarregado = (Genius) is.readObject();
-					} catch (IOException | ClassNotFoundException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-
-					// This is where a real application would open the file.
-				}
-				JPanel telaPlacar = new TelaPlacar(tabbedPane, jogoCarregado);
-				tabbedPane.insertTab("Genius", null, telaPlacar, TOOL_TIP_TEXT_KEY, 1);
-				tabbedPane.removeTabAt(0);
-
-			}
-		});
-        	
-        	lblExtra.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    if (e.getSource() != lblExtra) {
-                        return;
-                    }
-                    try {
-                    	lblExtra.startSound();
-                    } catch (Exception e1) {
-                        System.out.println(e1.toString());
-                    }
-
-                    /*JPanel novoJPanel = new TelaCadastro(tabbedPane, 1);
-                    tabbedPane.insertTab("Individual", null, novoJPanel, TOOL_TIP_TEXT_KEY, 1);
-                    tabbedPane.removeTabAt(0);*/
-
+        lblCarregar.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                try {
+                    lblCarregar.startSound();
+                } catch (Exception e1) {
+                    System.out.println(e.toString());
                 }
-            });
+                Genius jogoCarregado = null;
+                final JFileChooser fc = new JFileChooser();
+                int returnVal = fc.showOpenDialog(null);
+                if (returnVal == JFileChooser.APPROVE_OPTION) {
+                    File file = fc.getSelectedFile();
+                    try {
+                        FileInputStream fis = new java.io.FileInputStream(file);
+                        ObjectInputStream is = new ObjectInputStream(fis);
+                        jogoCarregado = (Genius) is.readObject();
+                    } catch (IOException | ClassNotFoundException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    }
+
+                    // This is where a real application would open the file.
+                }
+                JPanel telaPlacar = new TelaPlacar(tabbedPane, jogoCarregado);
+                tabbedPane.insertTab("Genius", null, telaPlacar, TOOL_TIP_TEXT_KEY, 1);
+                tabbedPane.removeTabAt(0);
+
+            }
+        });
+
+        lblExtra.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getSource() != lblExtra) {
+                    return;
+                }
+                try {
+                    lblExtra.startSound();
+                } catch (Exception e1) {
+                    System.out.println(e1.toString());
+                }
+
+                /*
+                 * JPanel novoJPanel = new TelaCadastro(tabbedPane, 1);
+                 * tabbedPane.insertTab("Individual", null, novoJPanel, TOOL_TIP_TEXT_KEY, 1);
+                 * tabbedPane.removeTabAt(0);
+                 */
+
+            }
+        });
 
     }
 
