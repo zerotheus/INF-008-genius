@@ -1,5 +1,7 @@
 package View;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -41,8 +43,17 @@ public class TeladeSelecaoModo extends MyJPanel {
         MyJLabelwithSound lblCarregar = new MyJLabelwithSound();
         lblCarregar.setIcon(new ImageIcon(this.getImagesPath() + "Carregar.png"));
         lblCarregar.setBounds(894, 583, 264, 95);
+        
+        MyJLabelwithSound lblExtra = new MyJLabelwithSound();
+        lblExtra.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 34));
+        lblExtra.setForeground(Color.RED);
+        lblExtra.setText("EXTRAS");
+        lblExtra.setBounds(629, 783, 264, 95);
+        
+        
         this.add(lblCarregar);
         this.add(lblindividual);
+        this.add(lblExtra);
         this.add(lblTeladeFundo);
         
 
@@ -114,6 +125,25 @@ public class TeladeSelecaoModo extends MyJPanel {
 
 			}
 		});
+        	
+        	lblExtra.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    if (e.getSource() != lblExtra) {
+                        return;
+                    }
+                    try {
+                    	lblExtra.startSound();
+                    } catch (Exception e1) {
+                        System.out.println(e1.toString());
+                    }
+
+                    /*JPanel novoJPanel = new TelaCadastro(tabbedPane, 1);
+                    tabbedPane.insertTab("Individual", null, novoJPanel, TOOL_TIP_TEXT_KEY, 1);
+                    tabbedPane.removeTabAt(0);*/
+
+                }
+            });
 
     }
 
