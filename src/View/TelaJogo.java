@@ -144,55 +144,49 @@ public class TelaJogo extends MyJPanel implements Runnable {
 				int returnVal = fc.showOpenDialog(lblFundoJogo);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					File file = fc.getSelectedFile();
-					/*if(!filter.accept(file)){
-						
-					}*/
+					/*
+					 * if(!filter.accept(file)){
+					 * 
+					 * }
+					 */
 					try {
 						FileOutputStream fileStream = new FileOutputStream(file);
-						ObjectOutputStream os = new ObjectOutputStream(fileStream);
-						
-						os.writeObject(genius);
+						try (ObjectOutputStream os = new ObjectOutputStream(fileStream)) {
+							os.writeObject(genius);
+						}
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
-					}
-					// This is where a real application would open the file.
 				}
-				//JPanel telaPlacar = new TelaPlacar(tabbedPane, jogo);
-				// tabbedPane.insertTab("Genius", null, telaPlacar, TOOL_TIP_TEXT_KEY, 1);
-				// tabbedPane.removeTabAt(0);
+				// This is where a real application would open the file.
+			}
+			// JPanel telaPlacar = new TelaPlacar(tabbedPane, jogo);
+			// tabbedPane.insertTab("Genius", null, telaPlacar, TOOL_TIP_TEXT_KEY, 1);
+			// tabbedPane.removeTabAt(0);
 
-			
 		});
 
 		btnCarregar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				try {
+					btnCarregar.startSound();
+				} catch (Exception e1) {
+					System.out.println(e.toString());
+				}
+				final JFileChooser fc = new JFileChooser();
+				int returnVal = fc.showOpenDialog(lblFundoJogo);
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					File file = fc.getSelectedFile();
 					try {
-						btnCarregar.startSound();
-					} catch (Exception e1) {
-						System.out.println(e.toString());
+						FileInputStream fis = new java.io.FileInputStream(file);
+						ObjectInputStream is = new ObjectInputStream(fis);
+						genius = (Genius) is.readObject();
+						is.close();
+					} catch (IOException | ClassNotFoundException e1) {
+						e1.printStackTrace();
 					}
-					Genius jogoCarregado = null;
-					final JFileChooser fc = new JFileChooser();
-					int returnVal = fc.showOpenDialog(lblFundoJogo);
-
-					if (returnVal == JFileChooser.APPROVE_OPTION) {
-						File file = fc.getSelectedFile();
-						try {
-							FileInputStream fis = new java.io.FileInputStream(file);
-							ObjectInputStream is = new ObjectInputStream(fis);
-							jogoCarregado = (Genius) is.readObject();
-
-						} catch (IOException | ClassNotFoundException e1) {
-							e1.printStackTrace();
-						}
-
-						// This is where a real application would open the file.
-					}
-					JPanel telaPlacar = new TelaPlacar(tabbedPane, jogoCarregado);
-					// tabbedPane.insertTab("Genius", null, telaPlacar, TOOL_TIP_TEXT_KEY, 1);
-					// tabbedPane.removeTabAt(0);
+				}
 			}
 		});
 
@@ -282,6 +276,9 @@ public class TelaJogo extends MyJPanel implements Runnable {
 	}
 
 	public void getInformacoes(final GeniusLabels botao) {
+		if (thread.isAlive()) {
+			return;
+		}
 		final Jogador jogador = genius.getJogadorAtual();
 		final boolean eraUltimaJogada = genius.ehUltimaJogada();
 		System.out.println("É o último:" + genius.ehUltimaJogada());
@@ -324,6 +321,9 @@ public class TelaJogo extends MyJPanel implements Runnable {
 	public synchronized void run() {
 		this.sequenciadeCoresaExibir = genius.getSequencia();
 		System.out.println(sequenciadeCoresaExibir);
+		for (GeniusLabels geniusLabel : geniusLabels) {
+			// geniusLabel.getInputMap();
+		}
 		try {
 			this.thread.join(300);
 		} catch (InterruptedException e) {
@@ -340,6 +340,9 @@ public class TelaJogo extends MyJPanel implements Runnable {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+		}
+		for (GeniusLabels geniusLabel : geniusLabels) {
+			geniusLabel.setEnabled(true);
 		}
 		instantedofimdaExibicao = clock.millis();
 		this.thread = new Thread(this);
