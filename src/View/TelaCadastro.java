@@ -13,13 +13,16 @@ import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
 
 import Negocio.Genius;
+import Negocio.GeniusBase;
 import Negocio.Jogador;
 
 public class TelaCadastro extends MyJPanel {
 	private int qtdJogadores;
-	private Genius jogo = new Genius("Teste");
+	private Genius jogo = new GeniusBase("Teste");
 
 	public TelaCadastro(JTabbedPane tabbedPane, int qtdJogadores) {
+
+		
 		super();
 		this.setLayout(null);
 		this.qtdJogadores = qtdJogadores;
@@ -37,6 +40,7 @@ public class TelaCadastro extends MyJPanel {
 
 		MyJLabelwithSound lblSalvar = new MyJLabelwithSound();
 		lblSalvar.setIcon(new ImageIcon(this.getImagesPath() + "Salvar.png"));
+		lblSalvar.setBounds(550, 780, 117, 60);
 		lblSalvar.setBounds(550, 780, 117, 60);
 		lblSalvar.setVisible(true);
 
@@ -85,33 +89,32 @@ public class TelaCadastro extends MyJPanel {
 		lblLogo.setVisible(true);
 
 		MyJLabelwithSound lblVoltar = new MyJLabelwithSound();
-        lblVoltar.setIcon(new ImageIcon(this.getImagesPath() + "botaoVoltar.png"));
-        lblVoltar.setBounds(813, 795, 106, 53);
-        lblVoltar.setVisible(true);
-        this.add(lblVoltar);
+		lblVoltar.setIcon(new ImageIcon(this.getImagesPath() + "botaoVoltar.png"));
+		lblVoltar.setBounds(813, 795, 106, 53);
+		lblVoltar.setVisible(true);
+		this.add(lblVoltar);
 
- 		lblVoltar.addMouseListener(new MouseAdapter() { // colocar som ao clicar o botão
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (e.getSource() != lblVoltar) {
-                    return;
-                }
-                try {
-                    lblVoltar.startSound();
-                } catch (Exception e1) {
-                    System.out.println(e.toString());
-                }
-                lblVoltar.setEnabled(false);
-                lblVoltar.setVisible(false);
-                JPanel teladeMododeJogo = new TeladeSelecaoModo(tabbedPane);
-                tabbedPane.insertTab("Selecione o modo de Jogo", null, teladeMododeJogo, TOOL_TIP_TEXT_KEY, 1);
-                tabbedPane.removeTabAt(0);
+		lblVoltar.addMouseListener(new MouseAdapter() { // colocar som ao clicar o botão
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getSource() != lblVoltar) {
+					return;
+				}
+				try {
+					lblVoltar.startSound();
+				} catch (Exception e1) {
+					System.out.println(e.toString());
+				}
+				lblVoltar.setEnabled(false);
+				lblVoltar.setVisible(false);
+				JPanel teladeMododeJogo = new TeladeSelecaoModo(tabbedPane);
+				tabbedPane.insertTab("Selecione o modo de Jogo", null, teladeMododeJogo, TOOL_TIP_TEXT_KEY, 1);
+				tabbedPane.removeTabAt(0);
 
-            }
-        });
+			}
+		});
 
-
-		//(847, 738, 111, 60);
+		// (847, 738, 111, 60);
 
 		JLabel FundoSemLogo = new JLabelFundoSemLogo();
 		this.add(lblCampeonatoNome);
@@ -130,6 +133,7 @@ public class TelaCadastro extends MyJPanel {
 				}
 				try {
 					jogo.adicionaJogador(new Jogador(textNome.getText(), textApelido.getText()));
+					jogo.setTitulo(textCampeonato.getText());
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(FundoSemLogo, "Nome/apelido tem que ter pelo menos 3 letras!");
 					return;
