@@ -283,16 +283,23 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		}
 		this.atualizaInformacoes();
 
-		if (!genius.jogoEstaAtivo()) {
-			jogador.setTempoTotal();
-			MyJPanel telaPlacar = new TelaPlacar(tabbedPane, genius);
-			JOptionPane.showMessageDialog(null, "Fim de jogo", "Fim de jogo", 2);
-			this.tabbedPane.insertTab("Placar", null, telaPlacar, TOOL_TIP_TEXT_KEY, 1);
-			this.tabbedPane.remove(0);
-			return;
+		if (!genius.jogoEstaAtivo()){
+			if(genius.temEmpate()) {
+				JOptionPane.showMessageDialog(null, "Houve empate! A rodada reiniciará. "+jogador.getApelido()+" começará desta vez!", "empate", 2);
+				return;
+			}else {
+				jogador.setTempoTotal();
+				MyJPanel telaPlacar = new TelaPlacar(tabbedPane, genius);
+				JOptionPane.showMessageDialog(null, "Fim de jogo", "Fim de jogo", 2);
+				this.tabbedPane.insertTab("Placar", null, telaPlacar, TOOL_TIP_TEXT_KEY, 1);
+				this.tabbedPane.remove(0);
+				return;
+			}
+			
 		}
 		if (!naoPerdeu) {// ou seja perdeu
 			btnIniciar.setEnabled(true);
+			this.atualizaInformacoes();
 			jogador.setTempoTotal();
 			JOptionPane.showMessageDialog(null, jogador.getApelido() + " Por favor passe a vez", "Errou a Sequencia",
 					2);
