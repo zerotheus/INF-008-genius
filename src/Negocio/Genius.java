@@ -19,6 +19,7 @@ public abstract class Genius implements Serializable {
     protected List<Integer> sequenciaDeCores;
     private int indexJogadorAtual;
     private int indexdaJogadaAtual = 0;
+    private int maiorPontuacao;
     private int tempoParaReagir; // A definir oq poderia ser considerado facil ou dificil
     private final Clock clock = Clock.systemDefaultZone();
     private long instantedaUltimaReacaodoJogadorAtual;
@@ -143,6 +144,7 @@ public abstract class Genius implements Serializable {
     }
 
     private void alteraJogadorAtual() {
+        this.ehAmaiorPontuacao();
         this.invalidaInstante();
         if (this.indexJogadorAtual + 1 < this.jogadores.size()) {
             geraSequencia();
@@ -167,6 +169,13 @@ public abstract class Genius implements Serializable {
     }
 
     public boolean jogoEstaAtivo() {
+        boolean temEmpate = this.temEmpate();
+        /*
+         * if (temEmpate) {
+         * indexdaJogadaAtual = 0;
+         * return true;
+         * }
+         */
         if (indexJogadorAtual == this.jogadores.size()) {
             return false;
         }
@@ -230,7 +239,6 @@ public abstract class Genius implements Serializable {
             return false;
         }
         pontua();
-
         if (this.indexdaJogadaAtual + 1 == this.sequenciaDeCores.size()) {
             this.indexdaJogadaAtual = 0;
             adicionanaSequencia();
@@ -257,6 +265,29 @@ public abstract class Genius implements Serializable {
         Random geraNumeroAleatorio = new Random();
         this.sequenciaDeCores.add(geraNumeroAleatorio.nextInt(4));
         System.out.println(this.sequenciaDeCores.get(this.sequenciaDeCores.size() - 1));
+    }
+
+    private boolean ehAmaiorPontuacao() {
+        final int pontuacaodoJogoador = this.getJogadorAtual().getPontos();
+        if (pontuacaodoJogoador > maiorPontuacao) {
+            maiorPontuacao = pontuacaodoJogoador;
+            return true;
+        }
+        return false;
+    }
+
+    private boolean temEmpate() {
+        int contaMaiorPontucao = 0;
+        for (int i = 0; i < jogadores.size(); i++) {
+            if (jogadores.get(i).getPontos() == this.maiorPontuacao) {
+                contaMaiorPontucao++;
+            }
+        }
+        if (contaMaiorPontucao > 1) {
+            Collections.sort(jogadores);
+            return true;
+        }
+        return false;
     }
 
 }
