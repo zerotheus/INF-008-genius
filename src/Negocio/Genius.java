@@ -44,6 +44,7 @@ public abstract class Genius implements Serializable {
         this.data = data;
         this.titulodoCampeonato = titulodoCampeonato;
         this.ritmo = ritmo;
+        setTempodeReacao(ritmo);
         this.dificuldade = dificuldade;
         this.jogadores = jogadores;
         geraSequencia();
@@ -203,7 +204,7 @@ public abstract class Genius implements Serializable {
 
     private boolean reagiuEmTempo(Long instantedaExibicao) {
         final Long instantedeReacao = clock.millis();
-        System.out.println(instantedeReacao);
+        System.out.println(tempoParaReagir);
         if (!oinstanteEstaValido) {// se nao esta valido
             if (instantedaExibicao + tempoParaReagir > instantedeReacao) {
                 instantedaUltimaReacaodoJogadorAtual = instantedeReacao;
