@@ -18,4 +18,9 @@ public class AzulLabel extends GeniusLabels {
         this.setImagem("azul.png");
     }
 
+    @Override
+    public String toString() {
+        return "AzulLabel";
+    }
+
 }

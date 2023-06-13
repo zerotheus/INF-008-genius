@@ -18,4 +18,9 @@ public class VerdeLabel extends GeniusLabels {
         this.setImagem("verde 1.png");
     }
 
+    @Override
+    public String toString() {
+        return "VerdeLabel";
+    }
+
 }

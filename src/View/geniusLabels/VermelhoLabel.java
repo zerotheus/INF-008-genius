@@ -18,4 +18,9 @@ public class VermelhoLabel extends GeniusLabels {
         this.setImagem("vermelho 1.png");
     }
 
+    @Override
+    public String toString() {
+        return "VermelhoLabel";
+    }
+
 }

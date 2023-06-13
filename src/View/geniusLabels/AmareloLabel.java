@@ -18,4 +18,9 @@ public class AmareloLabel extends GeniusLabels {
         this.setImagem("amarelo 1.png");
     }
 
+    @Override
+    public String toString() {
+        return "AmareloLabel";
+    }
+
 }
