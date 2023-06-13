@@ -18,7 +18,8 @@ public class GeniusDificil extends Genius {
 
     protected void adicionanaSequencia() {
         Random geraNumeroAleatorio = new Random();
-        for (int i = 0; i < 3; i++) {
+        this.sequenciaDeCores.add(geraNumeroAleatorio.nextInt(4));
+        for (int i = 0; i < geraNumeroAleatorio.nextInt(5); i++) {
             this.sequenciaDeCores.add(geraNumeroAleatorio.nextInt(4));
         }
     }
@@ -26,7 +27,7 @@ public class GeniusDificil extends Genius {
     protected void geraSequencia() {
         Random geraNumeroAleatorio = new Random();
         List<Integer> novaSequencia = new ArrayList<Integer>();
-        for (int i = 0; i < geraNumeroAleatorio.nextInt(6); i++) {
+        for (int i = 0; i < 3; i++) {
             novaSequencia.add(geraNumeroAleatorio.nextInt(4));
         }
         this.sequenciaDeCores = novaSequencia;
