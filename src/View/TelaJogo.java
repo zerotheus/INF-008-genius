@@ -110,6 +110,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 					return;
 				}
 				btnIniciar.setEnabled(false);
+				genius.getJogadorAtual().setTempoInicial();
 				try {
 					btnIniciar.startSound();
 				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
@@ -283,6 +284,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		this.atualizaInformacoes();
 
 		if (!genius.jogoEstaAtivo()) {
+			jogador.setTempoTotal();
 			MyJPanel telaPlacar = new TelaPlacar(tabbedPane, genius);
 			JOptionPane.showMessageDialog(null, "Fim de jogo", "Fim de jogo", 2);
 			this.tabbedPane.insertTab("Placar", null, telaPlacar, TOOL_TIP_TEXT_KEY, 1);
@@ -291,6 +293,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		}
 		if (!naoPerdeu) {// ou seja perdeu
 			btnIniciar.setEnabled(true);
+			jogador.setTempoTotal();
 			JOptionPane.showMessageDialog(null, jogador.getApelido() + " Por favor passe a vez", "Errou a Sequencia",
 					2);
 			return;
