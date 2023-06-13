@@ -2,7 +2,6 @@ package View;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
-
 import View.geniusLabels.GeniusLabels;
 
 public class KeyButtonMaps extends AbstractAction {
