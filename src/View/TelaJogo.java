@@ -139,7 +139,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 				} catch (Exception e1) {
 					System.out.println(e.toString());
 				}
-				FileNameExtensionFilter filter = new FileNameExtensionFilter("JPEG file", "jpg", "jpeg");
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("OBJ file", "obj");
 				final JFileChooser fc = new JFileChooser();
 				int returnVal = fc.showOpenDialog(lblFundoJogo);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -175,23 +175,29 @@ public class TelaJogo extends MyJPanel implements Runnable {
 						System.out.println(e.toString());
 					}
 					Genius jogoCarregado = null;
+					FileNameExtensionFilter filter = new FileNameExtensionFilter("OBJ file", "obj");
 					final JFileChooser fc = new JFileChooser();
 					int returnVal = fc.showOpenDialog(lblFundoJogo);
 
 					if (returnVal == JFileChooser.APPROVE_OPTION) {
 						File file = fc.getSelectedFile();
-						try {
+						if(filter.accept(file)){
+							File newFile = new File(file.toString()+".obj");
+							file = newFile;
+							try {
 							FileInputStream fis = new java.io.FileInputStream(file);
 							ObjectInputStream is = new ObjectInputStream(fis);
 							jogoCarregado = (Genius) is.readObject();
-
+							is.close();
 						} catch (IOException | ClassNotFoundException e1) {
 							e1.printStackTrace();
 						}
+						}else
+							JOptionPane.showMessageDialog(lblFundoJogo,"Arquivo não suportado. Use somente arquivos .obj");
 
 						// This is where a real application would open the file.
 					}
-					JPanel telaPlacar = new TelaPlacar(tabbedPane, jogoCarregado);
+					//JPanel telaPlacar = new TelaPlacar(tabbedPane, jogoCarregado);
 					// tabbedPane.insertTab("Genius", null, telaPlacar, TOOL_TIP_TEXT_KEY, 1);
 					// tabbedPane.removeTabAt(0);
 			}
