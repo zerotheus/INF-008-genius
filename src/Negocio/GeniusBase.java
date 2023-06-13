@@ -1,9 +1,8 @@
 package Negocio;
 
-import java.io.Serializable;
 import java.util.List;
 
-public class GeniusBase extends Genius implements Serializable{
+public class GeniusBase extends Genius {
 
     public GeniusBase(String titulodoCampeonato) {
         super(titulodoCampeonato);
@@ -19,5 +18,5 @@ public class GeniusBase extends Genius implements Serializable{
         setDificuldade();
         return new GeniusMedio(getData(), getTitulodoCampeonato(), super.ritmo, this.dificuldade, getListaJogadores());
     }
-    
+
 }
