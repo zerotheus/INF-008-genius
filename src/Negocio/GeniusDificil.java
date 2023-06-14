@@ -33,4 +33,17 @@ public class GeniusDificil extends Genius {
         this.sequenciaDeCores = novaSequencia;
         return;
     }
+
+    @Override
+    public Genius getRodadadeDesempate() throws Exception {
+        if (!temEmpate()) {
+            throw new Exception("Nao ha empate");
+        }
+        int i = 0;
+        List<Jogador> empatados = new ArrayList<Jogador>();
+        while (super.jogadores.get(i).getPontos() == maiorPontuacao) {
+            empatados.add((jogadores.get(i)));
+        }
+        return new GeniusMedio(new Data(), getTitulodoCampeonato(), super.ritmo, super.dificuldade, empatados);
+    }
 }

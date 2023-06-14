@@ -18,4 +18,10 @@ public class GeniusInfinito extends Genius {
         throw new UnsupportedOperationException("Unimplemented method 'mudaDificuldade'");
     }
 
+    @Override
+    public Genius getRodadadeDesempate() throws Exception {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getRodadadeDesempate'");
+    }
+
 }

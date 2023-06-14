@@ -65,6 +65,10 @@ public class TelaPlacar extends MyJPanel {
 
             }
         });
+
+        if (jogo.temEmpate()) {
+            System.out.println("tem empate");
+        }
     }
 
     public void desenhaPlacar(Genius jogo) {

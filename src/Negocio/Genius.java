@@ -15,11 +15,11 @@ public abstract class Genius implements Serializable {
     private String titulodoCampeonato;
     protected int ritmo;
     protected int dificuldade;
-    private List<Jogador> jogadores; // para facilitar a alteracao na quantidade de jogadores
+    protected List<Jogador> jogadores; // para facilitar a alteracao na quantidade de jogadores
     protected List<Integer> sequenciaDeCores;
     private int indexJogadorAtual;
     private int indexdaJogadaAtual = 0;
-    private int maiorPontuacao;
+    protected int maiorPontuacao;
     private int tempoParaReagir; // A definir oq poderia ser considerado facil ou dificil
     private final Clock clock = Clock.systemDefaultZone();
     private long instantedaUltimaReacaodoJogadorAtual;
@@ -53,8 +53,7 @@ public abstract class Genius implements Serializable {
     }
 
     public Genius(String titulodoCampeonato) {
-        data = new Data(LocalDateTime.now().getDayOfMonth(), LocalDateTime.now().getMonthValue(),
-                LocalDateTime.now().getYear());
+        data = new Data();
         this.titulodoCampeonato = titulodoCampeonato;
         this.setRitmo();
         this.jogadores = new ArrayList<Jogador>();
@@ -274,16 +273,15 @@ public abstract class Genius implements Serializable {
         for (int i = 0; i < jogadores.size(); i++) {
             if (jogadores.get(i).getPontos() == this.maiorPontuacao) {
                 contaMaiorPontucao++;
-                
             }
         }
         if (contaMaiorPontucao > 1) {
             Collections.sort(jogadores);
-            indexdaJogadaAtual = 0;
-            indexJogadorAtual = 0;
             return true;
         }
         return false;
     }
+
+    public abstract Genius getRodadadeDesempate() throws Exception;
 
 }
