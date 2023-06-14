@@ -84,20 +84,26 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		});
 
 		btnIniciar = new MyJLabelwithSound();
-		btnIniciar.setBounds(1212, 87, 190, 70);
+		btnIniciar.setBounds(1223, 87, 190, 70);
 		btnIniciar.setVisible(true);
 		this.add(btnIniciar);
 
 		MyJLabelwithSound btnSalvar = new MyJLabelwithSound();
-		btnSalvar.setBounds(1223, 405, 173, 57);
+		btnSalvar.setText("TOOL_TIP_TEXT_KEY");;
+		btnSalvar.setBounds(1223, 293, 190, 70);
 		btnSalvar.setVisible(true);
 		this.add(btnSalvar);
 
 		MyJLabelwithSound btnCarregar = new MyJLabelwithSound();
-		btnCarregar.setBounds(1206, 716, 190, 70);
+		btnCarregar.setBounds(1212, 716, 190, 70);
 		btnCarregar.setVisible(true);
 		this.add(btnCarregar);
 
+		MyJLabelwithSound btnExtras = new MyJLabelwithSound();
+		btnExtras.setBounds(1212, 506, 190, 70);
+		btnExtras.setVisible(true);
+		this.add(btnExtras);
+		
 		JLabel lblFundoJogo = new JLabel();
 		lblFundoJogo.setIcon(new ImageIcon(this.getImagesPath() + "fundojOGO.png"));
 		lblFundoJogo.setBounds(0, 0, 1444, 881);
