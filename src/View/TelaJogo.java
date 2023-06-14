@@ -209,52 +209,19 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		GeniusLabels lblAzul = new AzulLabel();
 		lblAzul.setBounds(447, 78, 322, 316);
 		lblAzul.setIcon(new ImageIcon(this.getImagesPath() + "azul.png"));
-		lblAzul.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (e.getSource() != lblAzul) {
-					return;
-				}
-				getInformacoes(lblAzul);
-			}
-		});
+		lblAzul.addMouseListener(new AcaodoGenius(lblAzul, this));
 		GeniusLabels lblVermelho = new VermelhoLabel();
 		lblVermelho.setIcon(new ImageIcon(this.getImagesPath() + "vermelho 1.png"));
 		lblVermelho.setBounds(447, 474, 322, 316);
-		lblVermelho.addMouseListener(new MouseAdapter() {
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (e.getSource() != lblVermelho) {
-					return;
-				}
-				getInformacoes(lblVermelho);
-			}
-		});
+		lblVermelho.addMouseListener(new AcaodoGenius(lblVermelho, this));
 		GeniusLabels lblAmarelo = new AmareloLabel();
 		lblAmarelo.setIcon(new ImageIcon(this.getImagesPath() + "amarelo 1.png"));
 		lblAmarelo.setBounds(807, 78, 322, 316);
-		lblAmarelo.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (e.getSource() != lblAmarelo) {
-					return;
-				}
-				getInformacoes(lblAmarelo);
-			}
-		});
+		lblAmarelo.addMouseListener(new AcaodoGenius(lblAmarelo, this));
 		GeniusLabels lblVerde = new VerdeLabel();
 		lblVerde.setIcon(new ImageIcon(this.getImagesPath() + "verde 1.png"));
 		lblVerde.setBounds(807, 474, 322, 316);
-		lblVerde.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (e.getSource() != lblVerde) {
-					return;
-				}
-				getInformacoes(lblVerde);
-			}
-		});
+		lblVerde.addMouseListener(new AcaodoGenius(lblVerde, this));
 		geniusLabels.add(lblAzul);
 		geniusLabels.add(lblAmarelo);
 		geniusLabels.add(lblVermelho);
@@ -263,7 +230,6 @@ public class TelaJogo extends MyJPanel implements Runnable {
 			this.add(geniusLabels.get(i));
 			keyMapping(geniusLabels.get(i));
 		}
-
 	}
 
 	public void getInformacoes(final GeniusLabels botao) {
