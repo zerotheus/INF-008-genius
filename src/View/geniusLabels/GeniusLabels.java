@@ -15,12 +15,14 @@ public abstract class GeniusLabels extends MyJLabelwithSound {
     private final String nomedaImagemBranca;
     private final String arquivoSom;
     private final Cor cor;
+    private char keyChar;
 
-    public GeniusLabels(String nomedaImagemBase, String nomedaImagemBranca, String arquivoSom, Cor cor) {
+    public GeniusLabels(String nomedaImagemBase, String nomedaImagemBranca, String arquivoSom, Cor cor, char keyChar) {
         this.nomedaImagemBase = nomedaImagemBase;
         this.nomedaImagemBranca = nomedaImagemBranca;
         this.arquivoSom = arquivoSom;
         this.cor = cor;
+        this.keyChar = keyChar;
     }
 
     public synchronized void pisca() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
@@ -37,8 +39,8 @@ public abstract class GeniusLabels extends MyJLabelwithSound {
                 250);
     }
 
-    protected void setImagem(String nomeDaImagem ){
-    this.nomedaImagemBase = nomeDaImagem;
+    protected void setImagem(String nomeDaImagem) {
+        this.nomedaImagemBase = nomeDaImagem;
     }
 
     public abstract void setImagemParaRosa();
@@ -47,6 +49,10 @@ public abstract class GeniusLabels extends MyJLabelwithSound {
 
     public Cor getCor() {
         return this.cor;
+    }
+
+    public char getKeyChar() {
+        return keyChar;
     }
 
 }

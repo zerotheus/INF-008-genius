@@ -1,30 +1,33 @@
 package Negocio;
 
-public class Jogador implements Comparable<Jogador> {
+import java.io.Serializable;
+
+public class Jogador implements Comparable<Jogador>, Serializable {
 
     private String nome;
     private String apelido;
     private int pontos;
     private Long jogadaMaisRapidaEmUnidadedeTempo;
-    private int TempoTotalJogado;
+    private long tempoInicio;
+    private long tempoTotal;
     private int recordPessoal;
 
     public Jogador(String nome, String apelido) throws Exception {
         this.setNome(nome);
         this.setApelido(apelido);
         this.pontos = 0;
-        jogadaMaisRapidaEmUnidadedeTempo = null;
-        TempoTotalJogado = 0;
+        jogadaMaisRapidaEmUnidadedeTempo = Long.MAX_VALUE;
+        this.tempoInicio = 0;
         recordPessoal = 0;
     }
 
-    public Jogador(String nome, String apelido, int pontos, long jogadaMaisRapidaEmUnidadedeTempo, int tempoTotalJogado,
+    public Jogador(String nome, String apelido, int pontos, long jogadaMaisRapidaEmUnidadedeTempo, int tempoInicio,
             int recordPessoal) {
         this.nome = nome;
         this.apelido = apelido;
         this.pontos = pontos;
         this.jogadaMaisRapidaEmUnidadedeTempo = jogadaMaisRapidaEmUnidadedeTempo;
-        TempoTotalJogado = tempoTotalJogado;
+        this.tempoInicio = tempoInicio;
         this.recordPessoal = recordPessoal;
     }
 
@@ -40,6 +43,21 @@ public class Jogador implements Comparable<Jogador> {
             throw new Exception("Apelido tem de ter pelo menos 3 caracteres");
         }
         this.apelido = apelido;
+    }
+
+    public void setTempoInicial() {
+        if (this.tempoInicio != 0) {
+            return;
+        }
+        this.tempoInicio = System.currentTimeMillis();
+    }
+
+    public void setTempoTotal() {
+        this.tempoTotal = System.currentTimeMillis() - this.tempoInicio;
+    }
+
+    public long getTempoTotal() {
+        return this.tempoTotal / 1000;
     }
 
     public String getNome() {
@@ -70,10 +88,6 @@ public class Jogador implements Comparable<Jogador> {
         if (this.jogadaMaisRapidaEmUnidadedeTempo > jogada) {
             this.jogadaMaisRapidaEmUnidadedeTempo = jogada;
         }
-    }
-
-    public int getTempoTotalJogado() {
-        return TempoTotalJogado;
     }
 
     public int getrecordPessoal() {

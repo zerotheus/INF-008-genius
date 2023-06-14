@@ -4,24 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class GeniusDificil extends Genius {
+public class GeniusMedio extends Genius {
 
-    protected GeniusDificil(Data data, String titulodoCampeonato, int ritmo, int dificuldade, List<Jogador> jogadores) {
+    protected GeniusMedio(Data data, String titulodoCampeonato, int ritmo, int dificuldade, List<Jogador> jogadores) {
         super(data, titulodoCampeonato, ritmo, dificuldade, jogadores);
         this.geraSequencia();
-    }
-
-    @Override
-    public Genius mudaDificuldade() {
-        return new GeniusBase(getData(), getTitulodoCampeonato(), super.ritmo, 1, getListaJogadores());
-    }
-
-    protected void adicionanaSequencia() {
-        Random geraNumeroAleatorio = new Random();
-        this.sequenciaDeCores.add(geraNumeroAleatorio.nextInt(4));
-        for (int i = 0; i < geraNumeroAleatorio.nextInt(5); i++) {
-            this.sequenciaDeCores.add(geraNumeroAleatorio.nextInt(4));
-        }
     }
 
     protected void geraSequencia() {
@@ -35,6 +22,22 @@ public class GeniusDificil extends Genius {
     }
 
     @Override
+    protected void adicionanaSequencia() {
+        Random geraNumeroAleatorio = new Random();
+        for (int i = 0; i < 3; i++) {
+            this.sequenciaDeCores.add(geraNumeroAleatorio.nextInt(4));
+        }
+        System.out.println(this.sequenciaDeCores.get(this.sequenciaDeCores.size() - 1));
+    }
+
+    @Override
+    public Genius mudaDificuldade() {
+        setDificuldade();
+        return new GeniusDificil(getData(), getTitulodoCampeonato(), super.ritmo, this.dificuldade,
+                getListaJogadores());
+    }
+
+    @Override
     public Genius getRodadadeDesempate() throws Exception {
         if (!temEmpate()) {
             throw new Exception("Nao ha empate");
@@ -44,6 +47,7 @@ public class GeniusDificil extends Genius {
         while (super.jogadores.get(i).getPontos() == maiorPontuacao) {
             empatados.add((jogadores.get(i)));
         }
-        return new GeniusMedio(new Data(), getTitulodoCampeonato(), super.ritmo, super.dificuldade, empatados);
+        return new GeniusBase(new Data(), getTitulodoCampeonato(), super.ritmo, super.dificuldade, empatados);
     }
+
 }

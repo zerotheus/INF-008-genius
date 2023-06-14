@@ -7,16 +7,12 @@ import javax.swing.JFileChooser;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import Negocio.Genius;
 import Negocio.Jogador;
-import View.geniusLabels.AmareloLabel;
-import View.geniusLabels.AzulLabel;
-import View.geniusLabels.GeniusLabels;
-import View.geniusLabels.VerdeLabel;
-import View.geniusLabels.VermelhoLabel;
+import View.geniusLabels.*;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
@@ -48,7 +44,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		super();
 		this.tabbedPane = tabbedPane;
 		this.genius = jogo;
-		this.instanciabotoes();
+		this.instanciaBotoes();
 
 		MyJLabelwithSound btnRitmSound = new MyJLabelwithSound();
 		btnRitmSound.setBounds(714, 405, 44, 45);
@@ -68,7 +64,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
 					e1.printStackTrace();
 				}
-				genius = jogo.mudaDificuldade();
+				genius = genius.mudaDificuldade();
 				JOptionPane.showMessageDialog(null, "Dificuldade mudada para " + genius.getDificuldade(), "DIFICULDADE",
 						1);
 			}
@@ -82,8 +78,8 @@ public class TelaJogo extends MyJPanel implements Runnable {
 				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
 					e1.printStackTrace();
 				}
-				jogo.setRitmo();
-				JOptionPane.showMessageDialog(null, "Ritmo mudado para " + jogo.getRitmo(), "RITMO", 1);
+				genius.setRitmo();
+				JOptionPane.showMessageDialog(null, "Ritmo mudado para " + genius.getRitmo(), "RITMO", 1);
 			}
 		});
 
@@ -114,7 +110,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 					return;
 				}
 				btnIniciar.setEnabled(false);
-				System.out.println("btn ini " + btnIniciar.isEnabled());
+				genius.getJogadorAtual().setTempoInicial();
 				try {
 					btnIniciar.startSound();
 				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
@@ -126,7 +122,6 @@ public class TelaJogo extends MyJPanel implements Runnable {
 				}
 			}
 		});
-		btnIniciar.setEnabled(true);
 
 		btnSalvar.addMouseListener(new MouseAdapter() {
 
@@ -137,70 +132,67 @@ public class TelaJogo extends MyJPanel implements Runnable {
 				} catch (Exception e1) {
 					System.out.println(e.toString());
 				}
-
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("OBJ file", "obj");
 				final JFileChooser fc = new JFileChooser();
 				int returnVal = fc.showOpenDialog(lblFundoJogo);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					File file = fc.getSelectedFile();
+					if (!filter.accept(file)) {
+						File newFile = new File(file.toString() + ".obj");
+						file = newFile;
+					}
 					try {
 						FileOutputStream fileStream = new FileOutputStream(file);
 						ObjectOutputStream os = new ObjectOutputStream(fileStream);
-						os.writeObject(jogo);
+						os.writeObject(genius);
+						os.close();
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
-
-					// This is where a real application would open the file.
 				}
-				JPanel telaPlacar = new TelaPlacar(tabbedPane, jogo);
-				// tabbedPane.insertTab("Genius", null, telaPlacar, TOOL_TIP_TEXT_KEY, 1);
-				// tabbedPane.removeTabAt(0);
-
 			}
 		});
 
 		btnCarregar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (jogo.jogoEstaAtivo()) {
-					btnCarregar.setEnabled(false);
-					btnCarregar.setIcon(
-							new ImageIcon((btnCarregar.getImagesBasePath() + "botao carregar_desabilitado.png")));
+				try {
+					btnCarregar.startSound();
+				} catch (Exception e1) {
+					System.out.println(e.toString());
 				}
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("OBJ file", "obj");
+				final JFileChooser fc = new JFileChooser();
+				int returnVal = fc.showOpenDialog(lblFundoJogo);
 
-				else {
-					try {
-						btnCarregar.startSound();
-					} catch (Exception e1) {
-						System.out.println(e.toString());
-					}
-					Genius jogoCarregado = null;
-					final JFileChooser fc = new JFileChooser();
-					int returnVal = fc.showOpenDialog(lblFundoJogo);
-
-					if (returnVal == JFileChooser.APPROVE_OPTION) {
-						File file = fc.getSelectedFile();
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					File file = fc.getSelectedFile();
+					if (filter.accept(file)) {
+						File newFile = new File(file.toString() + ".obj");
+						file = newFile;
 						try {
 							FileInputStream fis = new java.io.FileInputStream(file);
 							ObjectInputStream is = new ObjectInputStream(fis);
-							jogoCarregado = (Genius) is.readObject();
+							genius = (Genius) is.readObject();
+							is.close();
 						} catch (IOException | ClassNotFoundException e1) {
 							e1.printStackTrace();
 						}
-
-						// This is where a real application would open the file.
-					}
-					JPanel telaPlacar = new TelaPlacar(tabbedPane, jogoCarregado);
-					// tabbedPane.insertTab("Genius", null, telaPlacar, TOOL_TIP_TEXT_KEY, 1);
-					// tabbedPane.removeTabAt(0);
+						atualizaInformacoes();
+					} else
+						JOptionPane.showMessageDialog(lblFundoJogo, "Arquivo não suportado. Use somente arquivos .obj");
 				}
-
 			}
 		});
-
 	}
 
-	private void instanciabotoes() {
+	private void keyMapping(GeniusLabels geniusLabel) {
+		geniusLabel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(geniusLabel.getKeyChar()),
+				geniusLabel.toString());
+		geniusLabel.getActionMap().put(geniusLabel.toString(), new KeyButtonMaps(geniusLabel, this));
+	}
+
+	private void instanciaBotoes() {
 
 		lblPontos = new JLabel("" + genius.getJogadorAtual().getPontos());
 		lblPontos.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 34));
@@ -263,40 +255,36 @@ public class TelaJogo extends MyJPanel implements Runnable {
 				getInformacoes(lblVerde);
 			}
 		});
-		// Start key Mapping
-		lblAzul.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('w'), "W");
-		lblAzul.getActionMap().put("W", new KeyButtonMaps(lblAzul, this));
-		lblAmarelo.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('a'), "A");
-		lblAmarelo.getActionMap().put("A", new KeyButtonMaps(lblAmarelo, this));
-		lblVermelho.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('s'), "S");
-		lblVermelho.getActionMap().put("S", new KeyButtonMaps(lblVermelho, this));
-		lblVerde.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('d'), "D");
-		lblVerde.getActionMap().put("D", new KeyButtonMaps(lblVerde, this));
-		// end key Mapping
 		geniusLabels.add(lblAzul);
 		geniusLabels.add(lblAmarelo);
 		geniusLabels.add(lblVermelho);
 		geniusLabels.add(lblVerde);
 		for (int i = 0; i < geniusLabels.size(); i++) {
 			this.add(geniusLabels.get(i));
+			keyMapping(geniusLabels.get(i));
 		}
 
 	}
 
 	public void getInformacoes(final GeniusLabels botao) {
+		if (thread.isAlive()) {
+			return;
+		}
 		final Jogador jogador = genius.getJogadorAtual();
 		final boolean eraUltimaJogada = genius.ehUltimaJogada();
-		System.out.println("É o último:" + genius.ehUltimaJogada());
 		final boolean naoPerdeu = genius.analisaJogada(instantedofimdaExibicao, botao.getCor());
+		if (thread.isAlive()) {
+			return;
+		}
 		try {
 			botao.pisca();
 		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
 			e.printStackTrace();
 		}
 		this.atualizaInformacoes();
-		System.out.println("btn iniciar" + btnIniciar.isEnabled());
 
 		if (!genius.jogoEstaAtivo()) {
+			jogador.setTempoTotal();
 			MyJPanel telaPlacar = new TelaPlacar(tabbedPane, genius);
 			JOptionPane.showMessageDialog(null, "Fim de jogo", "Fim de jogo", 2);
 			this.tabbedPane.insertTab("Placar", null, telaPlacar, TOOL_TIP_TEXT_KEY, 1);
@@ -305,6 +293,8 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		}
 		if (!naoPerdeu) {// ou seja perdeu
 			btnIniciar.setEnabled(true);
+			this.atualizaInformacoes();
+			jogador.setTempoTotal();
 			JOptionPane.showMessageDialog(null, jogador.getApelido() + " Por favor passe a vez", "Errou a Sequencia",
 					2);
 			return;

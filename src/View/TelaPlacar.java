@@ -13,7 +13,6 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import Negocio.Genius;
-import Negocio.Jogador;
 
 public class TelaPlacar extends MyJPanel {
     private List<JLabel> labelNomes;
@@ -23,7 +22,6 @@ public class TelaPlacar extends MyJPanel {
     private List<JLabel> labelMelhorJgd;
 
     public TelaPlacar(JTabbedPane tabbedPane, Genius jogo) {
-        this.setLayout(null);
         this.desenhaPlacar(jogo);
         JLabel lblDataJogo = new JLabel(jogo.getData().toString());
         lblDataJogo.setForeground(new Color(255, 255, 255));
@@ -68,6 +66,9 @@ public class TelaPlacar extends MyJPanel {
             }
         });
 
+        if (jogo.temEmpate()) {
+            System.out.println("tem empate");
+        }
     }
 
     public void desenhaPlacar(Genius jogo) {
@@ -86,7 +87,6 @@ public class TelaPlacar extends MyJPanel {
         /* fim dos nomes */
 
         /* INICIO APELIDO */
-
         labelApelidos = new ArrayList<JLabel>();
         for (int i = 0; i < qtdJogadores; i++) {
             labelApelidos.add(new JLabel(jogo.getListaJogadores().get(i).getApelido()));
@@ -100,7 +100,7 @@ public class TelaPlacar extends MyJPanel {
         /* INICIO TEMPO TOTAL */
         labelTempoTot = new ArrayList<JLabel>();
         for (int i = 0; i < qtdJogadores; i++) {
-            labelTempoTot.add(new JLabel(jogo.getListaJogadores().get(i).getTempoTotalJogado() + ""));
+            labelTempoTot.add(new JLabel(jogo.getListaJogadores().get(i).getTempoTotal() + ""));
             labelTempoTot.get(i).setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 34));
             labelTempoTot.get(i).setForeground(Color.WHITE);
             labelTempoTot.get(i).setBounds(786, 267 + posicao * i, 136, 38);
@@ -112,9 +112,10 @@ public class TelaPlacar extends MyJPanel {
         /* INICIO PONTOS TOTAL */
         labelPontosTot = new ArrayList<JLabel>();
         for (int i = 0; i < qtdJogadores; i++) {
-            labelPontosTot.add(new JLabel(jogo.getListaJogadores().get(i).getPontos() + "")); // temporariamente alterado para
-                                                                                     // pontos da partida não record
-                                                                                     // pessoal
+            labelPontosTot.add(new JLabel(jogo.getListaJogadores().get(i).getPontos() + "")); // temporariamente
+                                                                                              // alterado para
+            // pontos da partida não record
+            // pessoal
             labelPontosTot.get(i).setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 34));
             labelPontosTot.get(i).setForeground(Color.WHITE);
             labelPontosTot.get(i).setBounds(986, 267 + posicao * i, 152, 38);

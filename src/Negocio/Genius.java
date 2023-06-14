@@ -10,15 +10,16 @@ import java.util.Random;
 
 import Enums.Cor;
 
-public class Genius implements Serializable {
+public abstract class Genius implements Serializable {
     private Data data;// mudar para tipo para Date;
     private String titulodoCampeonato;
     protected int ritmo;
-    private int dificuldade;
-    private List<Jogador> jogadores; // para facilitar a alteracao na quantidade de jogadores
+    protected int dificuldade;
+    protected List<Jogador> jogadores; // para facilitar a alteracao na quantidade de jogadores
     protected List<Integer> sequenciaDeCores;
     private int indexJogadorAtual;
     private int indexdaJogadaAtual = 0;
+    protected int maiorPontuacao;
     private int tempoParaReagir; // A definir oq poderia ser considerado facil ou dificil
     private final Clock clock = Clock.systemDefaultZone();
     private long instantedaUltimaReacaodoJogadorAtual;
@@ -44,13 +45,15 @@ public class Genius implements Serializable {
         this.data = data;
         this.titulodoCampeonato = titulodoCampeonato;
         this.ritmo = ritmo;
+        setTempodeReacao(ritmo);
         this.dificuldade = dificuldade;
         this.jogadores = jogadores;
+        geraSequencia();
+
     }
 
     public Genius(String titulodoCampeonato) {
-        data = new Data(LocalDateTime.now().getDayOfMonth(), LocalDateTime.now().getMonthValue(),
-                LocalDateTime.now().getYear());
+        data = new Data();
         this.titulodoCampeonato = titulodoCampeonato;
         this.setRitmo();
         this.jogadores = new ArrayList<Jogador>();
@@ -85,21 +88,7 @@ public class Genius implements Serializable {
         return Integer.toString(this.dificuldade);
     }
 
-    public Genius mudaDificuldade() {
-        setDificuldade();
-        if (this.dificuldade == 1) {
-            return this;
-        }
-        if (this.dificuldade == 2) {
-            return this;
-        }
-        if (this.dificuldade == 3) {
-            return new GeniusDificil(data, titulodoCampeonato, ritmo, dificuldade, jogadores, sequenciaDeCores,
-                    indexJogadorAtual, indexdaJogadaAtual, tempoParaReagir, instantedaUltimaReacaodoJogadorAtual,
-                    oinstanteEstaValido);
-        }
-        return this;
-    }
+    public abstract Genius mudaDificuldade();
 
     public String getRitmo() {
         return Integer.toString(ritmo);
@@ -154,6 +143,7 @@ public class Genius implements Serializable {
     }
 
     private void alteraJogadorAtual() {
+        this.ehAmaiorPontuacao();
         this.invalidaInstante();
         if (this.indexJogadorAtual + 1 < this.jogadores.size()) {
             geraSequencia();
@@ -215,7 +205,7 @@ public class Genius implements Serializable {
 
     private boolean reagiuEmTempo(Long instantedaExibicao) {
         final Long instantedeReacao = clock.millis();
-        System.out.println(instantedeReacao);
+        System.out.println(tempoParaReagir);
         if (!oinstanteEstaValido) {// se nao esta valido
             if (instantedaExibicao + tempoParaReagir > instantedeReacao) {
                 instantedaUltimaReacaodoJogadorAtual = instantedeReacao;
@@ -233,19 +223,18 @@ public class Genius implements Serializable {
     }
 
     private boolean acertouaSequencia(Cor cor) {
-
+        System.out.println(sequenciaDeCores);
         if (cor.ordinal() != this.sequenciaDeCores.get(this.indexdaJogadaAtual)) {
             this.alteraJogadorAtual();
             this.indexdaJogadaAtual = 0;
-            System.out.println("perdeu!");
+            System.out.println("Sequencia");
             return false;
         }
         pontua();
-
         if (this.indexdaJogadaAtual + 1 == this.sequenciaDeCores.size()) {
             this.indexdaJogadaAtual = 0;
             adicionanaSequencia();
-            System.out.println("Acertou");
+            System.out.println("invalidaInstante");
             this.invalidaInstante();
             return true;
         }
@@ -269,5 +258,30 @@ public class Genius implements Serializable {
         this.sequenciaDeCores.add(geraNumeroAleatorio.nextInt(4));
         System.out.println(this.sequenciaDeCores.get(this.sequenciaDeCores.size() - 1));
     }
+
+    private boolean ehAmaiorPontuacao() {
+        final int pontuacaodoJogoador = this.getJogadorAtual().getPontos();
+        if (pontuacaodoJogoador > maiorPontuacao) {
+            maiorPontuacao = pontuacaodoJogoador;
+            return true;
+        }
+        return false;
+    }
+
+    public boolean temEmpate() {
+        int contaMaiorPontucao = 0;
+        for (int i = 0; i < jogadores.size(); i++) {
+            if (jogadores.get(i).getPontos() == this.maiorPontuacao) {
+                contaMaiorPontucao++;
+            }
+        }
+        if (contaMaiorPontucao > 1) {
+            Collections.sort(jogadores);
+            return true;
+        }
+        return false;
+    }
+
+    public abstract Genius getRodadadeDesempate() throws Exception;
 
 }

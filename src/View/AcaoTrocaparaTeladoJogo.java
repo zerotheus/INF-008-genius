@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import Negocio.Genius;
+import Negocio.GeniusBase;
 import Negocio.Jogador;
 
 public class AcaoTrocaparaTeladoJogo extends AbstractAction {
@@ -27,7 +28,7 @@ public class AcaoTrocaparaTeladoJogo extends AbstractAction {
         } catch (Exception e1) {
             System.out.println(e1.toString());
         }
-        Genius jogo = new Genius("Teste");
+        Genius jogo = new GeniusBase("Teste");
         Jogador jogador;
         try {
             jogador = new Jogador("Irineu", "Sla");

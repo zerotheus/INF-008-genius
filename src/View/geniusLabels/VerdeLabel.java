@@ -5,7 +5,7 @@ import Enums.Cor;
 public class VerdeLabel extends GeniusLabels {
 
     public VerdeLabel() {
-        super("verde 1.png", "verde branco.png", "Mi.wav", Cor.verde);
+        super("verde 1.png", "verde branco.png", "Mi.wav", Cor.verde, 'd');
     }
 
     @Override
@@ -16,6 +16,11 @@ public class VerdeLabel extends GeniusLabels {
     @Override
     public void setImagemPadrao() {
         this.setImagem("verde 1.png");
+    }
+
+    @Override
+    public String toString() {
+        return "VerdeLabel";
     }
 
 }
