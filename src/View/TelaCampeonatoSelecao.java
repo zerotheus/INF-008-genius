@@ -63,7 +63,7 @@ public class TelaCampeonatoSelecao extends MyJPanel {
         });
 
         MyJLabelwithSound lblVoltar = new MyJLabelwithSound();
-        lblVoltar.setIcon(new ImageIcon(this.getImagesPath() + "botaoVoltar.png"));
+        lblVoltar.setIcon(new ImageIcon(this.getImagesPath() + "botaoVoltarMenor.png"));
         lblVoltar.setBounds(650, 795, 106, 53);
         lblVoltar.setVisible(true);
         this.add(lblVoltar);

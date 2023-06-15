@@ -2,7 +2,6 @@ package Negocio;
 
 import java.io.Serializable;
 import java.time.Clock;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -24,22 +23,8 @@ public abstract class Genius implements Serializable {
     private final Clock clock = Clock.systemDefaultZone();
     private long instantedaUltimaReacaodoJogadorAtual;
     private boolean oinstanteEstaValido;
-
-    protected Genius(Data data, String titulodoCampeonato, int ritmo, int dificuldade, List<Jogador> jogadores,
-            List<Integer> sequenciaDeCores, int indexJogadorAtual, int indexdaJogadaAtual, int tempoParaReagir,
-            long instantedaUltimaReacaodoJogadorAtual, boolean oinstanteEstaValido) {
-        this.data = data;
-        this.titulodoCampeonato = titulodoCampeonato;
-        this.ritmo = ritmo;
-        this.dificuldade = dificuldade;
-        this.jogadores = jogadores;
-        this.sequenciaDeCores = sequenciaDeCores;
-        this.indexJogadorAtual = indexJogadorAtual;
-        this.indexdaJogadaAtual = indexdaJogadaAtual;
-        this.tempoParaReagir = tempoParaReagir;
-        this.instantedaUltimaReacaodoJogadorAtual = instantedaUltimaReacaodoJogadorAtual;
-        this.oinstanteEstaValido = oinstanteEstaValido;
-    }
+    private boolean mododeTreinoAtivo = false;
+    private boolean aRodadaFoiIniciada = false;
 
     protected Genius(Data data, String titulodoCampeonato, int ritmo, int dificuldade, List<Jogador> jogadores) {
         this.data = data;
@@ -88,8 +73,6 @@ public abstract class Genius implements Serializable {
         return Integer.toString(this.dificuldade);
     }
 
-    public abstract Genius mudaDificuldade();
-
     public String getRitmo() {
         return Integer.toString(ritmo);
     }
@@ -114,7 +97,7 @@ public abstract class Genius implements Serializable {
     }
 
     public Jogador getJogadorAtual() {
-        if (jogoEstaAtivo()) {
+        if (!jogofoiEncerado()) {
             return jogadores.get(indexJogadorAtual);
         }
         return jogadores.get(indexJogadorAtual - 1);
@@ -143,8 +126,12 @@ public abstract class Genius implements Serializable {
     }
 
     private void alteraJogadorAtual() {
+        if (mododeTreinoAtivo) {
+            return;
+        }
         this.ehAmaiorPontuacao();
         this.invalidaInstante();
+        this.finalizaRodada();
         if (this.indexJogadorAtual + 1 < this.jogadores.size()) {
             geraSequencia();
             this.indexdaJogadaAtual = 0;
@@ -167,11 +154,15 @@ public abstract class Genius implements Serializable {
         indexJogadorAtual++;
     }
 
-    public boolean jogoEstaAtivo() {
+    public boolean jogofoiEncerado() {
         if (indexJogadorAtual == this.jogadores.size()) {
-            return false;
+            return true;
         }
-        return true;
+        return false;
+    }
+
+    public boolean jogoEstaAtivo() {
+        return this.aRodadaFoiIniciada;
     }
 
     public boolean ehUltimaJogada() {
@@ -192,7 +183,7 @@ public abstract class Genius implements Serializable {
     }
 
     public boolean analisaJogada(Long instantedaExibicao, Cor jogada) {
-        if (!jogoEstaAtivo()) {
+        if (!jogofoiEncerado()) {
             return false;
         }
         if (!reagiuEmTempo(instantedaExibicao)) {
@@ -230,7 +221,9 @@ public abstract class Genius implements Serializable {
             System.out.println("Sequencia");
             return false;
         }
-        pontua();
+        if (!ehmododeTreino()) {
+            pontua();
+        }
         if (this.indexdaJogadaAtual + 1 == this.sequenciaDeCores.size()) {
             this.indexdaJogadaAtual = 0;
             adicionanaSequencia();
@@ -281,6 +274,30 @@ public abstract class Genius implements Serializable {
         }
         return false;
     }
+
+    public void ativaDesativaTreino() {
+        if (mododeTreinoAtivo) {// ativo
+            mododeTreinoAtivo = false;
+            geraSequencia();
+            return;
+        }
+        geraSequencia();
+        mododeTreinoAtivo = true;// quando esta desativo
+    }
+
+    public boolean ehmododeTreino() {
+        return this.mododeTreinoAtivo;
+    }
+
+    public void inciaRodada() {
+        this.aRodadaFoiIniciada = true;
+    }
+
+    private void finalizaRodada() {
+        this.aRodadaFoiIniciada = false;
+    }
+
+    public abstract Genius mudaDificuldade();
 
     public abstract Genius getRodadadeDesempate() throws Exception;
 
