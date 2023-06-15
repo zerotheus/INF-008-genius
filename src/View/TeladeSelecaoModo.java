@@ -115,6 +115,9 @@ public class TeladeSelecaoModo extends MyJPanel {
 
                     // This is where a real application would open the file.
                 }
+                if (jogoCarregado == null) {
+                    return;
+                }
                 JPanel telaPlacar = new TelaPlacar(tabbedPane, jogoCarregado);
                 tabbedPane.insertTab("Genius", null, telaPlacar, TOOL_TIP_TEXT_KEY, 1);
                 tabbedPane.removeTabAt(0);

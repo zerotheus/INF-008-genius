@@ -22,7 +22,6 @@ public class TelaCadastro extends MyJPanel {
 
 	public TelaCadastro(JTabbedPane tabbedPane, int qtdJogadores) {
 
-		
 		super();
 		this.setLayout(null);
 		this.qtdJogadores = qtdJogadores;
@@ -125,7 +124,6 @@ public class TelaCadastro extends MyJPanel {
 		lblSalvar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// TODO validar campos
 				try {
 					lblSalvar.startSound();
 				} catch (Exception e1) {
