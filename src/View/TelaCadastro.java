@@ -89,7 +89,7 @@ public class TelaCadastro extends MyJPanel {
 		lblLogo.setVisible(true);
 
 		MyJLabelwithSound lblVoltar = new MyJLabelwithSound();
-		lblVoltar.setIcon(new ImageIcon(this.getImagesPath() + "botaoVoltar.png"));
+		lblVoltar.setIcon(new ImageIcon(this.getImagesPath() + "botaoVoltarMenor.png"));
 		lblVoltar.setBounds(813, 795, 106, 53);
 		lblVoltar.setVisible(true);
 		this.add(lblVoltar);
