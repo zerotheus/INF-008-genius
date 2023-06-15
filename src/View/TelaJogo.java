@@ -274,6 +274,12 @@ public class TelaJogo extends MyJPanel implements Runnable {
 			btnIniciar.setEnabled(true);
 			this.atualizaInformacoes();
 			jogador.setTempoTotal();
+			if (genius.ehmododeTreino()) {
+				JOptionPane.showMessageDialog(null, "Tente novamente", "Errou a Sequencia",
+						2);
+				thread.start();
+				return;
+			}
 			JOptionPane.showMessageDialog(null, jogador.getApelido() + " Por favor passe a vez", "Errou a Sequencia",
 					2);
 			return;
@@ -296,7 +302,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		this.sequenciadeCoresaExibir = genius.getSequencia();
 		System.out.println(sequenciadeCoresaExibir);
 		try {
-			this.thread.join(300);
+			this.thread.join(600);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
