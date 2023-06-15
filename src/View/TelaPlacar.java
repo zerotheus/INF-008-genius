@@ -41,13 +41,13 @@ public class TelaPlacar extends MyJPanel {
         lblVoltar.setVisible(true);
         this.add(lblVoltar);
 
-                MyJLabelwithSound lblEmpate = new MyJLabelwithSound();
+        MyJLabelwithSound lblEmpate = new MyJLabelwithSound();
         lblEmpate.setIcon(new ImageIcon(this.getImagesPath() + "botaoDesempate.png"));
-        lblEmpate.setBounds(100, 812, 152, 58);
+        this.add(lblEmpate);
+        lblEmpate.setBounds(60, 812, 152, 58);
         lblEmpate.setVisible(true);
         lblEmpate.setText("TOOL_TIP_TEXT_KEY aaaaaaaaaaaaaaaaaa");
-        this.add(lblEmpate);
-                lblEmpate.setEnabled(false);
+        lblEmpate.setEnabled(false);
 
         JLabel lblFundoJogo = new JLabel("");
         lblFundoJogo.setIcon(new ImageIcon(this.getImagesPath() + "tela placar.png"));
@@ -73,9 +73,6 @@ public class TelaPlacar extends MyJPanel {
 
             }
         });
-
-        
-
 
         if (jogo.temEmpate()) {
             System.out.println("tem empate");

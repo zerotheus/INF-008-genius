@@ -89,7 +89,8 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		this.add(btnIniciar);
 
 		MyJLabelwithSound btnSalvar = new MyJLabelwithSound();
-		btnSalvar.setText("TOOL_TIP_TEXT_KEY");;
+		btnSalvar.setText("TOOL_TIP_TEXT_KEY");
+		;
 		btnSalvar.setBounds(1223, 293, 190, 70);
 		btnSalvar.setVisible(true);
 		this.add(btnSalvar);
@@ -103,7 +104,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		btnExtras.setBounds(1212, 506, 190, 70);
 		btnExtras.setVisible(true);
 		this.add(btnExtras);
-		
+
 		JLabel lblFundoJogo = new JLabel();
 		lblFundoJogo.setIcon(new ImageIcon(this.getImagesPath() + "fundojOGO.png"));
 		lblFundoJogo.setBounds(0, 0, 1444, 881);
@@ -192,10 +193,19 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		});
 	}
 
-	private void keyMapping(GeniusLabels geniusLabel) {
+	private void keyAndMouseMapping(GeniusLabels geniusLabel) {
 		geniusLabel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(geniusLabel.getKeyChar()),
 				geniusLabel.toString());
 		geniusLabel.getActionMap().put(geniusLabel.toString(), new KeyButtonMaps(geniusLabel, this));
+		geniusLabel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getSource() != geniusLabel) {
+					return;
+				}
+				getInformacoes(geniusLabel);
+			}
+		});
 	}
 
 	private void instanciaBotoes() {
@@ -215,26 +225,23 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		GeniusLabels lblAzul = new AzulLabel();
 		lblAzul.setBounds(447, 78, 322, 316);
 		lblAzul.setIcon(new ImageIcon(this.getImagesPath() + "azul.png"));
-		lblAzul.addMouseListener(new AcaodoGenius(lblAzul, this));
 		GeniusLabels lblVermelho = new VermelhoLabel();
 		lblVermelho.setIcon(new ImageIcon(this.getImagesPath() + "vermelho 1.png"));
 		lblVermelho.setBounds(447, 474, 322, 316);
-		lblVermelho.addMouseListener(new AcaodoGenius(lblVermelho, this));
 		GeniusLabels lblAmarelo = new AmareloLabel();
 		lblAmarelo.setIcon(new ImageIcon(this.getImagesPath() + "amarelo 1.png"));
 		lblAmarelo.setBounds(807, 78, 322, 316);
-		lblAmarelo.addMouseListener(new AcaodoGenius(lblAmarelo, this));
 		GeniusLabels lblVerde = new VerdeLabel();
 		lblVerde.setIcon(new ImageIcon(this.getImagesPath() + "verde 1.png"));
 		lblVerde.setBounds(807, 474, 322, 316);
-		lblVerde.addMouseListener(new AcaodoGenius(lblVerde, this));
+
 		geniusLabels.add(lblAzul);
 		geniusLabels.add(lblAmarelo);
 		geniusLabels.add(lblVermelho);
 		geniusLabels.add(lblVerde);
 		for (int i = 0; i < geniusLabels.size(); i++) {
 			this.add(geniusLabels.get(i));
-			keyMapping(geniusLabels.get(i));
+			keyAndMouseMapping(geniusLabels.get(i));
 		}
 	}
 
