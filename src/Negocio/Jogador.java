@@ -106,16 +106,4 @@ public class Jogador implements Comparable<Jogador>, Serializable {
         return 0;
     }
 
-    public void iniciaJogada() {
-        this.comecouaJogar = true;
-    }
-
-    public void terminaJogada() {
-        this.comecouaJogar = false;
-    }
-
-    public boolean iniciouAjogada() {
-        return this.comecouaJogar;
-    }
-
 }
