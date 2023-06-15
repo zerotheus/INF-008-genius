@@ -39,6 +39,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 	private MyJLabelwithSound btnIniciar;
 	private final Clock clock = Clock.systemDefaultZone();
 	private long instantedofimdaExibicao;
+	private boolean modosemcoresAtivado = false;
 
 	public TelaJogo(JTabbedPane tabbedPane, Genius jogo) {
 		super();
@@ -287,6 +288,21 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		}
 		return;
 	};
+
+	private void ativaDesativaModoSemCores() {
+		if (modosemcoresAtivado) {
+			for (GeniusLabels geniusLabel : geniusLabels) {
+				geniusLabel.setImagemParaRosa();
+			}
+			modosemcoresAtivado = true;
+			return;
+		}
+		for (GeniusLabels geniusLabel : geniusLabels) {
+			geniusLabel.setImagemPadrao();
+		}
+		modosemcoresAtivado = false;
+		return;
+	}
 
 	private void atualizaInformacoes() {
 		lblNomeJogador.setText(genius.getJogadorAtual().getApelido());

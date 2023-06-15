@@ -99,6 +99,7 @@ public class TeladeSelecaoModo extends MyJPanel {
                         FileInputStream fis = new java.io.FileInputStream(file);
                         ObjectInputStream is = new ObjectInputStream(fis);
                         jogoCarregado = (Genius) is.readObject();
+                        is.close();
                     } catch (IOException | ClassNotFoundException e1) {
                         e1.printStackTrace();
                     }
