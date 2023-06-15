@@ -39,11 +39,13 @@ public class GeniusDificil extends Genius {
         if (!temEmpate()) {
             throw new Exception("Nao ha empate");
         }
-        int i = 0;
         List<Jogador> empatados = new ArrayList<Jogador>();
-        while (super.jogadores.get(i).getPontos() == maiorPontuacao) {
-            empatados.add((jogadores.get(i)));
+        for (int i = 0; i < super.jogadores.size(); i++) {
+            if (super.jogadores.get(i).getPontos() == this.maiorPontuacao) {
+                empatados.add(jogadores.get(i));
+            }
         }
-        return new GeniusMedio(new Data(), getTitulodoCampeonato(), super.ritmo, super.dificuldade, empatados);
+        return new GeniusBase(new Data(), "Desempate " + getTitulodoCampeonato(), super.ritmo, super.dificuldade,
+                empatados);
     }
 }
