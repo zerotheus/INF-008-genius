@@ -77,6 +77,20 @@ public class TelaPlacar extends MyJPanel {
         if (jogo.temEmpate()) {
             System.out.println("tem empate");
             lblEmpate.setEnabled(true);
+            lblEmpate.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    Genius desempate = null;
+                    try {
+                        desempate = jogo.getRodadadeDesempate();
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
+                    MyJPanel teladeJogoDesempate = new TelaJogo(tabbedPane, desempate);
+                    tabbedPane.insertTab("Desempate", null, teladeJogoDesempate, TOOL_TIP_TEXT_KEY, 1);
+                    tabbedPane.removeTabAt(0);
+                }
+            });
         }
     }
 
