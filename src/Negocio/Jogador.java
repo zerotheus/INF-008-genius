@@ -11,6 +11,7 @@ public class Jogador implements Comparable<Jogador>, Serializable {
     private long tempoInicio;
     private long tempoTotal;
     private int recordPessoal;
+    private boolean comecouaJogar = false;
 
     public Jogador(String nome, String apelido) throws Exception {
         this.setNome(nome);
@@ -103,6 +104,18 @@ public class Jogador implements Comparable<Jogador>, Serializable {
             return -1;
         }
         return 0;
+    }
+
+    public void iniciaJogada() {
+        this.comecouaJogar = true;
+    }
+
+    public void terminaJogada() {
+        this.comecouaJogar = false;
+    }
+
+    public boolean iniciouAjogada() {
+        return this.comecouaJogar;
     }
 
 }
