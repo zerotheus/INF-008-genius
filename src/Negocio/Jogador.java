@@ -11,7 +11,6 @@ public class Jogador implements Comparable<Jogador>, Serializable {
     private long tempoInicio;
     private long tempoTotal;
     private int recordPessoal;
-    private boolean comecouaJogar = false;
 
     public Jogador(String nome, String apelido) throws Exception {
         this.setNome(nome);
