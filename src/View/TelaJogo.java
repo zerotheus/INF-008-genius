@@ -90,7 +90,6 @@ public class TelaJogo extends MyJPanel implements Runnable {
 
 		MyJLabelwithSound btnSalvar = new MyJLabelwithSound();
 		btnSalvar.setText("TOOL_TIP_TEXT_KEY");
-		;
 		btnSalvar.setBounds(1223, 293, 190, 70);
 		btnSalvar.setVisible(true);
 		this.add(btnSalvar);
@@ -117,6 +116,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 					return;
 				}
 				btnIniciar.setEnabled(false);
+				genius.inciaRodada();
 				genius.getJogadorAtual().setTempoInicial();
 				try {
 					btnIniciar.startSound();
@@ -246,23 +246,19 @@ public class TelaJogo extends MyJPanel implements Runnable {
 	}
 
 	public void getInformacoes(final GeniusLabels botao) {
-		if (thread.isAlive()) {
+		if (thread.isAlive() || !genius.jogoEstaAtivo()) {
 			return;
 		}
 		final Jogador jogador = genius.getJogadorAtual();
 		final boolean eraUltimaJogada = genius.ehUltimaJogada();
 		final boolean naoPerdeu = genius.analisaJogada(instantedofimdaExibicao, botao.getCor());
-		if (thread.isAlive()) {
-			return;
-		}
 		try {
 			botao.pisca();
 		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
 			e.printStackTrace();
 		}
 		this.atualizaInformacoes();
-
-		if (!genius.jogoEstaAtivo()) {
+		if (genius.jogofoiEncerado()) {
 			jogador.setTempoTotal();
 			MyJPanel telaPlacar = new TelaPlacar(tabbedPane, genius);
 			JOptionPane.showMessageDialog(null, "Fim de jogo", "Fim de jogo", 2);
