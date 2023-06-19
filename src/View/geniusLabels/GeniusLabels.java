@@ -41,6 +41,7 @@ public abstract class GeniusLabels extends MyJLabelwithSound {
 
     protected void setImagem(String nomeDaImagem) {
         this.nomedaImagemBase = nomeDaImagem;
+        this.setIcon(new ImageIcon(this.getImagesBasePath() + nomedaImagemBase));
     }
 
     public abstract void setImagemParaRosa();

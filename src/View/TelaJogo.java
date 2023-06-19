@@ -90,7 +90,6 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		this.add(btnIniciar);
 
 		MyJLabelwithSound btnSalvar = new MyJLabelwithSound();
-		btnSalvar.setText("TOOL_TIP_TEXT_KEY");
 		btnSalvar.setBounds(1223, 293, 190, 70);
 		btnSalvar.setVisible(true);
 		this.add(btnSalvar);
@@ -109,6 +108,31 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		lblFundoJogo.setIcon(new ImageIcon(this.getImagesPath() + "fundojOGO.png"));
 		lblFundoJogo.setBounds(0, 0, 1444, 881);
 		this.add(lblFundoJogo);
+
+		btnExtras.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (btnExtras != e.getSource()) {
+					return;
+				}
+				String[] modos = { "ColorBlind", "Treinar" };
+				final String retorno;
+				retorno = (String) JOptionPane.showInputDialog(null,
+						"",
+						"",
+						-1,
+						null,
+						modos, modos[0]);
+				if (retorno.equals("ColorBlind")) {
+					ativaDesativaModoSemCores();
+					return;
+				}
+				if (retorno.equals("Treinar")) {
+					jogo.ativaDesativaTreino();
+					return;
+				}
+			}
+		});
 
 		btnIniciar.addMouseListener(new MouseAdapter() {
 			@Override
@@ -290,7 +314,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 	};
 
 	private void ativaDesativaModoSemCores() {
-		if (modosemcoresAtivado) {
+		if (!modosemcoresAtivado) {
 			for (GeniusLabels geniusLabel : geniusLabels) {
 				geniusLabel.setImagemParaRosa();
 			}
@@ -300,6 +324,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		for (GeniusLabels geniusLabel : geniusLabels) {
 			geniusLabel.setImagemPadrao();
 		}
+		System.out.println("ativou");
 		modosemcoresAtivado = false;
 		return;
 	}

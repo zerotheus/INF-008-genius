@@ -183,7 +183,7 @@ public abstract class Genius implements Serializable {
     }
 
     public boolean analisaJogada(Long instantedaExibicao, Cor jogada) {
-        if (!jogofoiEncerado()) {
+        if (jogofoiEncerado()) {
             return false;
         }
         if (!reagiuEmTempo(instantedaExibicao)) {
