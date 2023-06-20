@@ -115,14 +115,17 @@ public class TelaJogo extends MyJPanel implements Runnable {
 				if (btnExtras != e.getSource()) {
 					return;
 				}
-				String[] modos = { "ColorBlind", "Treinar" };
+				final String[] modos = { "ColorBlind", "Treinar" };
 				final String retorno;
 				retorno = (String) JOptionPane.showInputDialog(null,
-						"",
-						"",
+						"Ative ou desative modos de Jogo",
+						"Modos Extras",
 						-1,
 						null,
 						modos, modos[0]);
+				if (retorno == null) {
+					return;
+				}
 				if (retorno.equals("ColorBlind")) {
 					ativaDesativaModoSemCores();
 					return;

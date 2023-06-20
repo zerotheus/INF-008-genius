@@ -107,8 +107,8 @@ public class TeladeSelecaoModo extends MyJPanel {
                 if (jogoCarregado == null) {
                     return;
                 }
-                JPanel telaPlacar = new TelaPlacar(tabbedPane, jogoCarregado);
-                tabbedPane.insertTab("Genius", null, telaPlacar, TOOL_TIP_TEXT_KEY, 1);
+                JPanel telaJogo = new TelaJogo(tabbedPane, jogoCarregado);
+                tabbedPane.insertTab("Genius", null, telaJogo, TOOL_TIP_TEXT_KEY, 1);
                 tabbedPane.removeTabAt(0);
             }
         });
