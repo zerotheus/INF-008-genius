@@ -1,9 +1,9 @@
 package Negocio;
 
-import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class GeniusBase extends Genius implements Serializable{
+public class GeniusBase extends Genius {
 
     public GeniusBase(String titulodoCampeonato) {
         super(titulodoCampeonato);
@@ -19,5 +19,20 @@ public class GeniusBase extends Genius implements Serializable{
         setDificuldade();
         return new GeniusMedio(getData(), getTitulodoCampeonato(), super.ritmo, this.dificuldade, getListaJogadores());
     }
-    
+
+    @Override
+    public Genius getRodadadeDesempate() throws Exception {
+        if (!temEmpate()) {
+            throw new Exception("Nao ha empate");
+        }
+        List<Jogador> empatados = new ArrayList<Jogador>();
+        for (int i = 0; i < super.jogadores.size(); i++) {
+            if (super.jogadores.get(i).getPontos() == this.maiorPontuacao) {
+                empatados.add(jogadores.get(i));
+            }
+        }
+        return new GeniusBase(new Data(), "Desempate " + getTitulodoCampeonato(), super.ritmo, super.dificuldade,
+                empatados);
+    }
+
 }

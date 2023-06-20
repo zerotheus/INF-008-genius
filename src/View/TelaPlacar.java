@@ -37,9 +37,17 @@ public class TelaPlacar extends MyJPanel {
 
         MyJLabelwithSound lblVoltar = new MyJLabelwithSound();
         lblVoltar.setIcon(new ImageIcon(this.getImagesPath() + "botaoVoltar.png"));
-        lblVoltar.setBounds(1270, 812, 152, 58);
+        lblVoltar.setBounds(1230, 812, 152, 58);
         lblVoltar.setVisible(true);
         this.add(lblVoltar);
+
+        MyJLabelwithSound lblEmpate = new MyJLabelwithSound();
+        lblEmpate.setIcon(new ImageIcon(this.getImagesPath() + "botaoDesempate.png"));
+        this.add(lblEmpate);
+        lblEmpate.setBounds(60, 812, 152, 58);
+        lblEmpate.setVisible(true);
+        lblEmpate.setText("TOOL_TIP_TEXT_KEY aaaaaaaaaaaaaaaaaa");
+        lblEmpate.setEnabled(false);
 
         JLabel lblFundoJogo = new JLabel("");
         lblFundoJogo.setIcon(new ImageIcon(this.getImagesPath() + "tela placar.png"));
@@ -65,6 +73,25 @@ public class TelaPlacar extends MyJPanel {
 
             }
         });
+
+        if (jogo.temEmpate()) {
+            System.out.println("tem empate");
+            lblEmpate.setEnabled(true);
+            lblEmpate.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    Genius desempate = null;
+                    try {
+                        desempate = jogo.getRodadadeDesempate();
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
+                    MyJPanel teladeJogoDesempate = new TelaJogo(tabbedPane, desempate);
+                    tabbedPane.insertTab("Desempate", null, teladeJogoDesempate, TOOL_TIP_TEXT_KEY, 1);
+                    tabbedPane.removeTabAt(0);
+                }
+            });
+        }
     }
 
     public void desenhaPlacar(Genius jogo) {
@@ -83,7 +110,6 @@ public class TelaPlacar extends MyJPanel {
         /* fim dos nomes */
 
         /* INICIO APELIDO */
-
         labelApelidos = new ArrayList<JLabel>();
         for (int i = 0; i < qtdJogadores; i++) {
             labelApelidos.add(new JLabel(jogo.getListaJogadores().get(i).getApelido()));
@@ -97,7 +123,7 @@ public class TelaPlacar extends MyJPanel {
         /* INICIO TEMPO TOTAL */
         labelTempoTot = new ArrayList<JLabel>();
         for (int i = 0; i < qtdJogadores; i++) {
-            labelTempoTot.add(new JLabel(jogo.getListaJogadores().get(i).getTempoTotalJogado() + ""));
+            labelTempoTot.add(new JLabel(jogo.getListaJogadores().get(i).getTempoTotal() + ""));
             labelTempoTot.get(i).setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 34));
             labelTempoTot.get(i).setForeground(Color.WHITE);
             labelTempoTot.get(i).setBounds(786, 267 + posicao * i, 136, 38);

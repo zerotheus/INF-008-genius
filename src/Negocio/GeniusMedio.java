@@ -37,4 +37,19 @@ public class GeniusMedio extends Genius {
                 getListaJogadores());
     }
 
+    @Override
+    public Genius getRodadadeDesempate() throws Exception {
+        if (!temEmpate()) {
+            throw new Exception("Nao ha empate");
+        }
+        List<Jogador> empatados = new ArrayList<Jogador>();
+        for (int i = 0; i < super.jogadores.size(); i++) {
+            if (super.jogadores.get(i).getPontos() == this.maiorPontuacao) {
+                empatados.add(jogadores.get(i));
+            }
+        }
+        return new GeniusBase(new Data(), "Desempate " + getTitulodoCampeonato(), super.ritmo, super.dificuldade,
+                empatados);
+    }
+
 }

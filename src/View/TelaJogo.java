@@ -2,6 +2,7 @@ package View;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JComponent;
@@ -15,6 +16,7 @@ import Negocio.Jogador;
 import View.geniusLabels.*;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -39,6 +41,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 	private MyJLabelwithSound btnIniciar;
 	private final Clock clock = Clock.systemDefaultZone();
 	private long instantedofimdaExibicao;
+	private boolean modosemcoresAtivado = false;
 
 	public TelaJogo(JTabbedPane tabbedPane, Genius jogo) {
 		super();
@@ -84,24 +87,57 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		});
 
 		btnIniciar = new MyJLabelwithSound();
-		btnIniciar.setBounds(1212, 87, 190, 70);
+		btnIniciar.setBounds(1223, 87, 190, 70);
 		btnIniciar.setVisible(true);
 		this.add(btnIniciar);
 
 		MyJLabelwithSound btnSalvar = new MyJLabelwithSound();
-		btnSalvar.setBounds(1223, 405, 173, 57);
+		btnSalvar.setBounds(1223, 293, 190, 70);
 		btnSalvar.setVisible(true);
 		this.add(btnSalvar);
 
 		MyJLabelwithSound btnCarregar = new MyJLabelwithSound();
-		btnCarregar.setBounds(1206, 716, 190, 70);
+		btnCarregar.setBounds(1212, 716, 190, 70);
 		btnCarregar.setVisible(true);
 		this.add(btnCarregar);
+
+		MyJLabelwithSound btnExtras = new MyJLabelwithSound();
+		btnExtras.setBounds(1212, 506, 190, 70);
+		btnExtras.setVisible(true);
+		this.add(btnExtras);
 
 		JLabel lblFundoJogo = new JLabel();
 		lblFundoJogo.setIcon(new ImageIcon(this.getImagesPath() + "fundojOGO.png"));
 		lblFundoJogo.setBounds(0, 0, 1444, 881);
 		this.add(lblFundoJogo);
+
+		btnExtras.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (btnExtras != e.getSource()) {
+					return;
+				}
+				final String[] modos = { "ColorBlind", "Treinar" };
+				final String retorno;
+				retorno = (String) JOptionPane.showInputDialog(null,
+						"Ative ou desative modos de Jogo",
+						"Modos Extras",
+						-1,
+						null,
+						modos, modos[0]);
+				if (retorno == null) {
+					return;
+				}
+				if (retorno.equals("ColorBlind")) {
+					ativaDesativaModoSemCores();
+					return;
+				}
+				if (retorno.equals("Treinar")) {
+					jogo.ativaDesativaTreino();
+					return;
+				}
+			}
+		});
 
 		btnIniciar.addMouseListener(new MouseAdapter() {
 			@Override
@@ -110,6 +146,8 @@ public class TelaJogo extends MyJPanel implements Runnable {
 					return;
 				}
 				btnIniciar.setEnabled(false);
+				genius.inciaRodada();
+				genius.getJogadorAtual().setTempoInicial();
 				try {
 					btnIniciar.startSound();
 				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
@@ -185,10 +223,24 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		});
 	}
 
-	private void keyMapping(GeniusLabels geniusLabel) {
+	private void keyAndMouseMapping(GeniusLabels geniusLabel) {
 		geniusLabel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(geniusLabel.getKeyChar()),
 				geniusLabel.toString());
-		geniusLabel.getActionMap().put(geniusLabel.toString(), new KeyButtonMaps(geniusLabel, this));
+		geniusLabel.getActionMap().put(geniusLabel.toString(), new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				getInformacoes(geniusLabel);
+			}
+		});
+		geniusLabel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getSource() != geniusLabel) {
+					return;
+				}
+				getInformacoes(geniusLabel);
+			}
+		});
 	}
 
 	private void instanciaBotoes() {
@@ -208,81 +260,41 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		GeniusLabels lblAzul = new AzulLabel();
 		lblAzul.setBounds(447, 78, 322, 316);
 		lblAzul.setIcon(new ImageIcon(this.getImagesPath() + "azul.png"));
-		lblAzul.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (e.getSource() != lblAzul) {
-					return;
-				}
-				getInformacoes(lblAzul);
-			}
-		});
 		GeniusLabels lblVermelho = new VermelhoLabel();
 		lblVermelho.setIcon(new ImageIcon(this.getImagesPath() + "vermelho 1.png"));
 		lblVermelho.setBounds(447, 474, 322, 316);
-		lblVermelho.addMouseListener(new MouseAdapter() {
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (e.getSource() != lblVermelho) {
-					return;
-				}
-				getInformacoes(lblVermelho);
-			}
-		});
 		GeniusLabels lblAmarelo = new AmareloLabel();
 		lblAmarelo.setIcon(new ImageIcon(this.getImagesPath() + "amarelo 1.png"));
 		lblAmarelo.setBounds(807, 78, 322, 316);
-		lblAmarelo.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (e.getSource() != lblAmarelo) {
-					return;
-				}
-				getInformacoes(lblAmarelo);
-			}
-		});
 		GeniusLabels lblVerde = new VerdeLabel();
 		lblVerde.setIcon(new ImageIcon(this.getImagesPath() + "verde 1.png"));
 		lblVerde.setBounds(807, 474, 322, 316);
-		lblVerde.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (e.getSource() != lblVerde) {
-					return;
-				}
-				getInformacoes(lblVerde);
-			}
-		});
+
 		geniusLabels.add(lblAzul);
 		geniusLabels.add(lblAmarelo);
 		geniusLabels.add(lblVermelho);
 		geniusLabels.add(lblVerde);
 		for (int i = 0; i < geniusLabels.size(); i++) {
 			this.add(geniusLabels.get(i));
-			keyMapping(geniusLabels.get(i));
+			keyAndMouseMapping(geniusLabels.get(i));
 		}
-
 	}
 
 	public void getInformacoes(final GeniusLabels botao) {
-		if (thread.isAlive()) {
+		if (thread.isAlive() || !genius.jogoEstaAtivo()) {
 			return;
 		}
 		final Jogador jogador = genius.getJogadorAtual();
 		final boolean eraUltimaJogada = genius.ehUltimaJogada();
 		final boolean naoPerdeu = genius.analisaJogada(instantedofimdaExibicao, botao.getCor());
-		if (thread.isAlive()) {
-			return;
-		}
 		try {
 			botao.pisca();
 		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
 			e.printStackTrace();
 		}
 		this.atualizaInformacoes();
-
-		if (!genius.jogoEstaAtivo()) {
+		if (genius.jogofoiEncerado()) {
+			jogador.setTempoTotal();
 			MyJPanel telaPlacar = new TelaPlacar(tabbedPane, genius);
 			JOptionPane.showMessageDialog(null, "Fim de jogo", "Fim de jogo", 2);
 			this.tabbedPane.insertTab("Placar", null, telaPlacar, TOOL_TIP_TEXT_KEY, 1);
@@ -291,6 +303,14 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		}
 		if (!naoPerdeu) {// ou seja perdeu
 			btnIniciar.setEnabled(true);
+			this.atualizaInformacoes();
+			jogador.setTempoTotal();
+			if (genius.ehmododeTreino()) {
+				JOptionPane.showMessageDialog(null, "Tente novamente", "Errou a Sequencia",
+						2);
+				thread.start();
+				return;
+			}
 			JOptionPane.showMessageDialog(null, jogador.getApelido() + " Por favor passe a vez", "Errou a Sequencia",
 					2);
 			return;
@@ -303,6 +323,22 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		return;
 	};
 
+	private void ativaDesativaModoSemCores() {
+		if (!modosemcoresAtivado) {
+			for (GeniusLabels geniusLabel : geniusLabels) {
+				geniusLabel.setImagemParaRosa();
+			}
+			modosemcoresAtivado = true;
+			return;
+		}
+		for (GeniusLabels geniusLabel : geniusLabels) {
+			geniusLabel.setImagemPadrao();
+		}
+		System.out.println("ativou");
+		modosemcoresAtivado = false;
+		return;
+	}
+
 	private void atualizaInformacoes() {
 		lblNomeJogador.setText(genius.getJogadorAtual().getApelido());
 		lblPontos.setText("" + genius.getJogadorAtual().getPontos());
@@ -313,7 +349,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		this.sequenciadeCoresaExibir = genius.getSequencia();
 		System.out.println(sequenciadeCoresaExibir);
 		try {
-			this.thread.join(300);
+			this.thread.join(600);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
