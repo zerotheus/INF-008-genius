@@ -2,6 +2,7 @@ package View;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JComponent;
@@ -15,6 +16,7 @@ import Negocio.Jogador;
 import View.geniusLabels.*;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -224,7 +226,12 @@ public class TelaJogo extends MyJPanel implements Runnable {
 	private void keyAndMouseMapping(GeniusLabels geniusLabel) {
 		geniusLabel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(geniusLabel.getKeyChar()),
 				geniusLabel.toString());
-		geniusLabel.getActionMap().put(geniusLabel.toString(), new KeyButtonMaps(geniusLabel, this));
+		geniusLabel.getActionMap().put(geniusLabel.toString(), new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				getInformacoes(geniusLabel);
+			}
+		});
 		geniusLabel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
