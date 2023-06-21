@@ -2,31 +2,33 @@ package Negocio;
 
 import java.io.Serializable;
 
-public class Jogador implements Serializable {
+public class Jogador implements Comparable<Jogador>, Serializable {
 
     private String nome;
     private String apelido;
     private int pontos;
-    private long JogadaMaisRapidaEmUnidadedeTempo;
-    private int TempoTotalJogado;
+    private int pontosTotais =0;
+    private Long jogadaMaisRapidaEmUnidadedeTempo;
+    private long tempoInicio;
+    private long tempoTotal;
     private int recordPessoal;
 
     public Jogador(String nome, String apelido) throws Exception {
         this.setNome(nome);
         this.setApelido(apelido);
         this.pontos = 0;
-        JogadaMaisRapidaEmUnidadedeTempo = 0;
-        TempoTotalJogado = 0;
+        jogadaMaisRapidaEmUnidadedeTempo = Long.MAX_VALUE;
+        this.tempoInicio = 0;
         recordPessoal = 0;
     }
 
-    public Jogador(String nome, String apelido, int pontos, int jogadaMaisRapidaEmUnidadedeTempo, int tempoTotalJogado,
+    public Jogador(String nome, String apelido, int pontos, long jogadaMaisRapidaEmUnidadedeTempo, int tempoInicio,
             int recordPessoal) {
         this.nome = nome;
         this.apelido = apelido;
         this.pontos = pontos;
-        JogadaMaisRapidaEmUnidadedeTempo = jogadaMaisRapidaEmUnidadedeTempo;
-        TempoTotalJogado = tempoTotalJogado;
+        this.jogadaMaisRapidaEmUnidadedeTempo = jogadaMaisRapidaEmUnidadedeTempo;
+        this.tempoInicio = tempoInicio;
         this.recordPessoal = recordPessoal;
     }
 
@@ -44,6 +46,21 @@ public class Jogador implements Serializable {
         this.apelido = apelido;
     }
 
+    public void setTempoInicial() {
+        if (this.tempoInicio != 0) {
+            return;
+        }
+        this.tempoInicio = System.currentTimeMillis();
+    }
+
+    public void setTempoTotal() {
+        this.tempoTotal = System.currentTimeMillis() - this.tempoInicio;
+    }
+
+    public long getTempoTotal() {
+        return this.tempoTotal / 1000;
+    }
+
     public String getNome() {
         return nome;
     }
@@ -55,27 +72,46 @@ public class Jogador implements Serializable {
     public int getPontos() {
         return pontos;
     }
-
+    public void zeraPontosAtuais() {
+    	this.pontos = 0;
+    }
+    public int getPontosTotais() {
+    	return pontosTotais;
+    }
+    public void addPontosTotais(int pontos) {
+    	this.pontosTotais+= pontos;
+    }
     public void pontua(int pontos) {
         this.pontos += pontos;
     }
 
     public long getJogadaMaisRapidaEmUnidadedeTempo() {
-        return JogadaMaisRapidaEmUnidadedeTempo;
+        return jogadaMaisRapidaEmUnidadedeTempo;
     }
 
     public void foiJogadaMaisRapida(Long jogada) {
-        if (JogadaMaisRapidaEmUnidadedeTempo > jogada) {
-            JogadaMaisRapidaEmUnidadedeTempo = jogada;
+        if (this.jogadaMaisRapidaEmUnidadedeTempo == null) {
+            this.jogadaMaisRapidaEmUnidadedeTempo = jogada;
+            return;
         }
-    }
-
-    public int getTempoTotalJogado() {
-        return TempoTotalJogado;
+        if (this.jogadaMaisRapidaEmUnidadedeTempo > jogada) {
+            this.jogadaMaisRapidaEmUnidadedeTempo = jogada;
+        }
     }
 
     public int getrecordPessoal() {
         return this.recordPessoal;
+    }
+
+    @Override
+    public int compareTo(Jogador outroJogador) {
+        if (this.pontos > outroJogador.pontos) {
+            return 1;
+        }
+        if (this.pontos < outroJogador.pontos) {
+            return -1;
+        }
+        return 0;
     }
 
 }
