@@ -11,6 +11,7 @@ public class Jogador implements Comparable<Jogador>, Serializable {
     private long tempoInicio;
     private long tempoTotal;
     private int recordPessoal;
+    private int pontosganhosnaUltimaRodada = 0;
 
     public Jogador(String nome, String apelido) throws Exception {
         this.setNome(nome);
@@ -19,16 +20,6 @@ public class Jogador implements Comparable<Jogador>, Serializable {
         jogadaMaisRapidaEmUnidadedeTempo = Long.MAX_VALUE;
         this.tempoInicio = 0;
         recordPessoal = 0;
-    }
-
-    public Jogador(String nome, String apelido, int pontos, long jogadaMaisRapidaEmUnidadedeTempo, int tempoInicio,
-            int recordPessoal) {
-        this.nome = nome;
-        this.apelido = apelido;
-        this.pontos = pontos;
-        this.jogadaMaisRapidaEmUnidadedeTempo = jogadaMaisRapidaEmUnidadedeTempo;
-        this.tempoInicio = tempoInicio;
-        this.recordPessoal = recordPessoal;
     }
 
     public void setNome(String nome) throws Exception {
@@ -73,7 +64,16 @@ public class Jogador implements Comparable<Jogador>, Serializable {
     }
 
     public void pontua(int pontos) {
+        setPontosGanhosnaUltimaRodada(pontos);
         this.pontos += pontos;
+    }
+
+    private void setPontosGanhosnaUltimaRodada(int pontosGanhos) {
+        this.pontosganhosnaUltimaRodada = pontosGanhos;
+    }
+
+    public int getPontosFeitosnaUltimaRodada() {
+        return pontosganhosnaUltimaRodada;
     }
 
     public long getJogadaMaisRapidaEmUnidadedeTempo() {
