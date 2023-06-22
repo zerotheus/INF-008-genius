@@ -61,6 +61,7 @@ public class GeniusView {
 		frame = new JFrame();
 		frame.setFocusable(true);
 		frame.requestFocusInWindow();
+		frame.setResizable(false);
 		JTabbedPane tabbedPane = new JTabbedPane();
 		frame.setBounds(0, 0, 1440, 900);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

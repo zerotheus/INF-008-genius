@@ -38,6 +38,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 	private JTabbedPane tabbedPane;
 	private JLabel lblNomeJogador;
 	private JLabel lblPontos;
+	private JLabel lblPontosGanhosnaRodada;
 	private MyJLabelwithSound btnIniciar;
 	private final Clock clock = Clock.systemDefaultZone();
 	private long instantedofimdaExibicao;
@@ -201,12 +202,9 @@ public class TelaJogo extends MyJPanel implements Runnable {
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("OBJ file", "obj");
 				final JFileChooser fc = new JFileChooser();
 				int returnVal = fc.showOpenDialog(lblFundoJogo);
-
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					File file = fc.getSelectedFile();
 					if (filter.accept(file)) {
-						File newFile = new File(file.toString() + ".obj");
-						file = newFile;
 						try {
 							FileInputStream fis = new java.io.FileInputStream(file);
 							ObjectInputStream is = new ObjectInputStream(fis);
@@ -250,6 +248,13 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		lblPontos.setForeground(new Color(255, 255, 255));
 		lblPontos.setBounds(175, 589, 67, 57);
 		this.add(lblPontos);
+
+		lblPontosGanhosnaRodada = new JLabel("+" + genius.getJogadorAtual().getPontos());
+		lblPontosGanhosnaRodada.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 34));
+		lblPontosGanhosnaRodada.setForeground(new Color(255, 255, 255));
+		lblPontosGanhosnaRodada.setBounds(175, 629, 67, 57);
+		// lblPontosGanhosnaRodada.setVisible(false);
+		this.add(lblPontosGanhosnaRodada);
 
 		lblNomeJogador = new JLabel(genius.getJogadorAtual().getApelido());
 		lblNomeJogador.setForeground(new Color(255, 255, 255));
@@ -342,6 +347,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 	private void atualizaInformacoes() {
 		lblNomeJogador.setText(genius.getJogadorAtual().getApelido());
 		lblPontos.setText("" + genius.getJogadorAtual().getPontos());
+		lblPontosGanhosnaRodada.setText("+" + genius.getJogadorAtual().getPontosFeitosnaUltimaRodada());
 	}
 
 	@Override
