@@ -298,7 +298,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 			e.printStackTrace();
 		}
 		this.atualizaInformacoes();
-		if (genius.jogofoiEncerado()) {
+		if (genius.jogofoiEncerrado()) {
 			jogador.setTempoTotal();
 			MyJPanel telaPlacar = new TelaPlacar(tabbedPane, genius);
 			JOptionPane.showMessageDialog(null, "Fim de jogo", "Fim de jogo", 2);

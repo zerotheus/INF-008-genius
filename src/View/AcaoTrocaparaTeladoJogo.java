@@ -28,10 +28,16 @@ public class AcaoTrocaparaTeladoJogo extends AbstractAction {
         } catch (Exception e1) {
             System.out.println(e1.toString());
         }
-        Genius jogo = new GeniusBase("Teste");
+        Genius jogo = new GeniusBase();
+        try {
+            jogo.setTitulo("Rodada Teste");
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
         Jogador jogador;
         try {
-            jogador = new Jogador("Irineu", "Sla");
+            jogador = new Jogador("Jogador Teste", "Teste");
         } catch (Exception e1) {
             e1.printStackTrace();
             return;

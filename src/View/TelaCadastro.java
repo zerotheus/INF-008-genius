@@ -18,7 +18,7 @@ import Negocio.Jogador;
 
 public class TelaCadastro extends MyJPanel {
 	private int qtdJogadores;
-	private Genius jogo = new GeniusBase("Teste");
+	private Genius jogo = new GeniusBase();
 
 	public TelaCadastro(JTabbedPane tabbedPane, int qtdJogadores) {
 
@@ -113,7 +113,7 @@ public class TelaCadastro extends MyJPanel {
 			}
 		});
 
-		// (847, 738, 111, 60);
+	
 
 		JLabel FundoSemLogo = new JLabelFundoSemLogo();
 		this.add(lblCampeonatoNome);

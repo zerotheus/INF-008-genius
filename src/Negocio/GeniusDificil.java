@@ -32,7 +32,7 @@ public class GeniusDificil extends Genius {
         }
         this.sequenciaDeCores = novaSequencia;
         return;
-    }
+    }/* método q gera sequencia de 3 em 3 */
 
     @Override
     public Genius getRodadadeDesempate() throws Exception {
