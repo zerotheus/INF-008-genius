@@ -22,5 +22,5 @@ public class AzulLabel extends GeniusLabels {
     public String toString() {
         return "AzulLabel";
     }
-
+ /* classe que cria o botão azul e coloca as imagens*/
 }

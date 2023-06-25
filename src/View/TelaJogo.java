@@ -42,7 +42,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 	private MyJLabelwithSound btnIniciar;
 	private final Clock clock = Clock.systemDefaultZone();
 	private long instantedofimdaExibicao;
-	private boolean modosemcoresAtivado = false;
+	private boolean modoMonoCorAtivado = false;
 
 	public TelaJogo(JTabbedPane tabbedPane, Genius jogo) {
 		super();
@@ -130,7 +130,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 					return;
 				}
 				if (retorno.equals("ColorBlind")) {
-					ativaDesativaModoSemCores();
+					ativaDesativaModoMonoCor();
 					return;
 				}
 				if (retorno.equals("Treinar")) {
@@ -138,7 +138,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 					return;
 				}
 			}
-		});
+		});/*Adiciona ação de mudar para os modos extras do jogo */
 
 		btnIniciar.addMouseListener(new MouseAdapter() {
 			@Override
@@ -189,7 +189,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 					}
 				}
 			}
-		});
+		});/*CAIAN DESCREVA AI  */ 
 
 		btnCarregar.addMouseListener(new MouseAdapter() {
 			@Override
@@ -219,7 +219,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 				}
 			}
 		});
-	}
+	}/* CAIAN DESCREVA AI tbm*/
 
 	private void keyAndMouseMapping(GeniusLabels geniusLabel) {
 		geniusLabel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(geniusLabel.getKeyChar()),
@@ -239,7 +239,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 				getInformacoes(geniusLabel);
 			}
 		});
-	}
+	}/* método que é utilizado para selecionar o botão do jogo com mouse ou teclado */
 
 	private void instanciaBotoes() {
 
@@ -326,29 +326,30 @@ public class TelaJogo extends MyJPanel implements Runnable {
 			}
 		}
 		return;
-	};
+	};/*método que pega o jogador atual, verifica se ele perdeu, faz o botão pressionado piscar, faz o placar do jogo caso
+	finalizado, atualiza informações na tela do jogo*/
 
-	private void ativaDesativaModoSemCores() {
-		if (!modosemcoresAtivado) {
+	private void ativaDesativaModoMonoCor() {
+		if (!modoMonoCorAtivado) {
 			for (GeniusLabels geniusLabel : geniusLabels) {
 				geniusLabel.setImagemParaRosa();
 			}
-			modosemcoresAtivado = true;
+			modoMonoCorAtivado = true;
 			return;
 		}
 		for (GeniusLabels geniusLabel : geniusLabels) {
 			geniusLabel.setImagemPadrao();
 		}
 		System.out.println("ativou");
-		modosemcoresAtivado = false;
+		modoMonoCorAtivado = false;
 		return;
-	}
+	}/*Método que modifica as cores dos botões do jogo */
 
 	private void atualizaInformacoes() {
 		lblNomeJogador.setText(genius.getJogadorAtual().getApelido());
 		lblPontos.setText("" + genius.getJogadorAtual().getPontos());
 		lblPontosGanhosnaRodada.setText("+" + genius.getJogadorAtual().getPontosFeitosnaUltimaRodada());
-	}
+	}/*mini placar da tela de jogo */
 
 	@Override
 	public synchronized void run() {
@@ -373,6 +374,6 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		}
 		instantedofimdaExibicao = clock.millis();
 		this.thread = new Thread(this);
-	}
+	}/* método que guarda a sequencia de cores e exibe na tela */
 
 }

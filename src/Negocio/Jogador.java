@@ -66,7 +66,7 @@ public class Jogador implements Comparable<Jogador>, Serializable {
     public void pontua(int pontos) {
         setPontosGanhosnaUltimaRodada(pontos);
         this.pontos += pontos;
-    }/* */
+    }/*adiciona pontos */
 
     private void setPontosGanhosnaUltimaRodada(int pontosGanhos) {
         this.pontosganhosnaUltimaRodada = pontosGanhos;

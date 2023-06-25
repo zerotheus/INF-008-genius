@@ -54,7 +54,7 @@ public class TelaPlacar extends MyJPanel {
         lblFundoJogo.setBounds(0, 0, 1444, 881);
         this.add(lblFundoJogo);
 
-        lblVoltar.addMouseListener(new MouseAdapter() { // colocar som ao clicar o botão
+        lblVoltar.addMouseListener(new MouseAdapter() { 
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getSource() != lblVoltar) {
@@ -135,10 +135,7 @@ public class TelaPlacar extends MyJPanel {
         /* INICIO PONTOS TOTAL */
         labelPontosTot = new ArrayList<JLabel>();
         for (int i = 0; i < qtdJogadores; i++) {
-            labelPontosTot.add(new JLabel(jogo.getListaJogadores().get(i).getPontos() + "")); // temporariamente
-                                                                                              // alterado para
-            // pontos da partida não record
-            // pessoal
+            labelPontosTot.add(new JLabel(jogo.getListaJogadores().get(i).getPontos() + ""));
             labelPontosTot.get(i).setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 34));
             labelPontosTot.get(i).setForeground(Color.WHITE);
             labelPontosTot.get(i).setBounds(986, 267 + posicao * i, 152, 38);

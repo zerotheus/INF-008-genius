@@ -12,7 +12,7 @@ public abstract class MyJPanel extends JPanel {
         this.imagesBasePath = new File("src\\imagens").getPath() + "\\";
         this.basePath = new File("").getAbsolutePath() + "\\";
         this.setLayout(null);
-    }
+    } 
 
     protected String getImagesPath() {
         return this.imagesBasePath;
@@ -21,5 +21,5 @@ public abstract class MyJPanel extends JPanel {
     protected String getBasePath() {
         return this.basePath;
     }
-
+/* Essa classe foi criada para instanciar MYJapanel e começar com layout definido e um caminho para as imagens*/
 }

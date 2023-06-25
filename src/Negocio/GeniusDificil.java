@@ -18,11 +18,10 @@ public class GeniusDificil extends Genius {
 
     protected void adicionanaSequencia() {
         Random geraNumeroAleatorio = new Random();
-        this.sequenciaDeCores.add(geraNumeroAleatorio.nextInt(4));
-        for (int i = 0; i < geraNumeroAleatorio.nextInt(5); i++) {
+        for (int i = 0; i < geraNumeroAleatorio.nextInt(3) + 3; i++) {
             this.sequenciaDeCores.add(geraNumeroAleatorio.nextInt(4));
         }
-    }
+    }/*Método que adiciona a sequencia do jogo na lista */
 
     protected void geraSequencia() {
         Random geraNumeroAleatorio = new Random();
@@ -32,7 +31,7 @@ public class GeniusDificil extends Genius {
         }
         this.sequenciaDeCores = novaSequencia;
         return;
-    }/* método q gera sequencia de 3 em 3 */
+    }/* método q gera sequencia de 3 numeros */
 
     @Override
     public Genius getRodadadeDesempate() throws Exception {
