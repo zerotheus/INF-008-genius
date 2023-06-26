@@ -15,5 +15,5 @@ public class JLabeldateladeFundo extends JLabel {
         this.setIcon(new ImageIcon(this.imagesBasePath + "tela.png"));
         this.setBounds(0, 0, 1451, 884);
     }
-
+/* classe feita para utilizar um fundo */
 }

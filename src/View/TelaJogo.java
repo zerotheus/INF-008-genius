@@ -38,10 +38,13 @@ public class TelaJogo extends MyJPanel implements Runnable {
 	private JTabbedPane tabbedPane;
 	private JLabel lblNomeJogador;
 	private JLabel lblPontos;
+	private JLabel lblPontosGanhosnaRodada;
 	private MyJLabelwithSound btnIniciar;
+	private MyJLabelwithSound btnExtras;
 	private final Clock clock = Clock.systemDefaultZone();
 	private long instantedofimdaExibicao;
-	private boolean modosemcoresAtivado = false;
+	private boolean modoMonoCorAtivado = false;
+	private int pontosFeitosNaRodada =0;
 
 	public TelaJogo(JTabbedPane tabbedPane, Genius jogo) {
 		super();
@@ -101,7 +104,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		btnCarregar.setVisible(true);
 		this.add(btnCarregar);
 
-		MyJLabelwithSound btnExtras = new MyJLabelwithSound();
+		btnExtras = new MyJLabelwithSound();
 		btnExtras.setBounds(1212, 506, 190, 70);
 		btnExtras.setVisible(true);
 		this.add(btnExtras);
@@ -117,7 +120,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 				if (btnExtras != e.getSource()) {
 					return;
 				}
-				final String[] modos = { "ColorBlind", "Treinar" };
+				final String[] modos = { "MonoCor", "Treinar" };
 				final String retorno;
 				retorno = (String) JOptionPane.showInputDialog(null,
 						"Ative ou desative modos de Jogo",
@@ -128,16 +131,20 @@ public class TelaJogo extends MyJPanel implements Runnable {
 				if (retorno == null) {
 					return;
 				}
-				if (retorno.equals("ColorBlind")) {
-					ativaDesativaModoSemCores();
+				if (retorno.equals("MonoCor")) {
+					ativaDesativaModoMonoCor();
 					return;
 				}
 				if (retorno.equals("Treinar")) {
-					jogo.ativaDesativaTreino();
+					try {
+						jogo.ativaDesativaTreino();
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
 					return;
 				}
 			}
-		});
+		});/* Adiciona ação de mudar para os modos extras do jogo */
 
 		btnIniciar.addMouseListener(new MouseAdapter() {
 			@Override
@@ -146,6 +153,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 					return;
 				}
 				btnIniciar.setEnabled(false);
+				btnExtras.setEnabled(false);
 				genius.inciaRodada();
 				genius.getJogadorAtual().setTempoInicial();
 				try {
@@ -188,7 +196,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 					}
 				}
 			}
-		});
+		});/* CAIAN DESCREVA AI */
 
 		btnCarregar.addMouseListener(new MouseAdapter() {
 			@Override
@@ -201,12 +209,9 @@ public class TelaJogo extends MyJPanel implements Runnable {
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("OBJ file", "obj");
 				final JFileChooser fc = new JFileChooser();
 				int returnVal = fc.showOpenDialog(lblFundoJogo);
-
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					File file = fc.getSelectedFile();
 					if (filter.accept(file)) {
-						File newFile = new File(file.toString() + ".obj");
-						file = newFile;
 						try {
 							FileInputStream fis = new java.io.FileInputStream(file);
 							ObjectInputStream is = new ObjectInputStream(fis);
@@ -221,7 +226,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 				}
 			}
 		});
-	}
+	}/* CAIAN DESCREVA AI tbm */
 
 	private void keyAndMouseMapping(GeniusLabels geniusLabel) {
 		geniusLabel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(geniusLabel.getKeyChar()),
@@ -229,7 +234,11 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		geniusLabel.getActionMap().put(geniusLabel.toString(), new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				getInformacoes(geniusLabel);
+				try {
+					getInformacoes(geniusLabel);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 		geniusLabel.addMouseListener(new MouseAdapter() {
@@ -238,10 +247,16 @@ public class TelaJogo extends MyJPanel implements Runnable {
 				if (e.getSource() != geniusLabel) {
 					return;
 				}
-				getInformacoes(geniusLabel);
+				try {
+					getInformacoes(geniusLabel);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
-	}
+	}/*
+		 * método que é utilizado para selecionar o botão do jogo com mouse ou teclado
+		 */
 
 	private void instanciaBotoes() {
 
@@ -250,6 +265,13 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		lblPontos.setForeground(new Color(255, 255, 255));
 		lblPontos.setBounds(175, 589, 67, 57);
 		this.add(lblPontos);
+
+		lblPontosGanhosnaRodada = new JLabel("+" + genius.getJogadorAtual().getPontos());
+		lblPontosGanhosnaRodada.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 34));
+		lblPontosGanhosnaRodada.setForeground(new Color(255, 255, 255));
+		lblPontosGanhosnaRodada.setBounds(175, 629, 67, 57);
+		// lblPontosGanhosnaRodada.setVisible(false);
+		this.add(lblPontosGanhosnaRodada);
 
 		lblNomeJogador = new JLabel(genius.getJogadorAtual().getApelido());
 		lblNomeJogador.setForeground(new Color(255, 255, 255));
@@ -280,11 +302,11 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		}
 	}
 
-	public void getInformacoes(final GeniusLabels botao) {
+	private void getInformacoes(final GeniusLabels botao) throws Exception {
+		pontosFeitosNaRodada = genius.getJogadorAtual().getPontos();
 		if (thread.isAlive() || !genius.jogoEstaAtivo()) {
 			return;
 		}
-		int round = genius.getRound();
 		final Jogador jogador = genius.getJogadorAtual();
 		final boolean eraUltimaJogada = genius.ehUltimaJogada();
 		final boolean naoPerdeu = genius.analisaJogada(instantedofimdaExibicao, botao.getCor());
@@ -294,7 +316,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 			e.printStackTrace();
 		}
 		this.atualizaInformacoes();
-		if (genius.jogofoiEncerado()) {
+		if (genius.jogofoiEncerrado()) {
 			jogador.setTempoTotal();
 			MyJPanel telaPlacar = new TelaPlacar(tabbedPane, genius);
 			JOptionPane.showMessageDialog(null, "Fim de jogo", "Fim de jogo", 2);
@@ -304,6 +326,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		}
 		if (!naoPerdeu) {// ou seja perdeu
 			btnIniciar.setEnabled(true);
+			btnExtras.setEnabled(true);
 			this.atualizaInformacoes();
 			jogador.setTempoTotal();
 			if (genius.ehmododeTreino()) {
@@ -312,16 +335,8 @@ public class TelaJogo extends MyJPanel implements Runnable {
 				thread.start();
 				return;
 			}
-			if(genius.qtdJogadores()>1)
-				JOptionPane.showMessageDialog(null, jogador.getApelido() + " por favor, passe a vez.", "Errou a Sequencia",
+			JOptionPane.showMessageDialog(null, jogador.getApelido() + " Por favor passe a vez", "Errou a Sequencia",
 					2);
-			else
-				JOptionPane.showMessageDialog(null, "Errou.", "Errou a Sequencia", 2);
-			if(round < genius.getRound() && round<3) {
-				round = genius.getRound();
-				JOptionPane.showMessageDialog(null, genius.getRound() + " rodada!", "muda de rodada",
-						2);
-			}
 			return;
 		}
 		if (eraUltimaJogada && naoPerdeu) {
@@ -330,28 +345,33 @@ public class TelaJogo extends MyJPanel implements Runnable {
 			}
 		}
 		return;
-	};
+	};/*
+		 * método que pega o jogador atual, verifica se ele perdeu, faz o botão
+		 * pressionado piscar, faz o placar do jogo caso
+		 * finalizado, atualiza informações na tela do jogo
+		 */
 
-	private void ativaDesativaModoSemCores() {
-		if (!modosemcoresAtivado) {
+	private void ativaDesativaModoMonoCor() {
+		if (!modoMonoCorAtivado) {
 			for (GeniusLabels geniusLabel : geniusLabels) {
 				geniusLabel.setImagemParaRosa();
 			}
-			modosemcoresAtivado = true;
+			modoMonoCorAtivado = true;
 			return;
 		}
 		for (GeniusLabels geniusLabel : geniusLabels) {
 			geniusLabel.setImagemPadrao();
 		}
 		System.out.println("ativou");
-		modosemcoresAtivado = false;
+		modoMonoCorAtivado = false;
 		return;
-	}
+	}/* Método que modifica as cores dos botões do jogo */
 
 	private void atualizaInformacoes() {
 		lblNomeJogador.setText(genius.getJogadorAtual().getApelido());
 		lblPontos.setText("" + genius.getJogadorAtual().getPontos());
-	}
+		lblPontosGanhosnaRodada.setText("+" + (genius.getJogadorAtual().getPontos() - pontosFeitosNaRodada));
+	}/* mini placar da tela de jogo */
 
 	@Override
 	public synchronized void run() {
@@ -376,6 +396,6 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		}
 		instantedofimdaExibicao = clock.millis();
 		this.thread = new Thread(this);
-	}
+	}/* método que guarda a sequencia de cores e exibe na tela */
 
 }

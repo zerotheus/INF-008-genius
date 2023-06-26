@@ -19,5 +19,5 @@ public class MyJTabbedPaneUI extends BasicTabbedPaneUI {
         // valores negativos de referencia de x e de y, 0 nao reproduz o 0 geometrico a
         // area fica visivel ainda
     }
-
+/*Classe que esconde a barra de abas */
 }

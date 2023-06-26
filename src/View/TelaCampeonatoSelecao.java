@@ -14,7 +14,7 @@ public class TelaCampeonatoSelecao extends MyJPanel {
     public TelaCampeonatoSelecao(JTabbedPane tabbedPane) {
         super();
 
-        JLabel lbl2Jogadores = new JLabel("");
+        JLabel lbl2Jogadores = new JLabel();
         lbl2Jogadores.setIcon(new ImageIcon(this.getImagesPath() + "2 jogadores.png"));
         lbl2Jogadores.setBounds(263, 583, 264, 95);
         this.add(lbl2Jogadores);
@@ -30,7 +30,7 @@ public class TelaCampeonatoSelecao extends MyJPanel {
             }
         });
 
-        JLabel lbl4Jogadores = new JLabel("");
+        JLabel lbl4Jogadores = new JLabel();
         lbl4Jogadores.setIcon(new ImageIcon(this.getImagesPath() + "4 jogadores.png"));
         lbl4Jogadores.setBounds(578, 583, 264, 95);
         this.add(lbl4Jogadores);
@@ -46,7 +46,7 @@ public class TelaCampeonatoSelecao extends MyJPanel {
             }
         });
 
-        JLabel lbl8Jogadores = new JLabel("");
+        JLabel lbl8Jogadores = new JLabel();
         lbl8Jogadores.setIcon(new ImageIcon(this.getImagesPath() + "8 jogadores.png"));
         lbl8Jogadores.setBounds(894, 583, 264, 95);
         this.add(lbl8Jogadores);
@@ -63,12 +63,12 @@ public class TelaCampeonatoSelecao extends MyJPanel {
         });
 
         MyJLabelwithSound lblVoltar = new MyJLabelwithSound();
-        lblVoltar.setIcon(new ImageIcon(this.getImagesPath() + "botaoVoltar.png"));
+        lblVoltar.setIcon(new ImageIcon(this.getImagesPath() + "botaoVoltarMenor.png"));
         lblVoltar.setBounds(650, 795, 106, 53);
         lblVoltar.setVisible(true);
         this.add(lblVoltar);
 
-        lblVoltar.addMouseListener(new MouseAdapter() { // colocar som ao clicar o botão
+        lblVoltar.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getSource() != lblVoltar) {
