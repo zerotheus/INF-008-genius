@@ -92,8 +92,10 @@ public class TeladeSelecaoModo extends MyJPanel {
                 }
                 Genius jogoCarregado = null;
                 final JFileChooser fc = new JFileChooser();
+
                 File saves = new File("src\\Saves");
-				fc.setCurrentDirectory(saves);
+				        fc.setCurrentDirectory(saves);
+
                 int returnVal = fc.showOpenDialog(null);
                 if (returnVal == JFileChooser.APPROVE_OPTION) {
                     File file = fc.getSelectedFile();

@@ -45,7 +45,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 	private long instantedofimdaExibicao;
 	private boolean modoMonoCorAtivado = false;
 	private int pontosFeitosNaRodada =0;
-
+  
 	public TelaJogo(JTabbedPane tabbedPane, Genius jogo) {
 		super();
 		this.tabbedPane = tabbedPane;
@@ -202,6 +202,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 	 O método salva somente arquivos .obj. Ele possui um filtro para que não seja possível salvar ".obj.obj". 
 	 Se já possuir .obj, ele salva sem adicionar o .obj de novo */
 
+
 		btnCarregar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -212,6 +213,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 				}
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("OBJ file", "obj");
 				final JFileChooser fc = new JFileChooser();
+
 				File saves = new File("src\\Saves");
 				fc.setCurrentDirectory(saves);
 				int returnVal = fc.showOpenDialog(lblFundoJogo);
@@ -235,6 +237,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		});
 	}/*Método utilizado para carregar um jogo quando apertar o botão "Carregar".
 	 O método utiliza um filter para poder carregar somente arquivos .obj*/
+
 
 	private void keyAndMouseMapping(GeniusLabels geniusLabel) {
 		geniusLabel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(geniusLabel.getKeyChar()),
@@ -311,6 +314,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 	}
 
 	private void getInformacoes(final GeniusLabels botao) throws Exception {
+
 		pontosFeitosNaRodada = genius.getJogadorAtual().getPontos();
 		if (thread.isAlive() || !genius.jogoEstaAtivo()) {
 			return;

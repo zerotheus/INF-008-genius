@@ -66,4 +66,3 @@ public class GeniusMedio extends Genius {
         mododeTreinoAtivo = true;// quando esta desativo
     }
 
-}

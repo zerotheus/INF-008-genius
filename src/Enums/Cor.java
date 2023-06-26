@@ -7,5 +7,5 @@ public enum Cor {
     verde,
 }
 /*
- * Esse enum foi criado para dar nome as cores dos botões do jogo principal.
+Esse enum foi criado para dar nome as cores dos botões do jogo principal.
  */

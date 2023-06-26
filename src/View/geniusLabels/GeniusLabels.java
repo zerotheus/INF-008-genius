@@ -39,6 +39,7 @@ public abstract class GeniusLabels extends MyJLabelwithSound {
                 250);
     }/* Faz o botão piscar através de uma thread e imagens */
 
+
     protected void setImagem(String nomeDaImagem) {
         this.nomedaImagemBase = nomeDaImagem;
         this.setIcon(new ImageIcon(this.getImagesBasePath() + nomedaImagemBase));
@@ -50,7 +51,9 @@ public abstract class GeniusLabels extends MyJLabelwithSound {
 
     public Cor getCor() {
         return this.cor;
-    }/* diz a cor do botão */
+
+    }/*diz a cor do botão */
+
 
     public char getKeyChar() {
         return keyChar;

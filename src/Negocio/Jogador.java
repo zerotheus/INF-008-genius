@@ -36,6 +36,7 @@ public class Jogador implements Comparable<Jogador>, Serializable {
         return apelido;
     }/* retorna apelido do jogador */
 
+
     public int getPontos() {
         return pontos;
     }/* retorna os pontos do jogador *
@@ -97,6 +98,7 @@ public class Jogador implements Comparable<Jogador>, Serializable {
         setPontosGanhosnaUltimaRodada(pontos);
         this.pontos += pontos;
     }/* adiciona pontos */
+
 
     public void foiJogadaMaisRapida(Long jogada) {
         if (this.jogadaMaisRapidaEmUnidadedeTempo == null) {
