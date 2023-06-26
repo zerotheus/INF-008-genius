@@ -6,11 +6,13 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
+
 
 import Negocio.Genius;
 import Negocio.GeniusBase;
@@ -93,7 +95,9 @@ public class TelaCadastro extends MyJPanel {
 		lblVoltar.setVisible(true);
 		this.add(lblVoltar);
 
-		lblVoltar.addMouseListener(new MouseAdapter() { 
+
+		lblVoltar.addMouseListener(new MouseAdapter() {
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getSource() != lblVoltar) {
@@ -113,7 +117,6 @@ public class TelaCadastro extends MyJPanel {
 			}
 		});
 
-	
 
 		JLabel FundoSemLogo = new JLabelFundoSemLogo();
 		this.add(lblCampeonatoNome);
@@ -150,9 +153,5 @@ public class TelaCadastro extends MyJPanel {
 
 			}
 		});
-		// shortcut somente para eu n ter que ficar preenchendo formulario
-		lblSalvar.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('.'), "A");
-		lblSalvar.getActionMap().put("A", new AcaoTrocaparaTeladoJogo(tabbedPane, lblSalvar));
-
 	}
 }

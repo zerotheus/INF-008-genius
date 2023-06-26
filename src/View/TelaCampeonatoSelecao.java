@@ -68,7 +68,7 @@ public class TelaCampeonatoSelecao extends MyJPanel {
         lblVoltar.setVisible(true);
         this.add(lblVoltar);
 
-        lblVoltar.addMouseListener(new MouseAdapter() { 
+        lblVoltar.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getSource() != lblVoltar) {

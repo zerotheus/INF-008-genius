@@ -50,6 +50,56 @@ public abstract class Genius implements Serializable {
         this.geraSequencia();
     }/* Construtor utilizado para inicializar o jogo a primeira vez */
 
+    
+    
+//INICIO MÉTODOS GET
+    
+    public String getDificuldade() {
+        return Integer.toString(this.dificuldade);
+    }/* método que retorna o valor da dificuldade como string. */
+
+    public String getRitmo() {
+        return Integer.toString(ritmo);
+    }/* método que retorna o valor do ritmo como string */
+
+    public Data getData() {
+        return this.data;
+    }/* método que retorna a data do jogo */
+
+    public Jogador getJogadorAtual() {
+        if (!jogofoiEncerrado()) {
+            return jogadores.get(indexJogadorAtual);
+        }
+        return jogadores.get(indexJogadorAtual - 1);
+    }/* Método para pegar o jogador atual da rodada */
+
+    public int getQtdJogadores() {
+        return this.jogadores.size();
+    }/* Método que retorna o tamanho da lista de jogadores do campeonato */
+
+    public List<Jogador> getListaJogadores() {
+        return List.copyOf(this.jogadores);
+    }/* Método que retorna uma cópia da lista de jogadores */
+
+    public List<Jogador> getVencedores() {
+        List<Jogador> ordenadosPorPontos = this.jogadores;
+        Collections.sort(ordenadosPorPontos);
+        return ordenadosPorPontos;
+    }/* Método que retorna os jogadores ordenado por pontos */
+
+    public List<Integer> getSequencia() {
+        return this.sequenciaDeCores;
+    }/* Método que retorna a lista da sequencia dos botões do jogo */
+
+    public String getTitulodoCampeonato() {
+        return this.titulodoCampeonato;
+    }/* Método que retorna o titulo do campeonato */
+    
+    //FIM METODOS GET
+
+    //INICIO MÉTODOS SET
+    
+
     public void setTitulo(String tituloNovo) throws Exception {
         if (tituloNovo.length() < 3)
             throw new Exception("Titulo deve ter mais de 2 letras");
@@ -71,14 +121,6 @@ public abstract class Genius implements Serializable {
         this.dificuldade = dificuldade;
     }/* Método que muda o valor da dificuldade do jogo */
 
-    public String getDificuldade() {
-        return Integer.toString(this.dificuldade);
-    }/* método que retorna o valor da dificuldade como string. */
-
-    public String getRitmo() {
-        return Integer.toString(ritmo);
-    }/* método que retorna o valor do ritmo como string */
-
     private void setTempodeReacao(int ritmo) {
         if (ritmo == 1) {
             tempoParaReagir = 180000;
@@ -96,6 +138,12 @@ public abstract class Genius implements Serializable {
       * método que modifica o tempo que o jogador tem para reagir ao clicar o botão
       * de acordo com o ritmo que foi passado como parâmetro.
       */
+
+    //FIM MÉTODOS SET
+    
+    
+    
+
 
     public Data getData() {
         return this.data;
@@ -129,6 +177,7 @@ public abstract class Genius implements Serializable {
     public String getTitulodoCampeonato() {
         return this.titulodoCampeonato;
     }/* Método que retorna o titulo do campeonato */
+
 
     private void alteraJogadorAtual() {
         if (mododeTreinoAtivo) {
@@ -171,9 +220,11 @@ public abstract class Genius implements Serializable {
         return false;
     }/* retorna se o jogo foi encerrado */
 
+
     public boolean jogoEstaAtivo() {
         return this.aRodadaFoiIniciada;
     }/* retorna se a rodada foi iniciada */
+
 
     public boolean ehUltimaJogada() {
         System.out.println("sequenciaDeCores.size(): " + sequenciaDeCores.size());
@@ -196,7 +247,8 @@ public abstract class Genius implements Serializable {
         if (titulodoCampeonato == null) {
             throw new Exception("O jogo quer um titulo");
         }
-        if (this.qtdJogadores() == 0) {
+        if (this.getQtdJogadores() == 0) {
+
             throw new Exception("Jogo requer jogadores");
         }
         if (jogofoiEncerrado()) {
