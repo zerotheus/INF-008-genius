@@ -5,7 +5,8 @@ import java.util.List;
 
 public class GeniusBase extends Genius {
 
-    ic Geni super();
+    public GeniusBase() {
+        super();
     }/* Construtor para inicializar o modo */
 
     protected GeniusBase(Data data, String titulodoCampeonato, int ritmo, int dificuldade, List<Jogador> jogadores) {
@@ -19,7 +20,6 @@ public class GeniusBase extends Genius {
         return new GeniusMedio(getData(), getTitulodoCampeonato(), super.ritmo, this.dificuldade, getListaJogadores());
     }/* Método que muda a dificuldade para médio */
 
-    
     @Override
     public Genius getRodadadeDesempate() throws Exception {
         if (!temEmpate()) {
@@ -33,8 +33,7 @@ public class GeniusBase extends Genius {
         }
         return new GeniusBase(new Data(), "Desempate " + getTitulodoCampeonato(), super.ritmo, super.dificuldade,
                 empatados);
-    }
-/*
+    }/*
       * função que faz uma lista com os jogadores que tiveram empate e retorna um
       * novo jogo para desempate com os empatados
       */
@@ -52,6 +51,5 @@ public class GeniusBase extends Genius {
         geraSequencia();
         mododeTreinoAtivo = true;// quando esta desativo
     }
-    
-}
 
+}
