@@ -19,16 +19,15 @@ public class MyJLabelwithSound extends JLabel {
     public MyJLabelwithSound() {
         this.sfxBotaoMenuBasePath = new File("src\\sfx").getPath() + "\\";
         this.imagesBasePath = new File("src\\imagens").getPath() + "\\";
-    }
+    }/* Construtor para definir o som e a imagem */
 
     protected void startSound() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
 
-        // "/sfx/MenuBotão.wav"
         audioInputStream = AudioSystem.getAudioInputStream(new File((this.sfxBotaoMenuBasePath + "MenuBotao.Wav")));
         clip = AudioSystem.getClip();
         clip.open(audioInputStream);
         clip.start();
-    }
+    }/*Método que pega o arquivo áudio abre e executa */
 
     protected void startSound(String nomedoArquivo)
             throws UnsupportedAudioFileException, IOException, LineUnavailableException {
@@ -36,10 +35,10 @@ public class MyJLabelwithSound extends JLabel {
         clip = AudioSystem.getClip();
         clip.open(audioInputStream);
         clip.start();
-    }
+    }/*Método que pega o arquivo áudio abre e executa */
 
     public String getImagesBasePath() {
         return imagesBasePath;
-    }
+    }/*Retorna o caminho da imagem */
 
 }

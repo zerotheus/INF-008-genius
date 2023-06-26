@@ -3,13 +3,10 @@ package View;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
-import java.io.File;
 
 public class GeniusView {
 
 	private JFrame frame;
-	private final String basePath;
-	private final String imagesBasePath;
 
 	/**
 	 * Launch the application.
@@ -43,14 +40,12 @@ public class GeniusView {
 				}
 			}
 		});
-	}
+	}/* Inicia a applicação */
 
 	/**
 	 * Create the application.
 	 */
 	public GeniusView() {
-		basePath = new File("").getAbsolutePath() + "\\";
-		imagesBasePath = basePath + new File("src\\imagens").getPath() + "\\";
 		initialize();
 	}
 
@@ -61,6 +56,7 @@ public class GeniusView {
 		frame = new JFrame();
 		frame.setFocusable(true);
 		frame.requestFocusInWindow();
+		frame.setResizable(false);
 		JTabbedPane tabbedPane = new JTabbedPane();
 		frame.setBounds(0, 0, 1440, 900);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -20,3 +20,4 @@ public class Data implements Serializable {
     }
 
 }
+/*Classe para pegar a data atual, que tem um método que retornar uma string */

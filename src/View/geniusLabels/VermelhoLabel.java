@@ -22,5 +22,5 @@ public class VermelhoLabel extends GeniusLabels {
     public String toString() {
         return "VermelhoLabel";
     }
-
+ /* classe que cria o botão vermelho e coloca as imagens*/
 }

@@ -23,7 +23,7 @@ public abstract class GeniusLabels extends MyJLabelwithSound {
         this.arquivoSom = arquivoSom;
         this.cor = cor;
         this.keyChar = keyChar;
-    }
+    }/* Instancia os botões do jogo */
 
     public synchronized void pisca() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         String imagensPath = this.getImagesBasePath();
@@ -37,23 +37,23 @@ public abstract class GeniusLabels extends MyJLabelwithSound {
                     }
                 },
                 250);
-    }
+    }/* Faz o botão piscar através de uma thread e imagens */
 
     protected void setImagem(String nomeDaImagem) {
         this.nomedaImagemBase = nomeDaImagem;
         this.setIcon(new ImageIcon(this.getImagesBasePath() + nomedaImagemBase));
-    }
+    }/* Método feito para inserir imagem */
 
-    public abstract void setImagemParaRosa();
+    public abstract void setImagemParaRosa();/* muda imagem para rosa */
 
-    public abstract void setImagemPadrao();
+    public abstract void setImagemPadrao();/* muda imagem para cor padrão */
 
     public Cor getCor() {
         return this.cor;
-    }
+    }/* diz a cor do botão */
 
     public char getKeyChar() {
         return keyChar;
-    }
+    }/* diz a tecla do botão */
 
 }

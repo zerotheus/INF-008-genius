@@ -8,6 +8,7 @@ public class GeniusMedio extends Genius {
 
     protected GeniusMedio(Data data, String titulodoCampeonato, int ritmo, int dificuldade, List<Jogador> jogadores) {
         super(data, titulodoCampeonato, ritmo, dificuldade, jogadores);
+        setDificuldade(2);
         this.geraSequencia();
     }
 
@@ -32,7 +33,6 @@ public class GeniusMedio extends Genius {
 
     @Override
     public Genius mudaDificuldade() {
-        setDificuldade();
         return new GeniusDificil(getData(), getTitulodoCampeonato(), super.ritmo, this.dificuldade,
                 getListaJogadores());
     }
@@ -52,4 +52,21 @@ public class GeniusMedio extends Genius {
                 empatados);
     }
 
+    @Override
+    public void ativaDesativaTreino() throws Exception {
+        if (this.jogoEstaAtivo() || sequenciaDeCores.size() > 3) {
+            throw new Exception("Nao é possivel iniciar o Treino com Rodada iniciada");
+        }
+     
+
+                      
+
+        }
+        geraSequencia();
+        mododeTreinoAtivo = true;// quando esta desativo
+    }
+
 }
+
+
+    

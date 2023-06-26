@@ -22,5 +22,5 @@ public class VerdeLabel extends GeniusLabels {
     public String toString() {
         return "VerdeLabel";
     }
-
+ /* classe que cria o botão verde e coloca as imagens*/
 }

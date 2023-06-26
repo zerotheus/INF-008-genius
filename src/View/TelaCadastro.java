@@ -18,9 +18,10 @@ import Negocio.Jogador;
 
 public class TelaCadastro extends MyJPanel {
 	private int qtdJogadores;
-	private Genius jogo = new GeniusBase("Teste");
+	private Genius jogo = new GeniusBase();
 
 	public TelaCadastro(JTabbedPane tabbedPane, int qtdJogadores) {
+
 
 		super();
 		this.setLayout(null);
@@ -93,7 +94,7 @@ public class TelaCadastro extends MyJPanel {
 		lblVoltar.setVisible(true);
 		this.add(lblVoltar);
 
-		lblVoltar.addMouseListener(new MouseAdapter() { // colocar som ao clicar o botão
+		lblVoltar.addMouseListener(new MouseAdapter() { 
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getSource() != lblVoltar) {
@@ -113,7 +114,7 @@ public class TelaCadastro extends MyJPanel {
 			}
 		});
 
-		// (847, 738, 111, 60);
+	
 
 		JLabel FundoSemLogo = new JLabelFundoSemLogo();
 		this.add(lblCampeonatoNome);

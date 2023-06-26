@@ -8,6 +8,7 @@ public class GeniusDificil extends Genius {
 
     protected GeniusDificil(Data data, String titulodoCampeonato, int ritmo, int dificuldade, List<Jogador> jogadores) {
         super(data, titulodoCampeonato, ritmo, dificuldade, jogadores);
+        setDificuldade(3);
         this.geraSequencia();
     }
 
@@ -18,23 +19,23 @@ public class GeniusDificil extends Genius {
 
     protected void adicionanaSequencia() {
         Random geraNumeroAleatorio = new Random();
-        this.sequenciaDeCores.add(geraNumeroAleatorio.nextInt(4));
-        for (int i = 0; i < geraNumeroAleatorio.nextInt(5); i++) {
+        for (int i = 0; i < geraNumeroAleatorio.nextInt(3) + 3; i++) {
             this.sequenciaDeCores.add(geraNumeroAleatorio.nextInt(4));
         }
-    }
+    }/* Método que adiciona a sequencia do jogo na lista */
 
     protected void geraSequencia() {
         Random geraNumeroAleatorio = new Random();
         List<Integer> novaSequencia = new ArrayList<Integer>();
-        for (int i = 0; i < 3; i++) {
-            novaSequencia.add(geraNumeroAleatorio.nextInt(4));
-        }
+            }
+
+    
+    
         this.sequenciaDeCores = novaSequencia;
         return;
-    }
+    }/* método q gera sequencia de 3 numeros */
+    
 
-    @Override
     public Genius getRodadadeDesempate() throws Exception {
         if (!temEmpate()) {
             throw new Exception("Nao ha empate");
@@ -44,8 +45,24 @@ public class GeniusDificil extends Genius {
             if (super.jogadores.get(i).getPontos() == this.maiorPontuacao) {
                 empatados.add(jogadores.get(i));
             }
-        }
-        return new GeniusBase(new Data(), "Desempate " + getTitulodoCampeonato(), super.ritmo, super.dificuldade,
+            
+
                 empatados);
+        }
+
+    @Override
+    public void ativaDesativaTreino() throws Exception {
+        if (this.jogoEstaAtivo() || sequenciaDeCores.size() > 3) {
+            throw new Exception("Nao é possivel iniciar o Treino com Rodada iniciada");
+        }
+        if (mododeTreinoAtivo) {// ativo
+            mododeTreinoAtivo = false;
+            geraSequencia();
+            return;
+        }
+        geraSequencia();
+        mododeTreinoAtivo = true;// quando esta desativo
     }
 }
+
+    

@@ -23,4 +23,5 @@ public class AmareloLabel extends GeniusLabels {
         return "AmareloLabel";
     }
 
+    /* classe que cria o botão amarelo e coloca as imagens*/
 }
