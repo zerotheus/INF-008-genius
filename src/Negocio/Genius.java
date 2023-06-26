@@ -117,7 +117,7 @@ public abstract class Genius implements Serializable {
     }/* Método que retorna uma cópia da lista de jogadores */
 
     public List<Jogador> getVencedores() {
-        final List<Jogador> ordenadosPorPontos = getListaJogadores();
+        List<Jogador> ordenadosPorPontos = this.jogadores;
         Collections.sort(ordenadosPorPontos);
         return ordenadosPorPontos;
     }/* Método que retorna os jogadores ordenado por pontos */
@@ -302,7 +302,10 @@ public abstract class Genius implements Serializable {
       * retorna que há empate
       */
 
-    public void ativaDesativaTreino() {
+    public void ativaDesativaTreino() throws Exception {
+        if (this.jogoEstaAtivo()) {
+            throw new Exception("Nao é possivel iniciar o Treino com Rodada iniciada");
+        }
         if (mododeTreinoAtivo) {// ativo
             mododeTreinoAtivo = false;
             geraSequencia();
