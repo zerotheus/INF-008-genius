@@ -196,7 +196,9 @@ public class TelaJogo extends MyJPanel implements Runnable {
 					}
 				}
 			}
-		});/* CAIAN DESCREVA AI */
+		});/*Método utilizado para salvar um jogo quando apertar o botão "Salvar".
+	 O método salva somente arquivos .obj. Ele possui um filtro para que não seja possível salvar ".obj.obj". 
+	 Se já possuir .obj, ele salva sem adicionar o .obj de novo */
 
 		btnCarregar.addMouseListener(new MouseAdapter() {
 			@Override
@@ -221,12 +223,14 @@ public class TelaJogo extends MyJPanel implements Runnable {
 							e1.printStackTrace();
 						}
 						atualizaInformacoes();
+						btnIniciar.setEnabled(true);
 					} else
 						JOptionPane.showMessageDialog(lblFundoJogo, "Arquivo não suportado. Use somente arquivos .obj");
 				}
 			}
 		});
-	}/* CAIAN DESCREVA AI tbm */
+	}/*Método utilizado para carregar um jogo quando apertar o botão "Carregar".
+	 O método utiliza um filter para poder carregar somente arquivos .obj*/
 
 	private void keyAndMouseMapping(GeniusLabels geniusLabel) {
 		geniusLabel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(geniusLabel.getKeyChar()),
