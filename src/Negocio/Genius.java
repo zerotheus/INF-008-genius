@@ -303,7 +303,7 @@ public abstract class Genius implements Serializable {
       */
 
     public void ativaDesativaTreino() throws Exception {
-        if (this.jogoEstaAtivo()) {
+        if (this.jogoEstaAtivo() || sequenciaDeCores.size() > 3) {
             throw new Exception("Nao é possivel iniciar o Treino com Rodada iniciada");
         }
         if (mododeTreinoAtivo) {// ativo
