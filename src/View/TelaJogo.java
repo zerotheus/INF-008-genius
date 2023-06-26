@@ -179,6 +179,8 @@ public class TelaJogo extends MyJPanel implements Runnable {
 				}
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("OBJ file", "obj");
 				final JFileChooser fc = new JFileChooser();
+				File saves = new File("src\\Saves");
+				fc.setCurrentDirectory(saves);
 				int returnVal = fc.showOpenDialog(lblFundoJogo);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					File file = fc.getSelectedFile();
@@ -210,6 +212,8 @@ public class TelaJogo extends MyJPanel implements Runnable {
 				}
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("OBJ file", "obj");
 				final JFileChooser fc = new JFileChooser();
+				File saves = new File("src\\Saves");
+				fc.setCurrentDirectory(saves);
 				int returnVal = fc.showOpenDialog(lblFundoJogo);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					File file = fc.getSelectedFile();
