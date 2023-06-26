@@ -23,7 +23,7 @@ public abstract class Genius implements Serializable {
     private final Clock clock = Clock.systemDefaultZone();
     private long instantedaUltimaReacaodoJogadorAtual;
     private boolean instanteValidado;
-    private boolean mododeTreinoAtivo = false;
+    protected boolean mododeTreinoAtivo = false;
     private boolean aRodadaFoiIniciada = false;
 
     protected Genius(Data data, String titulodoCampeonato, int ritmo, int dificuldade, List<Jogador> jogadores) {
