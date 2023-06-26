@@ -192,7 +192,13 @@ public abstract class Genius implements Serializable {
         this.jogadores.get(this.indexJogadorAtual).pontua(this.indexdaJogadaAtual);
     }/* Método que chama o método de pontuar do jogador atual */
 
-    public boolean analisaJogada(Long instantedaExibicao, Cor jogada) {
+    public boolean analisaJogada(Long instantedaExibicao, Cor jogada) throws Exception {
+        if (titulodoCampeonato == null) {
+            throw new Exception("O jogo quer um titulo");
+        }
+        if (this.qtdJogadores() == 0) {
+            throw new Exception("Jogo requer jogadores");
+        }
         if (jogofoiEncerrado()) {
             return false;
         }
