@@ -19,7 +19,7 @@ public abstract class Genius implements Serializable {
     private int indexJogadorAtual;
     private int indexdaJogadaAtual = 0;
     protected int maiorPontuacao;
-    private int tempoParaReagir; 
+    private int tempoParaReagir;
     private final Clock clock = Clock.systemDefaultZone();
     private long instantedaUltimaReacaodoJogadorAtual;
     private boolean instanteValidado;
@@ -35,7 +35,10 @@ public abstract class Genius implements Serializable {
         this.jogadores = jogadores;
         geraSequencia();
 
-    }/*construtor que inicializa o jogo mantendo as informações principais do jogo já salvo */
+    }/*
+      * construtor que inicializa o jogo mantendo as informações principais do jogo
+      * já salvo
+      */
 
     protected Genius() {
         data = new Data();
@@ -44,14 +47,17 @@ public abstract class Genius implements Serializable {
         this.indexJogadorAtual = 0;
         this.instantedaUltimaReacaodoJogadorAtual = 0;
         this.instanteValidado = false;
-        this.setDificuldade();
         this.geraSequencia();
     }/* Construtor utilizado para inicializar o jogo a primeira vez */
 
-    public void setTitulo(String tituloNovo) throws Exception{
-        if(tituloNovo.length() < 3) throw new Exception("Titulo deve ter mais de 2 letras");
+    public void setTitulo(String tituloNovo) throws Exception {
+        if (tituloNovo.length() < 3)
+            throw new Exception("Titulo deve ter mais de 2 letras");
         this.titulodoCampeonato = tituloNovo;
-    }/*método que define um titulo para o jogo e alança uma exceção se tiver menos que 2 letras */
+    }/*
+      * método que define um titulo para o jogo e alança uma exceção se tiver menos
+      * que 2 letras
+      */
 
     public void setRitmo() {
         if (this.ritmo < 1 || this.ritmo > 2) {
@@ -59,22 +65,19 @@ public abstract class Genius implements Serializable {
         }
         this.ritmo++;
         setTempodeReacao(this.ritmo);
-    }/*Método que muda o ritmo do jogo e muda o tempo de reação*/
+    }/* Método que muda o ritmo do jogo e muda o tempo de reação */
 
-    public void setDificuldade() {
-        if (this.dificuldade < 1 || this.dificuldade > 2) {
-            this.dificuldade = 0;
-        }
-        this.dificuldade++;
+    protected void setDificuldade(int dificuldade) {
+        this.dificuldade = dificuldade;
     }/* Método que muda o valor da dificuldade do jogo */
 
     public String getDificuldade() {
         return Integer.toString(this.dificuldade);
-    }/* método que retorna o valor da dificuldade como string.*/
+    }/* método que retorna o valor da dificuldade como string. */
 
     public String getRitmo() {
         return Integer.toString(ritmo);
-    }/* método que retorna o valor do ritmo como string*/
+    }/* método que retorna o valor do ritmo como string */
 
     private void setTempodeReacao(int ritmo) {
         if (ritmo == 1) {
@@ -89,32 +92,35 @@ public abstract class Genius implements Serializable {
             tempoParaReagir = 1000;
             return;
         }
-    }/*método que modifica o tempo que o jogador tem para reagir ao clicar o botão de acordo com o ritmo que foi passado como parâmetro. */
+    }/*
+      * método que modifica o tempo que o jogador tem para reagir ao clicar o botão
+      * de acordo com o ritmo que foi passado como parâmetro.
+      */
 
     public Data getData() {
         return this.data;
-    }/*método que retorna a data do jogo */
+    }/* método que retorna a data do jogo */
 
     public Jogador getJogadorAtual() {
         if (!jogofoiEncerrado()) {
             return jogadores.get(indexJogadorAtual);
         }
         return jogadores.get(indexJogadorAtual - 1);
-    }/*Método para pegar o jogador atual da rodada*/
+    }/* Método para pegar o jogador atual da rodada */
 
     public int qtdJogadores() {
         return this.jogadores.size();
-    }/*Método que retorna o tamanho da lista de jogadores do campeonato */
+    }/* Método que retorna o tamanho da lista de jogadores do campeonato */
 
     public List<Jogador> getListaJogadores() {
         return List.copyOf(this.jogadores);
-    }/*Método que retorna uma cópia da lista de jogadores*/
+    }/* Método que retorna uma cópia da lista de jogadores */
 
     public List<Jogador> getVencedores() {
         final List<Jogador> ordenadosPorPontos = getListaJogadores();
         Collections.sort(ordenadosPorPontos);
         return ordenadosPorPontos;
-    }/*Método que retorna os jogadores ordenado por pontos */
+    }/* Método que retorna os jogadores ordenado por pontos */
 
     public List<Integer> getSequencia() {
         return this.sequenciaDeCores;
@@ -122,7 +128,7 @@ public abstract class Genius implements Serializable {
 
     public String getTitulodoCampeonato() {
         return this.titulodoCampeonato;
-    }/*Método que retorna o titulo do campeonato */
+    }/* Método que retorna o titulo do campeonato */
 
     private void alteraJogadorAtual() {
         if (mododeTreinoAtivo) {
@@ -139,31 +145,35 @@ public abstract class Genius implements Serializable {
         }
         this.encerraJogo();
         return;
-    }/*Método que altera o jogador atual se não estiver no modo treinio, e verifica se o jogador que perdeu tem a maior 
-    pontuação, reseta o instante da sequencia e finaliza a rodada, encerra o jogo caso não tenha mais jogadores*/
+    }/*
+      * Método que altera o jogador atual se não estiver no modo treinio, e verifica
+      * se o jogador que perdeu tem a maior
+      * pontuação, reseta o instante da sequencia e finaliza a rodada, encerra o jogo
+      * caso não tenha mais jogadores
+      */
 
     private void validaInstante() {
         this.instanteValidado = true;
-    }/*Método que valida o ultimo instante*/
+    }/* Método que valida o ultimo instante */
 
     private void invalidaInstante() {
         this.instanteValidado = false;
-    }/*Método que invalida tempo do ultimo instante apertado pelo jogadodor */
+    }/* Método que invalida tempo do ultimo instante apertado pelo jogadodor */
 
     private void encerraJogo() {
         indexJogadorAtual++;
-    }/*muda para o próximo jogador caso o ultimo perder */
+    }/* muda para o próximo jogador caso o ultimo perder */
 
     public boolean jogofoiEncerrado() {
         if (indexJogadorAtual == this.jogadores.size()) {
             return true;
         }
         return false;
-    }/* retorna se o jogo foi encerrado*/
+    }/* retorna se o jogo foi encerrado */
 
     public boolean jogoEstaAtivo() {
         return this.aRodadaFoiIniciada;
-    }/*retorna se a rodada foi iniciada */
+    }/* retorna se a rodada foi iniciada */
 
     public boolean ehUltimaJogada() {
         System.out.println("sequenciaDeCores.size(): " + sequenciaDeCores.size());
@@ -176,11 +186,11 @@ public abstract class Genius implements Serializable {
     public void adicionaJogador(Jogador novoJogador) {
         jogadores.add(novoJogador);
         return;
-    }/*Método que adiciona novos jogadores na lista */
+    }/* Método que adiciona novos jogadores na lista */
 
     private void pontua() {
         this.jogadores.get(this.indexJogadorAtual).pontua(this.indexdaJogadaAtual);
-    }/*Método que chama o método de pontuar do jogador atual */
+    }/* Método que chama o método de pontuar do jogador atual */
 
     public boolean analisaJogada(Long instantedaExibicao, Cor jogada) {
         if (jogofoiEncerrado()) {
@@ -192,7 +202,7 @@ public abstract class Genius implements Serializable {
             return false;
         }
         return acertouaSequencia(jogada);
-    }/*Método que retorna se o jogador acertou a sequencia dentro do tempo */
+    }/* Método que retorna se o jogador acertou a sequencia dentro do tempo */
 
     private boolean reagiuEmTempo(Long instantedaExibicao) {
         final Long instantedeReacao = clock.millis();
@@ -204,15 +214,16 @@ public abstract class Genius implements Serializable {
                 this.getJogadorAtual().foiJogadaMaisRapida(instantedeReacao - instantedaExibicao);
                 return true;
             }
-        }//verifica se o instante da ultima jogada não foi resetado, depois compara os instantes se reagiu em tempo, valida o instante
-        //e verifica se fiu a jogada mais rápida
+        } // verifica se o instante da ultima jogada não foi resetado, depois compara os
+          // instantes se reagiu em tempo, valida o instante
+          // e verifica se fiu a jogada mais rápida
         if (instantedaUltimaReacaodoJogadorAtual + tempoParaReagir > instantedeReacao) {
             instantedaUltimaReacaodoJogadorAtual = instantedeReacao;
             this.getJogadorAtual().foiJogadaMaisRapida(instantedeReacao - instantedaExibicao);
             return true;
-        }// faz a mesma coisa soq com o instante não resetado.
+        } // faz a mesma coisa soq com o instante não resetado.
         return false;
-    }/*Método que verifica se o jogador reagiu em tempo */
+    }/* Método que verifica se o jogador reagiu em tempo */
 
     private boolean acertouaSequencia(Cor cor) {
         System.out.println(sequenciaDeCores);
@@ -235,20 +246,29 @@ public abstract class Genius implements Serializable {
         System.out.println("Acertou");
         this.indexdaJogadaAtual++;
         return true;
-    }/* Método que retorna se o jogador acertou a cor da sequencia e também pontua caso acerte e não seja modo treino*/
+    }/*
+      * Método que retorna se o jogador acertou a cor da sequencia e também pontua
+      * caso acerte e não seja modo treino
+      */
 
     protected void geraSequencia() {
         Random geraNumeroAleatorio = new Random();
         List<Integer> novaSequencia = new ArrayList<Integer>();
-            novaSequencia.add(geraNumeroAleatorio.nextInt(4));
+        novaSequencia.add(geraNumeroAleatorio.nextInt(4));
         this.sequenciaDeCores = novaSequencia;
         return;
-    }/*Método que gera numeros aleátorios entre 0 e 3 na primeira rodada de cada jogador*/
+    }/*
+      * Método que gera numeros aleátorios entre 0 e 3 na primeira rodada de cada
+      * jogador
+      */
 
     protected void adicionanaSequencia() {
         Random geraNumeroAleatorio = new Random();
         this.sequenciaDeCores.add(geraNumeroAleatorio.nextInt(4));
-    }/*Método que gera numeros aleátorios entre 0 e 3 e guarda na lista sequenciaDeCores caso você acerte, cada cor representa um numero */
+    }/*
+      * Método que gera numeros aleátorios entre 0 e 3 e guarda na lista
+      * sequenciaDeCores caso você acerte, cada cor representa um numero
+      */
 
     private boolean ehAmaiorPontuacao() {
         final int pontuacaodoJogoador = this.getJogadorAtual().getPontos();
@@ -257,7 +277,7 @@ public abstract class Genius implements Serializable {
             return true;
         }
         return false;
-    }/*Método que verifica se a pontuação do jogador é a maior*/
+    }/* Método que verifica se a pontuação do jogador é a maior */
 
     public boolean temEmpate() {
         int contaMaiorPontucao = 0;
@@ -271,7 +291,10 @@ public abstract class Genius implements Serializable {
             return true;
         }
         return false;
-    }/* método que verifica se os pontos dos jogadores são iguais se sim ele ordena e retorna que há empate */
+    }/*
+      * método que verifica se os pontos dos jogadores são iguais se sim ele ordena e
+      * retorna que há empate
+      */
 
     public void ativaDesativaTreino() {
         if (mododeTreinoAtivo) {// ativo
@@ -281,22 +304,22 @@ public abstract class Genius implements Serializable {
         }
         geraSequencia();
         mododeTreinoAtivo = true;// quando esta desativo
-    }/*Método para ativar ou desativar o modo treino e gerar uma nova sequencia */
+    }/* Método para ativar ou desativar o modo treino e gerar uma nova sequencia */
 
     public boolean ehmododeTreino() {
         return this.mododeTreinoAtivo;
-    }/*Método retorna se está no modo treino */
+    }/* Método retorna se está no modo treino */
 
     public void inciaRodada() {
         this.aRodadaFoiIniciada = true;
-    }/*Método que diz que a rodada foi iniciada */
+    }/* Método que diz que a rodada foi iniciada */
 
     private void finalizaRodada() {
         this.aRodadaFoiIniciada = false;
-    }/*Método que diz que a rodada foi finalizada */
+    }/* Método que diz que a rodada foi finalizada */
 
-    public abstract Genius mudaDificuldade();/*Método que retorna um jogo de acordo com a dificuldade*/
+    public abstract Genius mudaDificuldade();/* Método que retorna um jogo de acordo com a dificuldade */
 
-    public abstract Genius getRodadadeDesempate() throws Exception; /*Método que retorna um jogo de desempate */
+    public abstract Genius getRodadadeDesempate() throws Exception; /* Método que retorna um jogo de desempate */
 
 }

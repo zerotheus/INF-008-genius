@@ -8,6 +8,7 @@ public class GeniusDificil extends Genius {
 
     protected GeniusDificil(Data data, String titulodoCampeonato, int ritmo, int dificuldade, List<Jogador> jogadores) {
         super(data, titulodoCampeonato, ritmo, dificuldade, jogadores);
+        setDificuldade(3);
         this.geraSequencia();
     }
 
@@ -21,7 +22,7 @@ public class GeniusDificil extends Genius {
         for (int i = 0; i < geraNumeroAleatorio.nextInt(3) + 3; i++) {
             this.sequenciaDeCores.add(geraNumeroAleatorio.nextInt(4));
         }
-    }/*Método que adiciona a sequencia do jogo na lista */
+    }/* Método que adiciona a sequencia do jogo na lista */
 
     protected void geraSequencia() {
         Random geraNumeroAleatorio = new Random();
