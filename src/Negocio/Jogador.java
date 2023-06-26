@@ -20,36 +20,42 @@ public class Jogador implements Comparable<Jogador>, Serializable {
         jogadaMaisRapidaEmUnidadedeTempo = Long.MAX_VALUE;
         this.tempoInicio = 0;
         recordPessoal = 0;
-    }/*Construtor do jogador */
+    }/* Construtor do jogador */
 
     public void setNome(String nome) throws Exception {
         if (nome.length() < 2) {
             throw new Exception("Nome tem de ter pelo menos 3 caracteres");
         }
         this.nome = nome;
-    }/*Método que coloca o nome do jogador e lança uma exception caso o nome tenha menos que 3 caracteres */
+    }/*
+      * Método que coloca o nome do jogador e lança uma exception caso o nome tenha
+      * menos que 3 caracteres
+      */
 
     public void setApelido(String apelido) throws Exception {
         if (apelido.length() < 3) {
             throw new Exception("Apelido tem de ter pelo menos 3 caracteres");
         }
         this.apelido = apelido;
-    }/*Método para colocar o apelido do jogador lança uma exception caso o apelido tenha menos que 3 caracteres  */
+    }/*
+      * Método para colocar o apelido do jogador lança uma exception caso o apelido
+      * tenha menos que 3 caracteres
+      */
 
     public void setTempoInicial() {
         if (this.tempoInicio != 0) {
             return;
         }
         this.tempoInicio = System.currentTimeMillis();
-    }/*Método que pega o tempo de inicio do jogo do jogador */
+    }/* Método que pega o tempo de inicio do jogo do jogador */
 
     public void setTempoTotal() {
         this.tempoTotal = System.currentTimeMillis() - this.tempoInicio;
-    }/*coloca o tempo total de jogo do jogador */
+    }/* coloca o tempo total de jogo do jogador */
 
     public long getTempoTotal() {
         return this.tempoTotal / 1000;
-    }/*retorna o tempo total do jogador */
+    }/* retorna o tempo total do jogador */
 
     public String getNome() {
         return nome;
@@ -66,7 +72,7 @@ public class Jogador implements Comparable<Jogador>, Serializable {
     public void pontua(int pontos) {
         setPontosGanhosnaUltimaRodada(pontos);
         this.pontos += pontos;
-    }/*adiciona pontos */
+    }/* adiciona pontos */
 
     private void setPontosGanhosnaUltimaRodada(int pontosGanhos) {
         this.pontosganhosnaUltimaRodada = pontosGanhos;
@@ -74,11 +80,11 @@ public class Jogador implements Comparable<Jogador>, Serializable {
 
     public int getPontosFeitosnaUltimaRodada() {
         return pontosganhosnaUltimaRodada;
-    }/*retorna os pontos ganhos na rodada anterior */
+    }/* retorna os pontos ganhos na rodada anterior */
 
     public long getJogadaMaisRapidaEmUnidadedeTempo() {
         return jogadaMaisRapidaEmUnidadedeTempo;
-    }/*retorna a jogada mais rápida */
+    }/* retorna a jogada mais rápida */
 
     public void foiJogadaMaisRapida(Long jogada) {
         if (this.jogadaMaisRapidaEmUnidadedeTempo == null) {
@@ -88,21 +94,21 @@ public class Jogador implements Comparable<Jogador>, Serializable {
         if (this.jogadaMaisRapidaEmUnidadedeTempo > jogada) {
             this.jogadaMaisRapidaEmUnidadedeTempo = jogada;
         }
-    }/*método que compara as jogadas e coloca a mais rápida */
+    }/* método que compara as jogadas e coloca a mais rápida */
 
     public int getrecordPessoal() {
         return this.recordPessoal;
-    }/*retorna o record do jogador */
+    }/* retorna o record do jogador */
 
     @Override
     public int compareTo(Jogador outroJogador) {
         if (this.pontos > outroJogador.pontos) {
-            return 1;
-        }
-        if (this.pontos < outroJogador.pontos) {
             return -1;
         }
+        if (this.pontos < outroJogador.pontos) {
+            return 1;
+        }
         return 0;
-    }/*Método que compara os pontos do jogador com outro jogador */
+    }/* Método que compara os pontos do jogador com outro jogador */
 
 }
