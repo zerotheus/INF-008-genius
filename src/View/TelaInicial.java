@@ -3,11 +3,9 @@ package View;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import javax.swing.KeyStroke;
 
 public class TelaInicial extends MyJPanel {
     private JLabel lbltelaFundo;
@@ -23,7 +21,7 @@ public class TelaInicial extends MyJPanel {
         lbltelaFundo = new JLabeldateladeFundo();
         this.add(lbltelaFundo);
 
-        lblbutao.addMouseListener(new MouseAdapter() { 
+        lblbutao.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getSource() != lblbutao) {
@@ -38,11 +36,10 @@ public class TelaInicial extends MyJPanel {
                 tabbedPane.insertTab("Selecione o modo de Jogo", null, teladeMododeJogo, TOOL_TIP_TEXT_KEY, 1);
                 tabbedPane.removeTabAt(0);
             }
-        });/*Innerclass que adiciona interação de click ao botão, muda de tela, remove a atual e inicia som */
-
-        lblbutao.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke('.'), "A");
-        lblbutao.getActionMap().put("A", new AcaoTrocaparaTeladoJogo(tabbedPane, lblbutao));
-
+        });/*
+            * Innerclass que adiciona interação de click ao botão, muda de tela, remove a
+            * atual e inicia som
+            */
     }
 
 }
