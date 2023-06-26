@@ -38,4 +38,18 @@ public class GeniusBase extends Genius {
       * novo jogo para desempate com os empatados
       */
 
+    @Override
+    public void ativaDesativaTreino() throws Exception {
+        if (this.jogoEstaAtivo() || sequenciaDeCores.size() > 1) {
+            throw new Exception("Nao é possivel iniciar o Treino com Rodada iniciada");
+        }
+        if (mododeTreinoAtivo) {// ativo
+            mododeTreinoAtivo = false;
+            geraSequencia();
+            return;
+        }
+        geraSequencia();
+        mododeTreinoAtivo = true;// quando esta desativo
+    }
+
 }

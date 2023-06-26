@@ -302,18 +302,8 @@ public abstract class Genius implements Serializable {
       * retorna que há empate
       */
 
-    public void ativaDesativaTreino() throws Exception {
-        if (this.jogoEstaAtivo() || sequenciaDeCores.size() > 3) {
-            throw new Exception("Nao é possivel iniciar o Treino com Rodada iniciada");
-        }
-        if (mododeTreinoAtivo) {// ativo
-            mododeTreinoAtivo = false;
-            geraSequencia();
-            return;
-        }
-        geraSequencia();
-        mododeTreinoAtivo = true;// quando esta desativo
-    }/* Método para ativar ou desativar o modo treino e gerar uma nova sequencia */
+    public abstract void ativaDesativaTreino() throws Exception;
+    // Método para ativar ou desativar o modo treino e gerar uma nova sequencia
 
     public boolean ehmododeTreino() {
         return this.mododeTreinoAtivo;
