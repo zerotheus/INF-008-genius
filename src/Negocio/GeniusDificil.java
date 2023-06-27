@@ -13,7 +13,10 @@ public class GeniusDificil extends Genius {
     }
 
     @Override
-    public Genius mudaDificuldade() {
+    public Genius mudaDificuldade() throws Exception {
+    	if (this.jogoEstaAtivo() || sequenciaDeCores.size() > 3) {
+            throw new Exception("Nao é possivel mudar dificuldade com Rodada iniciada");
+        }
         return new GeniusBase(getData(), getTitulodoCampeonato(), super.ritmo, 1, getListaJogadores());
     }
 
