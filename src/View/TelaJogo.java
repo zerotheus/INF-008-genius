@@ -78,8 +78,8 @@ public class TelaJogo extends MyJPanel implements Runnable {
 				try {
 					genius = genius.mudaDificuldade();
 				} catch (Exception e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
+					return;
 				}
 				JOptionPane.showMessageDialog(null, "Dificuldade mudada para " + genius.getDificuldade(), "DIFICULDADE",
 						1);
@@ -242,6 +242,9 @@ public class TelaJogo extends MyJPanel implements Runnable {
 						}
 						atualizaInformacoes();
 						btnIniciar.setEnabled(true);
+						MyJPanel telaJogoCarregado = new TelaJogo(tabbedPane, genius);
+						tabbedPane.insertTab("Placar", null, telaJogoCarregado, TOOL_TIP_TEXT_KEY, 1);
+						tabbedPane.remove(0);
 					} else
 						JOptionPane.showMessageDialog(lblFundoJogo, "Arquivo não suportado. Use somente arquivos .obj");
 				}
@@ -251,7 +254,6 @@ public class TelaJogo extends MyJPanel implements Runnable {
 		 * Método utilizado para carregar um jogo quando apertar o botão "Carregar".
 		 * O método utiliza um filter para poder carregar somente arquivos .obj
 		 */
-
 	private void keyAndMouseMapping(GeniusLabels geniusLabel) {
 		geniusLabel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(geniusLabel.getKeyChar()),
 				geniusLabel.toString());
@@ -278,6 +280,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 				}
 			}
 		});
+		atualizaInformacoes();
 	}/*
 		 * método que é utilizado para selecionar o botão do jogo com mouse ou teclado
 		 */
