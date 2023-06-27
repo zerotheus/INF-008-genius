@@ -229,7 +229,7 @@ public abstract class Genius implements Serializable {
             }
         } // verifica se o instante da ultima jogada não foi resetado, depois compara os
           // instantes se reagiu em tempo, valida o instante
-          // e verifica se fiu a jogada mais rápida
+          // e verifica se foi a jogada mais rápida
         if (instantedaUltimaReacaodoJogadorAtual + tempoParaReagir > instantedeReacao) {
             instantedaUltimaReacaodoJogadorAtual = instantedeReacao;
             this.getJogadorAtual().foiJogadaMaisRapida(instantedeReacao - instantedaExibicao);
