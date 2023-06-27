@@ -1,19 +1,5 @@
 package View;
 
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.swing.AbstractAction;
-import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTabbedPane;
-import javax.swing.KeyStroke;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import Negocio.Genius;
-import Negocio.Jogador;
-import View.geniusLabels.*;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -28,6 +14,26 @@ import java.io.ObjectOutputStream;
 import java.time.Clock;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
+import javax.swing.JComponent;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTabbedPane;
+import javax.swing.KeyStroke;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+import Negocio.Genius;
+import Negocio.Jogador;
+import View.geniusLabels.AmareloLabel;
+import View.geniusLabels.AzulLabel;
+import View.geniusLabels.GeniusLabels;
+import View.geniusLabels.VerdeLabel;
+import View.geniusLabels.VermelhoLabel;
 
 public class TelaJogo extends MyJPanel implements Runnable {
 
@@ -69,7 +75,12 @@ public class TelaJogo extends MyJPanel implements Runnable {
 				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
 					e1.printStackTrace();
 				}
-				genius = genius.mudaDificuldade();
+				try {
+					genius = genius.mudaDificuldade();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				JOptionPane.showMessageDialog(null, "Dificuldade mudada para " + genius.getDificuldade(), "DIFICULDADE",
 						1);
 			}
