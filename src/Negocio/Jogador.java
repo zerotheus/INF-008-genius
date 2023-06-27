@@ -22,8 +22,8 @@ public class Jogador implements Comparable<Jogador>, Serializable {
         recordPessoal = 0;
     }/* Construtor do jogador */
 
-  //INICIO MÉTODOS GET
-  
+    // INICIO MÉTODOS GET
+
     public long getTempoTotal() {
         return this.tempoTotal / 1000;
     }/* retorna o tempo total do jogador */
@@ -36,27 +36,26 @@ public class Jogador implements Comparable<Jogador>, Serializable {
         return apelido;
     }/* retorna apelido do jogador */
 
-
     public int getPontos() {
         return pontos;
-    }/* retorna os pontos do jogador *
-    
-     public int getPontosFeitosnaUltimaRodada() {
+    }/* retorna os pontos do jogador */
+
+    public int getPontosFeitosnaUltimaRodada() {
         return pontosganhosnaUltimaRodada;
     }/* retorna os pontos ganhos na rodada anterior */
 
     public long getJogadaMaisRapidaEmUnidadedeTempo() {
         return jogadaMaisRapidaEmUnidadedeTempo;
     }/* retorna a jogada mais rápida */
-    
+
     public int getrecordPessoal() {
         return this.recordPessoal;
     }/* retorna o record do jogador */
-    
-  //FIM METODOS GET
-    
-  //INICIO MÉTODOS SET
-    
+
+    // FIM METODOS GET
+
+    // INICIO MÉTODOS SET
+
     public void setNome(String nome) throws Exception {
         if (nome.length() < 2) {
             throw new Exception("Nome tem de ter pelo menos 3 caracteres");
@@ -87,18 +86,17 @@ public class Jogador implements Comparable<Jogador>, Serializable {
     public void setTempoTotal() {
         this.tempoTotal = System.currentTimeMillis() - this.tempoInicio;
     }/* coloca o tempo total de jogo do jogador */
-    
+
     private void setPontosGanhosnaUltimaRodada(int pontosGanhos) {
         this.pontosganhosnaUltimaRodada = pontosGanhos;
     }/* guarda os pontos que o jogador ganhou na rodada anterior */
-    
-  //FIM METODOS SET
+
+    // FIM METODOS SET
 
     public void pontua(int pontos) {
         setPontosGanhosnaUltimaRodada(pontos);
         this.pontos += pontos;
     }/* adiciona pontos */
-
 
     public void foiJogadaMaisRapida(Long jogada) {
         if (this.jogadaMaisRapidaEmUnidadedeTempo == null) {

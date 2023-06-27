@@ -44,8 +44,8 @@ public class TelaJogo extends MyJPanel implements Runnable {
 	private final Clock clock = Clock.systemDefaultZone();
 	private long instantedofimdaExibicao;
 	private boolean modoMonoCorAtivado = false;
-	private int pontosFeitosNaRodada =0;
-  
+	private int pontosFeitosNaRodada = 0;
+
 	public TelaJogo(JTabbedPane tabbedPane, Genius jogo) {
 		super();
 		this.tabbedPane = tabbedPane;
@@ -198,10 +198,12 @@ public class TelaJogo extends MyJPanel implements Runnable {
 					}
 				}
 			}
-		});/*Método utilizado para salvar um jogo quando apertar o botão "Salvar".
-	 O método salva somente arquivos .obj. Ele possui um filtro para que não seja possível salvar ".obj.obj". 
-	 Se já possuir .obj, ele salva sem adicionar o .obj de novo */
-
+		});/*
+			 * Método utilizado para salvar um jogo quando apertar o botão "Salvar".
+			 * O método salva somente arquivos .obj. Ele possui um filtro para que não seja
+			 * possível salvar ".obj.obj".
+			 * Se já possuir .obj, ele salva sem adicionar o .obj de novo
+			 */
 
 		btnCarregar.addMouseListener(new MouseAdapter() {
 			@Override
@@ -235,9 +237,10 @@ public class TelaJogo extends MyJPanel implements Runnable {
 				}
 			}
 		});
-	}/*Método utilizado para carregar um jogo quando apertar o botão "Carregar".
-	 O método utiliza um filter para poder carregar somente arquivos .obj*/
-
+	}/*
+		 * Método utilizado para carregar um jogo quando apertar o botão "Carregar".
+		 * O método utiliza um filter para poder carregar somente arquivos .obj
+		 */
 
 	private void keyAndMouseMapping(GeniusLabels geniusLabel) {
 		geniusLabel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(geniusLabel.getKeyChar()),
@@ -382,7 +385,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 	private void atualizaInformacoes() {
 		lblNomeJogador.setText(genius.getJogadorAtual().getApelido());
 		lblPontos.setText("" + genius.getJogadorAtual().getPontos());
-		lblPontosGanhosnaRodada.setText("+" + (genius.getJogadorAtual().getPontos() - pontosFeitosNaRodada));
+		lblPontosGanhosnaRodada.setText("+" + (genius.getJogadorAtual().getPontosFeitosnaUltimaRodada()));
 	}/* mini placar da tela de jogo */
 
 	@Override
