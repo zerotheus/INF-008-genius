@@ -9,7 +9,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-
 import Negocio.Genius;
 import Negocio.GeniusBase;
 import Negocio.Jogador;
@@ -92,6 +91,7 @@ public class TelaCadastro extends MyJPanel {
 		this.add(lblVoltar);
 
 		lblVoltar.addMouseListener(new MouseAdapter() {
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getSource() != lblVoltar) {
@@ -146,7 +146,5 @@ public class TelaCadastro extends MyJPanel {
 
 			}
 		});
-		// shortcut somente para eu n ter que ficar preenchendo formulario
-
 	}
 }

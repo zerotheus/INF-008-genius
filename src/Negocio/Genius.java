@@ -50,6 +50,23 @@ public abstract class Genius implements Serializable {
         this.geraSequencia();
     }/* Construtor utilizado para inicializar o jogo a primeira vez */
 
+    // INICIO MÉTODOS GET
+
+    public String getDificuldade() {
+        return Integer.toString(this.dificuldade);
+    }/* método que retorna o valor da dificuldade como string. */
+
+    public String getRitmo() {
+        return Integer.toString(ritmo);
+    }/* método que retorna o valor do ritmo como string */
+
+    public int qtdJogadores() {
+        return this.jogadores.size();
+    }/* Método que retorna o tamanho da lista de jogadores do campeonato */
+    // FIM METODOS GET
+
+    // INICIO MÉTODOS SET
+
     public void setTitulo(String tituloNovo) throws Exception {
         if (tituloNovo.length() < 3)
             throw new Exception("Titulo deve ter mais de 2 letras");
@@ -71,21 +88,13 @@ public abstract class Genius implements Serializable {
         this.dificuldade = dificuldade;
     }/* Método que muda o valor da dificuldade do jogo */
 
-    public String getDificuldade() {
-        return Integer.toString(this.dificuldade);
-    }/* método que retorna o valor da dificuldade como string. */
-
-    public String getRitmo() {
-        return Integer.toString(ritmo);
-    }/* método que retorna o valor do ritmo como string */
-
     private void setTempodeReacao(int ritmo) {
         if (ritmo == 1) {
-            tempoParaReagir = 180000;
+            tempoParaReagir = 10000;
             return;
         }
         if (ritmo == 2) {
-            tempoParaReagir = 3000;
+            tempoParaReagir = 1750;
             return;
         }
         if (ritmo == 3) {
@@ -97,6 +106,8 @@ public abstract class Genius implements Serializable {
       * de acordo com o ritmo que foi passado como parâmetro.
       */
 
+    // FIM MÉTODOS SET
+
     public Data getData() {
         return this.data;
     }/* método que retorna a data do jogo */
@@ -107,10 +118,6 @@ public abstract class Genius implements Serializable {
         }
         return jogadores.get(indexJogadorAtual - 1);
     }/* Método para pegar o jogador atual da rodada */
-
-    public int qtdJogadores() {
-        return this.jogadores.size();
-    }/* Método que retorna o tamanho da lista de jogadores do campeonato */
 
     public List<Jogador> getListaJogadores() {
         return List.copyOf(this.jogadores);
@@ -222,7 +229,7 @@ public abstract class Genius implements Serializable {
             }
         } // verifica se o instante da ultima jogada não foi resetado, depois compara os
           // instantes se reagiu em tempo, valida o instante
-          // e verifica se fiu a jogada mais rápida
+          // e verifica se foi a jogada mais rápida
         if (instantedaUltimaReacaodoJogadorAtual + tempoParaReagir > instantedeReacao) {
             instantedaUltimaReacaodoJogadorAtual = instantedeReacao;
             this.getJogadorAtual().foiJogadaMaisRapida(instantedeReacao - instantedaExibicao);
@@ -236,7 +243,6 @@ public abstract class Genius implements Serializable {
         if (cor.ordinal() != this.sequenciaDeCores.get(this.indexdaJogadaAtual)) {
             this.alteraJogadorAtual();
             this.indexdaJogadaAtual = 0;
-            System.out.println("Sequencia");
             return false;
         }
         if (!ehmododeTreino()) {

@@ -50,6 +50,7 @@ public abstract class GeniusLabels extends MyJLabelwithSound {
 
     public Cor getCor() {
         return this.cor;
+
     }/* diz a cor do botão */
 
     public char getKeyChar() {

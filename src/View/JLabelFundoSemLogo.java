@@ -17,5 +17,7 @@ public class JLabelFundoSemLogo extends JLabel {
         // devolve o arquivo de imagem que tem o caminho e nome da string
         this.setBounds(0, 0, 1451, 884);
     }
+
     /* Classe criada para o fundo sem o logo do jogo */
+
 }

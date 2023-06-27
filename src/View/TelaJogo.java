@@ -178,6 +178,8 @@ public class TelaJogo extends MyJPanel implements Runnable {
 				}
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("OBJ file", "obj");
 				final JFileChooser fc = new JFileChooser();
+				File saves = new File("src\\Saves");
+				fc.setCurrentDirectory(saves);
 				int returnVal = fc.showOpenDialog(lblFundoJogo);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					File file = fc.getSelectedFile();
@@ -195,7 +197,12 @@ public class TelaJogo extends MyJPanel implements Runnable {
 					}
 				}
 			}
-		});/* CAIAN DESCREVA AI */
+		});/*
+			 * Método utilizado para salvar um jogo quando apertar o botão "Salvar".
+			 * O método salva somente arquivos .obj. Ele possui um filtro para que não seja
+			 * possível salvar ".obj.obj".
+			 * Se já possuir .obj, ele salva sem adicionar o .obj de novo
+			 */
 
 		btnCarregar.addMouseListener(new MouseAdapter() {
 			@Override
@@ -207,6 +214,9 @@ public class TelaJogo extends MyJPanel implements Runnable {
 				}
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("OBJ file", "obj");
 				final JFileChooser fc = new JFileChooser();
+
+				File saves = new File("src\\Saves");
+				fc.setCurrentDirectory(saves);
 				int returnVal = fc.showOpenDialog(lblFundoJogo);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					File file = fc.getSelectedFile();
@@ -220,12 +230,16 @@ public class TelaJogo extends MyJPanel implements Runnable {
 							e1.printStackTrace();
 						}
 						atualizaInformacoes();
+						btnIniciar.setEnabled(true);
 					} else
 						JOptionPane.showMessageDialog(lblFundoJogo, "Arquivo não suportado. Use somente arquivos .obj");
 				}
 			}
 		});
-	}/* CAIAN DESCREVA AI tbm */
+	}/*
+		 * Método utilizado para carregar um jogo quando apertar o botão "Carregar".
+		 * O método utiliza um filter para poder carregar somente arquivos .obj
+		 */
 
 	private void keyAndMouseMapping(GeniusLabels geniusLabel) {
 		geniusLabel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(geniusLabel.getKeyChar()),
@@ -302,6 +316,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 	}
 
 	private void getInformacoes(final GeniusLabels botao) throws Exception {
+
 		if (thread.isAlive() || !genius.jogoEstaAtivo()) {
 			return;
 		}
@@ -368,7 +383,7 @@ public class TelaJogo extends MyJPanel implements Runnable {
 	private void atualizaInformacoes() {
 		lblNomeJogador.setText(genius.getJogadorAtual().getApelido());
 		lblPontos.setText("" + genius.getJogadorAtual().getPontos());
-		lblPontosGanhosnaRodada.setText("+" + genius.getJogadorAtual().getPontosFeitosnaUltimaRodada());
+		lblPontosGanhosnaRodada.setText("+" + (genius.getJogadorAtual().getPontosFeitosnaUltimaRodada()));
 	}/* mini placar da tela de jogo */
 
 	@Override
