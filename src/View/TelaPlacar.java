@@ -96,7 +96,7 @@ public class TelaPlacar extends MyJPanel {
 
     public void desenhaPlacar(Genius jogo) {
         int posicao = 70;
-        int qtdJogadores = jogo.getQtdJogadores();
+        int qtdJogadores = jogo.qtdJogadores();
 
         /* inicio dos nomes */
         labelNomes = new ArrayList<JLabel>();

@@ -50,10 +50,8 @@ public abstract class Genius implements Serializable {
         this.geraSequencia();
     }/* Construtor utilizado para inicializar o jogo a primeira vez */
 
-    
-    
-//INICIO MÉTODOS GET
-    
+    // INICIO MÉTODOS GET
+
     public String getDificuldade() {
         return Integer.toString(this.dificuldade);
     }/* método que retorna o valor da dificuldade como string. */
@@ -62,43 +60,12 @@ public abstract class Genius implements Serializable {
         return Integer.toString(ritmo);
     }/* método que retorna o valor do ritmo como string */
 
-    public Data getData() {
-        return this.data;
-    }/* método que retorna a data do jogo */
-
-    public Jogador getJogadorAtual() {
-        if (!jogofoiEncerrado()) {
-            return jogadores.get(indexJogadorAtual);
-        }
-        return jogadores.get(indexJogadorAtual - 1);
-    }/* Método para pegar o jogador atual da rodada */
-
-    public int getQtdJogadores() {
+    public int qtdJogadores() {
         return this.jogadores.size();
     }/* Método que retorna o tamanho da lista de jogadores do campeonato */
+    // FIM METODOS GET
 
-    public List<Jogador> getListaJogadores() {
-        return List.copyOf(this.jogadores);
-    }/* Método que retorna uma cópia da lista de jogadores */
-
-    public List<Jogador> getVencedores() {
-        List<Jogador> ordenadosPorPontos = this.jogadores;
-        Collections.sort(ordenadosPorPontos);
-        return ordenadosPorPontos;
-    }/* Método que retorna os jogadores ordenado por pontos */
-
-    public List<Integer> getSequencia() {
-        return this.sequenciaDeCores;
-    }/* Método que retorna a lista da sequencia dos botões do jogo */
-
-    public String getTitulodoCampeonato() {
-        return this.titulodoCampeonato;
-    }/* Método que retorna o titulo do campeonato */
-    
-    //FIM METODOS GET
-
-    //INICIO MÉTODOS SET
-    
+    // INICIO MÉTODOS SET
 
     public void setTitulo(String tituloNovo) throws Exception {
         if (tituloNovo.length() < 3)
@@ -123,11 +90,11 @@ public abstract class Genius implements Serializable {
 
     private void setTempodeReacao(int ritmo) {
         if (ritmo == 1) {
-            tempoParaReagir = 180000;
+            tempoParaReagir = 10000;
             return;
         }
         if (ritmo == 2) {
-            tempoParaReagir = 3000;
+            tempoParaReagir = 1750;
             return;
         }
         if (ritmo == 3) {
@@ -139,11 +106,7 @@ public abstract class Genius implements Serializable {
       * de acordo com o ritmo que foi passado como parâmetro.
       */
 
-    //FIM MÉTODOS SET
-    
-    
-    
-
+    // FIM MÉTODOS SET
 
     public Data getData() {
         return this.data;
@@ -155,10 +118,6 @@ public abstract class Genius implements Serializable {
         }
         return jogadores.get(indexJogadorAtual - 1);
     }/* Método para pegar o jogador atual da rodada */
-
-    public int qtdJogadores() {
-        return this.jogadores.size();
-    }/* Método que retorna o tamanho da lista de jogadores do campeonato */
 
     public List<Jogador> getListaJogadores() {
         return List.copyOf(this.jogadores);
@@ -177,7 +136,6 @@ public abstract class Genius implements Serializable {
     public String getTitulodoCampeonato() {
         return this.titulodoCampeonato;
     }/* Método que retorna o titulo do campeonato */
-
 
     private void alteraJogadorAtual() {
         if (mododeTreinoAtivo) {
@@ -220,11 +178,9 @@ public abstract class Genius implements Serializable {
         return false;
     }/* retorna se o jogo foi encerrado */
 
-
     public boolean jogoEstaAtivo() {
         return this.aRodadaFoiIniciada;
     }/* retorna se a rodada foi iniciada */
-
 
     public boolean ehUltimaJogada() {
         System.out.println("sequenciaDeCores.size(): " + sequenciaDeCores.size());
@@ -247,8 +203,7 @@ public abstract class Genius implements Serializable {
         if (titulodoCampeonato == null) {
             throw new Exception("O jogo quer um titulo");
         }
-        if (this.getQtdJogadores() == 0) {
-
+        if (this.qtdJogadores() == 0) {
             throw new Exception("Jogo requer jogadores");
         }
         if (jogofoiEncerrado()) {

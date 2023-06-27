@@ -65,4 +65,4 @@ public class GeniusMedio extends Genius {
         geraSequencia();
         mododeTreinoAtivo = true;// quando esta desativo
     }
-
+}
