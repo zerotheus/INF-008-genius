@@ -16,7 +16,10 @@ public class GeniusBase extends Genius {
     }/* Construtor que inicia o modo com os dados salvos */
 
     @Override
-    public Genius mudaDificuldade() {
+    public Genius mudaDificuldade() throws Exception {
+    	if (this.jogoEstaAtivo() || sequenciaDeCores.size() > 1) {
+            throw new Exception("Nao é possivel mudar dificuldade com Rodada iniciada");
+        }
         return new GeniusMedio(getData(), getTitulodoCampeonato(), super.ritmo, this.dificuldade, getListaJogadores());
     }/* Método que muda a dificuldade para médio */
 
