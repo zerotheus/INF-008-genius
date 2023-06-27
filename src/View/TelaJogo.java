@@ -44,7 +44,6 @@ public class TelaJogo extends MyJPanel implements Runnable {
 	private final Clock clock = Clock.systemDefaultZone();
 	private long instantedofimdaExibicao;
 	private boolean modoMonoCorAtivado = false;
-	private int pontosFeitosNaRodada = 0;
 
 	public TelaJogo(JTabbedPane tabbedPane, Genius jogo) {
 		super();
@@ -318,7 +317,6 @@ public class TelaJogo extends MyJPanel implements Runnable {
 
 	private void getInformacoes(final GeniusLabels botao) throws Exception {
 
-		pontosFeitosNaRodada = genius.getJogadorAtual().getPontos();
 		if (thread.isAlive() || !genius.jogoEstaAtivo()) {
 			return;
 		}
