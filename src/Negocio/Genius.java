@@ -120,7 +120,7 @@ public abstract class Genius implements Serializable {
     }/* Método para pegar o jogador atual da rodada */
 
     public List<Jogador> getListaJogadores() {
-        return List.copyOf(this.jogadores);
+        return this.jogadores;
     }/* Método que retorna uma cópia da lista de jogadores */
 
     public List<Jogador> getVencedores() {
@@ -323,7 +323,7 @@ public abstract class Genius implements Serializable {
         this.aRodadaFoiIniciada = false;
     }/* Método que diz que a rodada foi finalizada */
 
-    public abstract Genius mudaDificuldade();/* Método que retorna um jogo de acordo com a dificuldade */
+    public abstract Genius mudaDificuldade() throws Exception;/* Método que retorna um jogo de acordo com a dificuldade */
 
     public abstract Genius getRodadadeDesempate() throws Exception; /* Método que retorna um jogo de desempate */
 
