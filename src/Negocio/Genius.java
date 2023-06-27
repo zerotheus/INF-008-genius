@@ -243,7 +243,6 @@ public abstract class Genius implements Serializable {
         if (cor.ordinal() != this.sequenciaDeCores.get(this.indexdaJogadaAtual)) {
             this.alteraJogadorAtual();
             this.indexdaJogadaAtual = 0;
-            System.out.println("Sequencia");
             return false;
         }
         if (!ehmododeTreino()) {
